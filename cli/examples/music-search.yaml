@@ -1,0 +1,17 @@
+# Search for a song in Apple Music
+# Usage: agent-click run examples/music-search.yaml
+#
+# Demonstrates:
+# - App launching with wait
+# - Clicking interactive elements
+# - Typing into search fields
+# - Waiting for async results
+
+app: Music
+timeout: 15
+steps:
+  - open: { app: Music, wait: true }
+  - click: 'id~="Search"'
+  - type: { selector: 'role=textField name~="Search"', text: 'Kiss of Life' }
+  - key: Return
+  - wait-for: 'name~="Top Result"'

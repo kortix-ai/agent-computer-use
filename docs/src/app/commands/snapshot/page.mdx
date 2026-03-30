@@ -1,0 +1,71 @@
+# snapshot
+
+Dump the accessibility tree of any application and get refs you can use with every other command.
+
+## Usage
+
+```bash
+agent-click snapshot [OPTIONS]
+```
+
+## Options
+
+| Option | Description |
+| --- | --- |
+| `-a, --app` | Target application |
+| `-i, --interactive` | Only show interactive elements (buttons, inputs, links) |
+| `-c, --compact` | Skip empty structural elements |
+| `-d, --depth` | Limit tree traversal depth |
+
+## Examples
+
+```bash
+agent-click snapshot -a Calculator -i -c        # interactive + compact (best for AI)
+agent-click snapshot -a Safari -i -c -d 8       # deeper tree
+agent-click snapshot -a Music                   # full tree (verbose)
+```
+
+## Output
+
+```
+application "Calculator"
+  window "Calculator" id=main
+    group
+      splitgroup id=main, SidebarNavigationSplitView
+        group
+          group id=CalculatorKeypadView
+            [@e1] button "Delete" id=Delete
+            [@e2] button "All Clear" id=AllClear
+            [@e3] button "7" id=Seven
+            [@e4] button "8" id=Eight
+```
+
+Each `[@eN]` is a ref you can use in other commands:
+
+```bash
+agent-click click @e3          # clicks "7"
+agent-click get-value @e1      # reads "Delete" button info
+```
+
+## Refs
+
+- Refs are assigned sequentially: `@e1`, `@e2`, `@e3`...
+- With `-i`, only interactive elements get refs (reduces noise)
+- Refs are cached in `~/.agent-click/refs.json` with a 5-minute staleness warning
+- **Refs go stale after any UI change** — always re-snapshot after acting
+
+## CDP (Electron apps)
+
+For Electron apps, snapshot merges the native window shell (menus, title bar) with the CDP DOM tree:
+
+```bash
+agent-click snapshot -a Slack -i -c
+```
+
+CDP elements get `id=__cdp:N` identifiers and are clickable via JavaScript.
+
+## Tips
+
+- Always use `-i -c` for AI workflows — 10x less output
+- Add `-d 8` if elements are missing (deeper tree)
+- Re-snapshot after every action — refs become stale

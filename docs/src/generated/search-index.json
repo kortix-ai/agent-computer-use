@@ -1,0 +1,410 @@
+[
+  {
+    "title": "Quick Start",
+    "content": "Quick Start Install and try it in 2 minutes Computer use CLI for AI Agents. Agent-click lets you control desktop apps from the terminal. Click buttons, type into fields, read\n        what's on screen. All using a single CLI. Star it on GitHub How it works agent-click reads the accessibility tree — the same structure screen readers use. It sees every\n        button, text field, and menu item in any app. You point, it acts. Capture every interactive element. Each gets a ref. Use refs to click, type, or read. UI changed? Snapshot again for fresh refs. What can you do with it? Anything you'd do by clicking around:",
+    "href": "/",
+    "pageTitle": "Quick Start"
+  },
+  {
+    "title": "Quick Start",
+    "content": "The --wait flag ensures the app is fully loaded before continuing. This shows all interactive elements with refs:",
+    "href": "/quickstart#what-just-happened",
+    "pageTitle": "Quick Start"
+  },
+  {
+    "title": "What just happened?",
+    "content": "- No mouse moved. Clicks used AXPress (accessibility action). - No window activated. Calculator stayed in the background. - No coordinates. Elements targeted by ID. - 15ms per click. Native accessibility API, zero overhead.",
+    "href": "/quickstart#next-steps",
+    "pageTitle": "Quick Start"
+  },
+  {
+    "title": "Next steps",
+    "content": "- Selectors — target elements by role, name, ID, or CSS - Commands — full reference for all 25 commands - Background Ops — understand headless vs focus-required actions",
+    "href": "/quickstart",
+    "pageTitle": "Quick Start"
+  },
+  {
+    "title": "Quick setup (recommended)",
+    "content": "The setup script: 1. Installs Rust (if needed) 2. Installs dependencies 3. Builds and installs agent-click to ~/.cargo/bin 4. Prompts for accessibility permissions (macOS)",
+    "href": "/installation#cargo",
+    "pageTitle": "Installation"
+  },
+  {
+    "title": "Permissions (macOS)",
+    "content": "agent-click needs accessibility access to control apps: 1. Open System Settings → Privacy & Security → Accessibility 2. Add your terminal app (Terminal, iTerm2, Warp, Cursor, VS Code) 3. Toggle it on Verify:",
+    "href": "/installation#verify-installation",
+    "pageTitle": "Installation"
+  },
+  {
+    "title": "Why snapshots?",
+    "content": "The accessibility tree changes constantly. A button at @e5 right now might be @e12 after a page load. Snapshots give you a frozen view of the UI with stable refs.",
+    "href": "/snapshots#taking-a-snapshot",
+    "pageTitle": "Snapshots & Refs"
+  },
+  {
+    "title": "Taking a snapshot",
+    "content": "-i = interactive elements only (buttons, inputs, links). -c = compact (skip empty containers).",
+    "href": "/snapshots#using-refs",
+    "pageTitle": "Snapshots & Refs"
+  },
+  {
+    "title": "Using refs",
+    "content": "Every [@eN] in the snapshot output is a ref you can use:",
+    "href": "/snapshots#ref-lifecycle",
+    "pageTitle": "Snapshots & Refs"
+  },
+  {
+    "title": "Ref lifecycle",
+    "content": "1. Created when you run agent-click snapshot 2. Cached in ~/.agent-click/refs.json 3. Stale after any UI change (click, navigation, typing) 4. Warning after 5 minutes Always re-snapshot after acting. The UI changed — your refs are stale.",
+    "href": "/snapshots#path-based-resolution",
+    "pageTitle": "Snapshots & Refs"
+  },
+  {
+    "title": "Path-based resolution",
+    "content": "Each ref stores the element's path in the tree (e.g., [0, 1, 3, 2]). When you use @e5, agent-click walks the tree using this path — O(depth) lookup, much faster than searching. If the path becomes stale (element moved), agent-click falls back to matching by role + name + id.",
+    "href": "/snapshots#cdp-refs",
+    "pageTitle": "Snapshots & Refs"
+  },
+  {
+    "title": "CDP refs",
+    "content": "For Electron apps, refs with __cdp: prefix are CDP-sourced elements. They're clickable via JavaScript — no coordinates needed:",
+    "href": "/snapshots#tips",
+    "pageTitle": "Snapshots & Refs"
+  },
+  {
+    "title": "Tips",
+    "content": "- Use -i -c for AI workflows — 10x less output - Use -d 8 for deep UIs (Safari web content, complex forms) - Don't reuse refs across snapshots — always re-snapshot - Refs from one app don't work for another app",
+    "href": "/snapshots",
+    "pageTitle": "Snapshots & Refs"
+  },
+  {
+    "title": "Refs (fastest)",
+    "content": "From the most recent snapshot: Refs resolve via cached path — O(depth) lookup, no tree search.",
+    "href": "/selectors#selector-dsl",
+    "pageTitle": "Selectors"
+  },
+  {
+    "title": "By ID",
+    "content": "IDs are the most stable selectors — they don't change when UI text is localized.",
+    "href": "/selectors#combined",
+    "pageTitle": "Selectors"
+  },
+  {
+    "title": "By index",
+    "content": "When multiple elements match:",
+    "href": "/selectors#by-depth",
+    "pageTitle": "Selectors"
+  },
+  {
+    "title": "By depth",
+    "content": "Limit how deep to search:",
+    "href": "/selectors#chains-descendant-selection",
+    "pageTitle": "Selectors"
+  },
+  {
+    "title": "Chains (descendant selection)",
+    "content": "Find elements inside other elements:",
+    "href": "/selectors#css-selectors-electron-apps-only",
+    "pageTitle": "Selectors"
+  },
+  {
+    "title": "CSS selectors (Electron apps only)",
+    "content": "For Electron apps with CDP:",
+    "href": "/selectors#app-scoping",
+    "pageTitle": "Selectors"
+  },
+  {
+    "title": "Priority",
+    "content": "When choosing a selector: 1. @ref — fastest, unambiguous 2. id= — stable across UI changes 3. id~= — for compound IDs 4. name= — when ID isn't available 5. role + name — when name alone is ambiguous 6. css= — for Electron apps (CDP) 7. coordinates — last resort",
+    "href": "/selectors",
+    "pageTitle": "Selectors"
+  },
+  {
+    "title": "Background Operation",
+    "content": "title=\"Background Operation\" description=\"What works headless and what needs window focus.\" />",
+    "href": "/background#background-first",
+    "pageTitle": "Background Operation"
+  },
+  {
+    "title": "Background-first",
+    "content": "agent-click is designed to run actions without bringing apps to the foreground. Most operations work while the app is minimized or behind other windows.",
+    "href": "/background#native-apps-macos",
+    "pageTitle": "Background Operation"
+  },
+  {
+    "title": "Native apps (macOS)",
+    "content": "Action   Headless?   Method Click (single)   Yes   AXPress Type with selector   Yes   AXSetValue Read text   Yes   Accessibility tree Snapshot   Yes   Accessibility tree Get value   Yes   Accessibility tree Move window   Yes   AXSetPosition Resize window   Yes   AXSetSize Scroll to element   Yes   AXScrollToVisible Key press   No   CGEvent (needs focus) Scroll direction   No   CGEvent (needs focus) Double-click   No   Mouse simulation Right-click   No   Mouse simulation Drag   No   Mouse simulation Screenshot   No   Needs visible window",
+    "href": "/background#electron-apps-cdp",
+    "pageTitle": "Background Operation"
+  },
+  {
+    "title": "Electron apps (CDP)",
+    "content": "Action   Headless?   Method Click   Yes   JS element.click() Type   Yes   Input.insertText Key press   Yes   Input.dispatchKeyEvent Scroll   Yes   JS scrollBy() Read text   Yes   document.body.innerText Snapshot   Yes   DOM walker via Runtime.evaluate Screenshot   No   Needs visible window",
+    "href": "/background#how-axpress-works",
+    "pageTitle": "Background Operation"
+  },
+  {
+    "title": "How AXPress works",
+    "content": "When you run agent-click click @e5, agent-click sends an AXPress action to the element via the macOS accessibility API. This is the same mechanism VoiceOver uses — it doesn't move the mouse cursor or activate the window. The app processes the press in its event loop without becoming frontmost. If AXPress isn't supported for a particular element (rare), agent-click falls back to coordinate-based mouse clicking, which does require the window to be visible.",
+    "href": "/background#why-scroll-and-key-need-focus",
+    "pageTitle": "Background Operation"
+  },
+  {
+    "title": "Why scroll and key need focus",
+    "content": "macOS routes keyboard and scroll events to the frontmost application. There's no accessibility equivalent of AXPress for keyboard input. The OS security model prevents injecting keystrokes into background apps. For Electron apps, this limitation doesn't apply — CDP dispatches events directly to the Chromium process via WebSocket, bypassing the OS event system entirely.",
+    "href": "/background",
+    "pageTitle": "Background Operation"
+  },
+  {
+    "title": "Interaction",
+    "content": "Command   Description agent-click click [selector] -a App   Click an element (AXPress, no focus steal) agent-click type \"text\" -s @e3   Clear and type into a field (AXSetValue) agent-click type \"text\" -a App   Type into focused field (keyboard sim) agent-click key cmd+k -a Slack   Press a key or combo agent-click scroll down -a Music   Scroll within an app agent-click scroll-to @e42   Scroll element into view (headless) agent-click drag @e5 @e10 -a Finder   Drag from one element to another",
+    "href": "/commands#discovery",
+    "pageTitle": "Commands"
+  },
+  {
+    "title": "Discovery",
+    "content": "Command   Description agent-click snapshot -a App -i -c   Get accessibility tree with refs agent-click find 'selector' -a App   Find elements matching a selector agent-click get-value @e5   Get element value, name, role, position agent-click text -a App   Get all visible text agent-click tree -a App   Raw accessibility tree (JSON) agent-click windows -a App   List windows with positions agent-click apps   List running applications agent-click focused   Get the focused element",
+    "href": "/commands#window-management",
+    "pageTitle": "Commands"
+  },
+  {
+    "title": "Window Management",
+    "content": "Command   Description agent-click open App --wait   Launch an application agent-click move-window -a App --x 100 --y 100   Move window position (headless) agent-click resize-window -a App --width 800 --height 600   Resize window (headless) agent-click screenshot -a App --path shot.png   Take a screenshot",
+    "href": "/commands#wait-verify",
+    "pageTitle": "Commands"
+  },
+  {
+    "title": "Wait & Verify",
+    "content": "Command   Description agent-click wait-for 'selector'   Wait for an element to appear agent-click ensure-text @e3 \"hello\"   Only types if current value differs agent-click click @e5 --expect 'name=\"Done\"'   Click then verify a result appeared",
+    "href": "/commands#automation",
+    "pageTitle": "Commands"
+  },
+  {
+    "title": "Automation",
+    "content": "Command   Description agent-click batch --bail   Execute commands from stdin JSON array agent-click run workflow.yaml   Run a multi-step YAML workflow agent-click observe -a App   Interactive TUI tree explorer",
+    "href": "/commands#system",
+    "pageTitle": "Commands"
+  },
+  {
+    "title": "System",
+    "content": "Command   Description agent-click check-permissions   Verify accessibility access",
+    "href": "/commands#snapshot-options",
+    "pageTitle": "Commands"
+  },
+  {
+    "title": "Snapshot Options",
+    "content": "Option   Description -a, --app   Target application -i, --interactive   Only interactive elements (buttons, inputs, links) -c, --compact   Remove empty structural elements -d, --depth   Limit tree depth",
+    "href": "/commands#global-options",
+    "pageTitle": "Commands"
+  },
+  {
+    "title": "Global Options",
+    "content": "Option   Description --human   Human-readable output --compact   Compact single-line JSON --timeout <s>   Global timeout in seconds (default: 5) -v, --verbose   Debug traces --cdp   Force CDP mode for Electron apps --cdp-port <port>   Override CDP port --no-cdp   Disable CDP auto-detection",
+    "href": "/commands",
+    "pageTitle": "Commands"
+  },
+  {
+    "title": "Options",
+    "content": "Option   Description [SELECTOR]   Selector DSL or @ref -a, --app   Target application --count   Number of clicks (2 = double-click) --button   Mouse button: left (default), right, middle --x, --y   Coordinate click (last resort) --expect   Verify this element appears after clicking",
+    "href": "/commands/click#how-it-works",
+    "pageTitle": "click"
+  },
+  {
+    "title": "How it works",
+    "content": "1. Finds the element via selector or ref 2. Tries AXPress first — native accessibility action, runs in background, no mouse, no focus steal 3. If AXPress fails, falls back to coordinate click — moves mouse, activates window, clicks For single left-clicks, AXPress handles ~95% of cases headlessly. Double-click and right-click always use coordinates.",
+    "href": "/commands/click#examples",
+    "pageTitle": "click"
+  },
+  {
+    "title": "CDP (Electron apps)",
+    "content": "For Electron apps (Slack, Cursor, VS Code), click routes through CDP automatically: No window activation, no mouse, no coordinates. The element is clicked via JavaScript.",
+    "href": "/commands/click#tips",
+    "pageTitle": "click"
+  },
+  {
+    "title": "Tips",
+    "content": "- Always snapshot first to get fresh refs - Use id= selectors when available — most stable across UI changes - Use --count 2 for items that need double-click (file lists, track lists) - Check with agent-click get-value @e5 if unsure whether an element is clickable",
+    "href": "/commands/click",
+    "pageTitle": "click"
+  },
+  {
+    "title": "type",
+    "content": "Type text into elements using AXSetValue or keyboard simulation.",
+    "href": "/commands/type#usage",
+    "pageTitle": "type"
+  },
+  {
+    "title": "Options",
+    "content": "Option   Description <TEXT>   Text to type (required, positional) -s, --selector   Target element (selector DSL or @ref) -a, --app   Target application (for keyboard fallback) --submit   Press Return after typing --append   Append instead of clearing first --expect   Verify element appears after typing",
+    "href": "/commands/type#two-modes",
+    "pageTitle": "type"
+  },
+  {
+    "title": "With selector (preferred)",
+    "content": "Uses AXSetValue — reliable, headless, no focus steal:",
+    "href": "/commands/type#without-selector",
+    "pageTitle": "type"
+  },
+  {
+    "title": "Without selector",
+    "content": "Simulates keypresses into the focused app — needs focus: Always prefer -s @ref when you have a ref.",
+    "href": "/commands/type#examples",
+    "pageTitle": "type"
+  },
+  {
+    "title": "CDP (Electron apps)",
+    "content": "For Electron apps, type -s @ref uses JavaScript to set the value. For type -a App, it uses CDP Input.insertText. When typing into Electron search fields (React inputs), click the input first:",
+    "href": "/commands/type",
+    "pageTitle": "type"
+  },
+  {
+    "title": "snapshot",
+    "content": "Dump the accessibility tree of any application and get refs you can use with every other command.",
+    "href": "/commands/snapshot#usage",
+    "pageTitle": "snapshot"
+  },
+  {
+    "title": "Options",
+    "content": "Option   Description -a, --app   Target application -i, --interactive   Only show interactive elements (buttons, inputs, links) -c, --compact   Skip empty structural elements -d, --depth   Limit tree traversal depth",
+    "href": "/commands/snapshot#examples",
+    "pageTitle": "snapshot"
+  },
+  {
+    "title": "Output",
+    "content": "Each [@eN] is a ref you can use in other commands:",
+    "href": "/commands/snapshot#refs",
+    "pageTitle": "snapshot"
+  },
+  {
+    "title": "Refs",
+    "content": "- Refs are assigned sequentially: @e1, @e2, @e3... - With -i, only interactive elements get refs (reduces noise) - Refs are cached in ~/.agent-click/refs.json with a 5-minute staleness warning - Refs go stale after any UI change — always re-snapshot after acting",
+    "href": "/commands/snapshot#cdp-electron-apps",
+    "pageTitle": "snapshot"
+  },
+  {
+    "title": "CDP (Electron apps)",
+    "content": "For Electron apps, snapshot merges the native window shell (menus, title bar) with the CDP DOM tree: CDP elements get id=__cdp:N identifiers and are clickable via JavaScript.",
+    "href": "/commands/snapshot#tips",
+    "pageTitle": "snapshot"
+  },
+  {
+    "title": "Tips",
+    "content": "- Always use -i -c for AI workflows — 10x less output - Add -d 8 if elements are missing (deeper tree) - Re-snapshot after every action — refs become stale",
+    "href": "/commands/snapshot",
+    "pageTitle": "snapshot"
+  },
+  {
+    "title": "YAML Workflows",
+    "content": "Define multi-step automations in YAML files. Workflows let you chain multiple agent-click commands into a single replayable file.",
+    "href": "/workflows#example-workflow",
+    "pageTitle": "YAML Workflows"
+  },
+  {
+    "title": "Batch Execution",
+    "content": "Execute multiple commands in a single process invocation. Pipe a JSON array of commands to agent-click batch to avoid per-command startup overhead.",
+    "href": "/batch#usage",
+    "pageTitle": "Batch Execution"
+  },
+  {
+    "title": "Stop on Error",
+    "content": "Use --bail to stop at the first failure:",
+    "href": "/batch#interactive-explorer",
+    "pageTitle": "Batch Execution"
+  },
+  {
+    "title": "Interactive Explorer",
+    "content": "Explore the accessibility tree in a TUI: Keys: j/k navigate, Enter expand, / search, y copy selector, q quit",
+    "href": "/batch",
+    "pageTitle": "Batch Execution"
+  },
+  {
+    "title": "AI Agent Mode",
+    "content": "Wire up an AI agent to control desktop apps. JSON output by default.",
+    "href": "/ai-mode#the-loop",
+    "pageTitle": "AI Agent Mode"
+  },
+  {
+    "title": "The loop",
+    "content": "Every AI agent should follow this loop:",
+    "href": "/ai-mode#example-agent-automates-calculator",
+    "pageTitle": "AI Agent Mode"
+  },
+  {
+    "title": "Integration with Claude/GPT",
+    "content": "Add to your system prompt or CLAUDE.md:",
+    "href": "/ai-mode#json-output",
+    "pageTitle": "AI Agent Mode"
+  },
+  {
+    "title": "JSON output",
+    "content": "All commands return JSON by default: Errors: Elements:",
+    "href": "/ai-mode#tips-for-agents",
+    "pageTitle": "AI Agent Mode"
+  },
+  {
+    "title": "Tips for agents",
+    "content": "1. Always snapshot before acting — you can't interact with what you can't see 2. Re-snapshot after every action — refs go stale 3. Use -i -c flags on every snapshot — reduces output by 10x 4. Use get-value to check state, not text (faster, targeted) 5. Use id= selectors when available — most stable 6. Add sleep 2-3 after page navigations 7. Use --expect on clicks for built-in verification 8. For Electron apps, CDP is automatic — no extra flags needed",
+    "href": "/ai-mode",
+    "pageTitle": "AI Agent Mode"
+  },
+  {
+    "title": "Architecture",
+    "content": "How agent-click is built. Reference for contributors.",
+    "href": "/architecture#crate-structure",
+    "pageTitle": "Architecture"
+  },
+  {
+    "title": "Platform trait",
+    "content": "Every platform implements the Platform trait from agent-click-core:",
+    "href": "/architecture#cdp-decorator",
+    "pageTitle": "Architecture"
+  },
+  {
+    "title": "CDP decorator",
+    "content": "ElectronAwarePlatform<P> wraps any Platform and intercepts methods for Electron apps: 1. Detects Electron via bundle check (Electron Framework.framework) 2. Auto-relaunches with --remote-debugging-port 3. Connects via WebSocket, caches URL in ~/.agent-click/cdp-*.json 4. Routes press(), set_value(), perform(), text() through CDP when available 5. Falls through to native platform when CDP is unavailable",
+    "href": "/architecture#click-strategy",
+    "pageTitle": "Architecture"
+  },
+  {
+    "title": "Batch attribute fetch",
+    "content": "macOS backend uses AXUIElementCopyMultipleAttributeValues to fetch 10 attributes per element in a single IPC call (role, title, description, value, id, position, size, focused, enabled, children). This is ~5x faster than individual AXUIElementCopyAttributeValue calls.",
+    "href": "/architecture#search-optimization",
+    "pageTitle": "Architecture"
+  },
+  {
+    "title": "Search optimization",
+    "content": "- BFS with default depth cap of 20 - Menu subtrees (AXMenuBar, AXMenu, AXMenuItem) are skipped when searching for non-menu elements - find_first stops at first match (early termination) - Path-based ref resolution: O(depth) vs O(tree_size)",
+    "href": "/architecture",
+    "pageTitle": "Architecture"
+  },
+  {
+    "title": "Global Options",
+    "content": "These flags can be added to any agent-click command.",
+    "href": "/options#output-format",
+    "pageTitle": "Global Options"
+  },
+  {
+    "title": "Output format",
+    "content": "Flag   Description (default)   JSON output --human   Human-readable output --compact   Compact single-line JSON",
+    "href": "/options#timeout",
+    "pageTitle": "Global Options"
+  },
+  {
+    "title": "Timeout",
+    "content": "Default: 5 seconds. Applies to wait-for, --expect, and element polling.",
+    "href": "/options#verbose",
+    "pageTitle": "Global Options"
+  },
+  {
+    "title": "Verbose",
+    "content": "Shows debug traces: selector resolution, element lookup, timing, CDP connection status.",
+    "href": "/options#cdp-flags",
+    "pageTitle": "Global Options"
+  },
+  {
+    "title": "CDP flags",
+    "content": "Flag   Description --cdp   Force CDP mode (even for non-Electron apps) --cdp-port <port>   Override the auto-detected CDP port --no-cdp   Disable CDP entirely, use native accessibility only CDP is automatic for Electron apps — you rarely need these flags. They're power-user overrides.",
+    "href": "/options",
+    "pageTitle": "Global Options"
+  }
+]

@@ -1,0 +1,56 @@
+{
+  "name": "agent-click",
+  "version": "0.1.0",
+  "description": "Computer use CLI for AI agents",
+  "license": "MIT",
+  "repository": "https://github.com/kortix-ai/agent-click",
+  "bin": {
+    "agent-click": "./bin/agent-click.js"
+  },
+  "files": [
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "setup": "./scripts/setup.sh",
+    "dev": "pnpm --filter docs dev",
+    "build": "cd cli && cargo build --release",
+    "build:debug": "cd cli && cargo build",
+    "build:docs": "pnpm --filter docs build",
+    "build:all": "./scripts/build-all.sh",
+    "test": "cd cli && cargo test",
+    "test:e2e": "./scripts/e2e.sh",
+    "lint": "cd cli && cargo fmt --check && cargo clippy -- -D warnings",
+    "format": "cd cli && cargo fmt && prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md,mdx,yaml,yml}\"",
+    "format:check": "cd cli && cargo fmt --check && prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md,mdx,yaml,yml}\"",
+    "check": "pnpm lint && pnpm test",
+    "bundle": "./scripts/bundle-npm.sh",
+    "changeset": "node scripts/changeset.mjs",
+    "release": "node scripts/release.mjs",
+    "release:version": "changeset version",
+    "release:publish": "pnpm build && pnpm bundle && changeset publish",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "cli/**/*.rs": [
+      "bash -c 'cd cli && cargo fmt --check'",
+      "bash -c 'cd cli && cargo clippy -- -D warnings'"
+    ],
+    "docs/**/*.{ts,tsx}": [
+      "pnpm --filter docs lint"
+    ],
+    "**/*.{ts,tsx,js,jsx,json,css,md,mdx,yaml,yml}": [
+      "prettier --check"
+    ]
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.6.0",
+    "@changesets/cli": "^2.30.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "picocolors": "^1.1.1",
+    "prettier": "^3.8.1",
+    "prompts": "^2.4.2"
+  }
+}

@@ -1,0 +1,53 @@
+import { PageHeader } from '@/components/docs';
+
+<PageHeader
+  title="Background Operation"
+  description="What works headless and what needs window focus."
+/>
+
+## Background-first
+
+agent-click is designed to run actions without bringing apps to the foreground. Most operations work while the app is minimized or behind other windows.
+
+## Native apps (macOS)
+
+| Action | Headless? | Method |
+| --- | --- | --- |
+| Click (single) | Yes | AXPress |
+| Type with selector | Yes | AXSetValue |
+| Read text | Yes | Accessibility tree |
+| Snapshot | Yes | Accessibility tree |
+| Get value | Yes | Accessibility tree |
+| Move window | Yes | AXSetPosition |
+| Resize window | Yes | AXSetSize |
+| Scroll to element | Yes | AXScrollToVisible |
+| Key press | No | CGEvent (needs focus) |
+| Scroll direction | No | CGEvent (needs focus) |
+| Double-click | No | Mouse simulation |
+| Right-click | No | Mouse simulation |
+| Drag | No | Mouse simulation |
+| Screenshot | No | Needs visible window |
+
+## Electron apps (CDP)
+
+| Action | Headless? | Method |
+| --- | --- | --- |
+| Click | Yes | JS element.click() |
+| Type | Yes | Input.insertText |
+| Key press | Yes | Input.dispatchKeyEvent |
+| Scroll | Yes | JS scrollBy() |
+| Read text | Yes | document.body.innerText |
+| Snapshot | Yes | DOM walker via Runtime.evaluate |
+| Screenshot | No | Needs visible window |
+
+## How AXPress works
+
+When you run `agent-click click @e5`, agent-click sends an `AXPress` action to the element via the macOS accessibility API. This is the same mechanism VoiceOver uses — it doesn't move the mouse cursor or activate the window. The app processes the press in its event loop without becoming frontmost.
+
+If AXPress isn't supported for a particular element (rare), agent-click falls back to coordinate-based mouse clicking, which does require the window to be visible.
+
+## Why scroll and key need focus
+
+macOS routes keyboard and scroll events to the **frontmost application**. There's no accessibility equivalent of AXPress for keyboard input. The OS security model prevents injecting keystrokes into background apps.
+
+For Electron apps, this limitation doesn't apply — CDP dispatches events directly to the Chromium process via WebSocket, bypassing the OS event system entirely.

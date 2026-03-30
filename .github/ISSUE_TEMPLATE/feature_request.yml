@@ -1,0 +1,42 @@
+name: Feature Request
+description: Suggest a new command, flag, or behavior
+labels: ['enhancement']
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the use case or pain point.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How would you use this feature?
+      render: bash
+      placeholder: |
+        # Example usage
+        agent-click new-command --flag value
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What workarounds exist today?
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - New command
+        - New flag on existing command
+        - Output format change
+        - Performance improvement
+        - Platform support (Linux/Windows)
+        - Documentation
+        - Other

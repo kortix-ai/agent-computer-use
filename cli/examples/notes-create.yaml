@@ -1,0 +1,16 @@
+# Create a new note in Apple Notes
+# Usage: agent-click run examples/notes-create.yaml
+#
+# Demonstrates:
+# - Key combos (cmd+n)
+# - Typing multiline text
+# - Waiting for elements after actions
+
+app: Notes
+timeout: 10
+steps:
+  - open: { app: Notes, wait: true }
+  - key: cmd+n
+  - wait-for: 'role=textArea'
+  - type: { selector: 'role=textArea', text: 'Meeting Notes — agent-click demo' }
+  - key: Return

@@ -1,0 +1,37 @@
+# Batch Execution
+
+Execute multiple commands in a single process invocation.
+
+Pipe a JSON array of commands to `agent-click batch` to avoid per-command startup overhead.
+
+## Usage
+
+```bash
+echo '[
+  ["snapshot", "Calculator", "-i"],
+  ["click", "@e5"],
+  ["click", "@e8"],
+  ["click", "@e11"],
+  ["click", "@e20"]
+]' | agent-click batch
+```
+
+## Stop on Error
+
+Use `--bail` to stop at the first failure:
+
+```bash
+echo '[["click","@e1"],["click","@e99"]]' | agent-click batch --bail
+```
+
+## Interactive Explorer
+
+Explore the accessibility tree in a TUI:
+
+```bash
+agent-click observe Calculator        # TUI tree viewer
+agent-click observe Maps -d 5         # Custom depth
+agent-click observe Safari --refresh 1.0
+```
+
+**Keys:** `j/k` navigate, `Enter` expand, `/` search, `y` copy selector, `q` quit

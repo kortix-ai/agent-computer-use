@@ -1,0 +1,22 @@
+# Calculator: (123 + 456) x 7 - 89 = 3964
+# Usage: agent-click run examples/complex-calc.yaml
+
+app: Calculator
+timeout: 5
+steps:
+  - click: 'name~="Clear"'
+  - click: 'name="1"'
+  - click: 'name="2"'
+  - click: 'name="3"'
+  - click: 'name="Add"'
+  - click: 'name="4"'
+  - click: 'name="5"'
+  - click: 'name="6"'
+  - click: 'name="Equals"'
+  - click: 'name="Multiply"'
+  - click: 'name="7"'
+  - click: 'name="Equals"'
+  - click: 'name="Subtract"'
+  - click: 'name="8"'
+  - click: 'name="9"'
+  - click: 'name="Equals"'

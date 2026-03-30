@@ -1,0 +1,46 @@
+name: Platform Backend
+description: Report issues or request features for a specific platform
+labels: ['platform']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Platform backends live in `cli/crates/agent-click-{macos,linux,windows}/`.
+        The `Platform` trait is in `cli/crates/agent-click-core/src/platform.rs`.
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - macOS (agent-click-macos)
+        - Linux (agent-click-linux)
+        - Windows (agent-click-windows)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      options:
+        - Bug in existing backend
+        - Missing Platform trait method
+        - New accessibility API feature
+        - Performance issue
+        - Compatibility issue with specific app
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Accessibility tree output, screenshots, or platform-specific details.

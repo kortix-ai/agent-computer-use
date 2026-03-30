@@ -1,0 +1,24 @@
+FROM rust:1.85-bookworm
+
+RUN apt-get update && apt-get install -y \
+    gcc-aarch64-linux-gnu \
+    gcc-x86-64-linux-gnu \
+    mingw-w64 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN rustup target add \
+    x86_64-unknown-linux-gnu \
+    aarch64-unknown-linux-gnu \
+    x86_64-pc-windows-gnu
+
+RUN cargo install cargo-zigbuild
+
+RUN mkdir -p /.cargo && echo '\
+[target.aarch64-unknown-linux-gnu]\n\
+linker = "aarch64-linux-gnu-gcc"\n\
+\n\
+[target.x86_64-pc-windows-gnu]\n\
+linker = "x86_64-w64-mingw32-gcc"\n\
+' > /.cargo/config.toml
+
+WORKDIR /build

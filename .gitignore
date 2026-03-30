@@ -1,0 +1,42 @@
+# Rust
+cli/target/
+**/*.rs.bk
+*.pdb
+
+# Node
+node_modules/
+.next/
+out/
+.vercel
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Build artifacts
+*.dSYM/
+
+# Ref cache (user-specific)
+.agent-click/
+
+# Precompiled binaries (built by CI, not committed)
+bin/agent-click-*
+
+# Personal
+TEST_CASES.md
+
+# Env
+.env
+.env.local
+.env.*.local
+
+.claude

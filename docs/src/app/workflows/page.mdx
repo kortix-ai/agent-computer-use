@@ -1,0 +1,41 @@
+# YAML Workflows
+
+Define multi-step automations in YAML files.
+
+Workflows let you chain multiple agent-click commands into a single replayable file.
+
+## Example Workflow
+
+```yaml
+app: Maps
+timeout: 10
+steps:
+  - click: 'id="MapsSearchTextField"'
+  - type:
+      selector: 'id="MapsSearchTextField"'
+      text: 'Taj Mahal'
+  - key: return
+  - wait-for: 'id="ActionRowItemTypeDirections"'
+  - click: 'id="ActionRowItemTypeDirections"'
+```
+
+## Running Workflows
+
+```bash
+agent-click run search-maps.yaml                # Execute
+agent-click run workflow.yaml --app Calculator   # Override default app
+agent-click run workflow.yaml --dry-run          # Validate without executing
+```
+
+## Available Step Types
+
+```yaml
+steps:
+  - click: '<selector>'
+  - type: { selector: '<selector>', text: 'hello' }
+  - key: return
+  - scroll: { direction: down, amount: 3 }
+  - wait-for: '<selector>'
+  - open: '<app>'
+  - screenshot: { path: 'output.png' }
+```

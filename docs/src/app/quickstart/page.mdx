@@ -1,0 +1,68 @@
+import { PageHeader, Step } from '@/components/docs';
+
+<PageHeader title="Quick Start" description="Automate your first app in 60 seconds." />
+
+<Step number={1} title="Open an app">
+
+```bash
+agent-click open Calculator --wait
+```
+
+The `--wait` flag ensures the app is fully loaded before continuing.
+
+</Step>
+
+<Step number={2} title="Take a snapshot">
+
+```bash
+agent-click snapshot -a Calculator -i -c
+```
+
+This shows all interactive elements with refs:
+
+```
+application "Calculator"
+  window "Calculator"
+    [@e1] button "Delete" id=Delete
+    [@e2] button "All Clear" id=AllClear
+    [@e3] button "7" id=Seven
+    [@e4] button "8" id=Eight
+    [@e5] button "9" id=Nine
+    ...
+```
+
+</Step>
+
+<Step number={3} title="Interact">
+
+```bash
+agent-click click 'id="AllClear"' -a Calculator
+agent-click click 'id="Seven"' -a Calculator
+agent-click click 'id="Add"' -a Calculator
+agent-click click 'id="Eight"' -a Calculator
+agent-click click 'id="Equals"' -a Calculator
+```
+
+</Step>
+
+<Step number={4} title="Read the result">
+
+```bash
+agent-click text -a Calculator | grep -A1 "Edit field"
+# → 15
+```
+
+</Step>
+
+## What just happened?
+
+- **No mouse moved.** Clicks used AXPress (accessibility action).
+- **No window activated.** Calculator stayed in the background.
+- **No coordinates.** Elements targeted by ID.
+- **15ms per click.** Native accessibility API, zero overhead.
+
+## Next steps
+
+- [Selectors](/selectors) — target elements by role, name, ID, or CSS
+- [Commands](/commands) — full reference for all 25 commands
+- [Background Ops](/background) — understand headless vs focus-required actions

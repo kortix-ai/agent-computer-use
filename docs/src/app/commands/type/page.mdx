@@ -1,0 +1,71 @@
+# type
+
+Type text into elements using AXSetValue or keyboard simulation.
+
+## Usage
+
+```bash
+agent-click type <TEXT> [OPTIONS]
+```
+
+## Options
+
+| Option | Description |
+| --- | --- |
+| `<TEXT>` | Text to type (required, positional) |
+| `-s, --selector` | Target element (selector DSL or @ref) |
+| `-a, --app` | Target application (for keyboard fallback) |
+| `--submit` | Press Return after typing |
+| `--append` | Append instead of clearing first |
+| `--expect` | Verify element appears after typing |
+
+## Two modes
+
+### With selector (preferred)
+
+Uses AXSetValue — reliable, headless, no focus steal:
+
+```bash
+agent-click type "hello" -s @e3
+agent-click type "john@example.com" -s 'id="email"'
+```
+
+### Without selector
+
+Simulates keypresses into the focused app — needs focus:
+
+```bash
+agent-click type "hello" -a Safari
+agent-click type "search query" -a Music
+```
+
+Always prefer `-s @ref` when you have a ref.
+
+## Examples
+
+```bash
+# Type into a specific field
+agent-click type "hello world" -s @e3
+
+# Append without clearing
+agent-click type " more text" -s @e3 --append
+
+# Type and submit
+agent-click type "search query" -s @e5 --submit
+
+# Idempotent typing (only types if value differs)
+agent-click ensure-text @e3 "hello"
+```
+
+## CDP (Electron apps)
+
+For Electron apps, `type -s @ref` uses JavaScript to set the value. For `type -a App`, it uses CDP `Input.insertText`.
+
+When typing into Electron search fields (React inputs), click the input first:
+
+```bash
+agent-click click @e18                     # focus the input
+agent-click key cmd+a -a Slack             # select all
+agent-click key backspace -a Slack         # clear
+agent-click type "search text" -a Slack    # type via insertText
+```

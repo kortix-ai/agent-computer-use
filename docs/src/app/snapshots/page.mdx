@@ -1,0 +1,61 @@
+import { PageHeader } from '@/components/docs';
+
+<PageHeader title="Snapshots & Refs" description="Deterministic element targeting for AI agents." />
+
+## Why snapshots?
+
+The accessibility tree changes constantly. A button at `@e5` right now might be `@e12` after a page load. Snapshots give you a **frozen view** of the UI with stable refs.
+
+## Taking a snapshot
+
+```bash
+agent-click snapshot -a Calculator -i -c
+```
+
+`-i` = interactive elements only (buttons, inputs, links). `-c` = compact (skip empty containers).
+
+## Using refs
+
+Every `[@eN]` in the snapshot output is a ref you can use:
+
+```bash
+agent-click click @e5
+agent-click type "hello" -s @e3
+agent-click get-value @e7
+agent-click scroll-to @e42
+agent-click drag @e5 @e10 -a Finder
+```
+
+## Ref lifecycle
+
+1. **Created** when you run `agent-click snapshot`
+2. **Cached** in `~/.agent-click/refs.json`
+3. **Stale** after any UI change (click, navigation, typing)
+4. **Warning** after 5 minutes
+
+Always re-snapshot after acting. The UI changed — your refs are stale.
+
+## Path-based resolution
+
+Each ref stores the element's path in the tree (e.g., `[0, 1, 3, 2]`). When you use `@e5`, agent-click walks the tree using this path — O(depth) lookup, much faster than searching.
+
+If the path becomes stale (element moved), agent-click falls back to matching by role + name + id.
+
+## CDP refs
+
+For Electron apps, refs with `__cdp:` prefix are CDP-sourced elements. They're clickable via JavaScript — no coordinates needed:
+
+```bash
+# CDP ref from Slack snapshot
+[@e18] combobox "Query" id=__cdp:7:texty_input
+
+# Click it — routes through JS automatically
+agent-click click @e18
+```
+
+## Tips
+
+- Use `-i -c` for AI workflows — 10x less output
+- Use `-d 8` for deep UIs (Safari web content, complex forms)
+- Don't reuse refs across snapshots — always re-snapshot
+- Refs from one app don't work for another app

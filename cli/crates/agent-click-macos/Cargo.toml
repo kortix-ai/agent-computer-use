@@ -1,0 +1,19 @@
+[package]
+name = "agent-click-macos"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "macOS backend for agent-click — uses AXUIElement accessibility APIs"
+
+[dependencies]
+agent-click-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+async-trait = { workspace = true }
+tracing = { workspace = true }
+core-foundation = "0.10"
+core-graphics = "0.24"
+foreign-types = "0.5"

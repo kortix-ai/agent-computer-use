@@ -1,0 +1,17 @@
+[package]
+name = "agent-click-cdp"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "CDP (Chrome DevTools Protocol) bridge for agent-click — enables interaction with Electron/Chromium apps"
+
+[dependencies]
+agent-click-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+tokio = { workspace = true }
+async-trait = { workspace = true }
+tokio-tungstenite = { version = "0.24", features = ["native-tls"] }
+futures-util = "0.3"

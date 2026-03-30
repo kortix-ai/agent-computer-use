@@ -1,0 +1,70 @@
+import { PageHeader } from '@/components/docs';
+
+<PageHeader title="click" description="Click an element — background-first, no focus stealing." />
+
+## Usage
+
+```bash
+agent-click click [SELECTOR] [OPTIONS]
+```
+
+## Options
+
+| Option | Description |
+| --- | --- |
+| `[SELECTOR]` | Selector DSL or @ref |
+| `-a, --app` | Target application |
+| `--count` | Number of clicks (2 = double-click) |
+| `--button` | Mouse button: left (default), right, middle |
+| `--x, --y` | Coordinate click (last resort) |
+| `--expect` | Verify this element appears after clicking |
+
+## How it works
+
+1. Finds the element via selector or ref
+2. Tries **AXPress** first — native accessibility action, runs in background, no mouse, no focus steal
+3. If AXPress fails, falls back to **coordinate click** — moves mouse, activates window, clicks
+
+For single left-clicks, AXPress handles ~95% of cases headlessly. Double-click and right-click always use coordinates.
+
+## Examples
+
+```bash
+# By ref (from snapshot)
+agent-click click @e5
+
+# By selector
+agent-click click 'name="Login"' -a Safari
+agent-click click 'id="play"' -a Music
+agent-click click 'id~="track-123"' -a Music    # partial id match
+agent-click click 'button "Submit"' -a Safari   # shorthand
+
+# Double-click (opens files, plays songs)
+agent-click click @e5 --count 2
+
+# Right-click
+agent-click click @e5 --button right
+
+# Coordinate click (when no selector works)
+agent-click click --x 500 --y 300 -a Finder
+
+# Click then verify
+agent-click click @e5 --expect 'name="Dashboard"'
+```
+
+## CDP (Electron apps)
+
+For Electron apps (Slack, Cursor, VS Code), click routes through CDP automatically:
+
+```bash
+agent-click click @e5    # JS element.click() via CDP — fully headless
+```
+
+No window activation, no mouse, no coordinates. The element is clicked via JavaScript.
+
+## Tips
+
+- Always snapshot first to get fresh refs
+- Use `id=` selectors when available — most stable across UI changes
+- Use `--count 2` for items that need double-click (file lists, track lists)
+- Check with `agent-click get-value @e5` if unsure whether an element is clickable

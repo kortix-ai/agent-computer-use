@@ -1,0 +1,54 @@
+import { PageHeader } from '@/components/docs';
+
+<PageHeader title="Installation" description="Get agent-click running in under a minute. Currently macOS only — Windows and Linux support is underway." />
+
+## Quick setup (recommended)
+
+```bash
+git clone https://github.com/kortix-ai/agent-click
+cd agent-click
+./scripts/setup.sh
+```
+
+The setup script:
+1. Installs Rust (if needed)
+2. Installs dependencies
+3. Builds and installs `agent-click` to `~/.cargo/bin`
+4. Prompts for accessibility permissions (macOS)
+
+## Cargo
+
+```bash
+cargo install --git https://github.com/kortix-ai/agent-click --path cli
+```
+
+## From source
+
+```bash
+git clone https://github.com/kortix-ai/agent-click
+cd agent-click/cli
+cargo build --release
+cargo install --path .
+```
+
+## Permissions (macOS)
+
+agent-click needs accessibility access to control apps:
+
+1. Open **System Settings → Privacy & Security → Accessibility**
+2. Add your terminal app (Terminal, iTerm2, Warp, Cursor, VS Code)
+3. Toggle it on
+
+Verify:
+
+```bash
+agent-click check-permissions
+# → Accessibility permissions: granted
+```
+
+## Verify installation
+
+```bash
+agent-click --version
+agent-click apps           # should list running applications
+```

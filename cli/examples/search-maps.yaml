@@ -1,0 +1,9 @@
+# Search Apple Maps and get directions
+# Usage: agent-click run examples/search-maps.yaml
+
+app: Maps
+timeout: 10
+steps:
+  - type: { selector: 'id="MapsSearchTextField"', text: 'Taj Mahal', submit: true }
+  - wait-for: 'id="ActionRowItemTypeDirections"'
+  - click: 'id="ActionRowItemTypeDirections"'

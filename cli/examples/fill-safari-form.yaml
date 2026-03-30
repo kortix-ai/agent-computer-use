@@ -1,0 +1,16 @@
+# Fill out a web form in Safari
+# Usage: agent-click run examples/fill-safari-form.yaml
+#
+# Demonstrates:
+# - Opening an app and waiting for it
+# - Typing text into form fields using selectors
+# - Submitting a form with a button press
+
+app: Safari
+timeout: 10
+steps:
+  - open: { app: Safari, wait: true }
+  - type: { selector: 'role=textField name~="Name"', text: 'Jane Doe' }
+  - type: { selector: 'role=textField name~="Email"', text: 'jane@example.com' }
+  - type: { selector: 'role=textArea name~="Message"', text: 'Hello from agent-click!' }
+  - click: 'role=button name~="Submit"'

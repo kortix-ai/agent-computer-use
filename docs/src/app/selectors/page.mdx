@@ -1,0 +1,102 @@
+import { PageHeader } from '@/components/docs';
+
+<PageHeader title="Selectors" description="Target elements by role, name, ID, CSS, or combinations." />
+
+## Refs (fastest)
+
+From the most recent snapshot:
+
+```bash
+@e1, @e2, @e3
+```
+
+Refs resolve via cached path — O(depth) lookup, no tree search.
+
+## Selector DSL
+
+### By role
+
+```bash
+agent-click click 'role=button' -a Calculator
+agent-click click 'button' -a Calculator         # shorthand
+```
+
+### By name
+
+```bash
+agent-click click 'name="Login"' -a Safari       # exact
+agent-click click 'name~="Log"' -a Safari        # contains (case-insensitive)
+agent-click click '"Login"' -a Safari             # shorthand
+```
+
+### By ID
+
+```bash
+agent-click click 'id="play"' -a Music           # exact
+agent-click click 'id~="track-123"' -a Music     # contains (case-insensitive)
+```
+
+IDs are the most stable selectors — they don't change when UI text is localized.
+
+### Combined
+
+```bash
+agent-click click 'role=button name="Submit"' -a Safari
+agent-click click 'button "Submit"' -a Safari    # shorthand
+```
+
+### By index
+
+When multiple elements match:
+
+```bash
+agent-click click 'role=button index=0' -a Music    # first button
+agent-click click 'role=button index=2' -a Music    # third button
+```
+
+### By depth
+
+Limit how deep to search:
+
+```bash
+agent-click find 'role=button depth=3' -a Calculator
+```
+
+## Chains (descendant selection)
+
+Find elements inside other elements:
+
+```bash
+agent-click click 'id=sidebar >> role=button index=0' -a Safari
+agent-click click 'name="Form" >> button "Submit"' -a Safari
+agent-click click 'role=window >> role=group >> button "OK"' -a Finder
+```
+
+## CSS selectors (Electron apps only)
+
+For Electron apps with CDP:
+
+```bash
+agent-click click 'css=".submit-btn"' -a Slack
+agent-click click 'css="#login-form button"' -a Cursor
+```
+
+## App scoping
+
+```bash
+agent-click click 'app="Safari" role=button name="Submit"'
+# equivalent to:
+agent-click click 'role=button name="Submit"' -a Safari
+```
+
+## Priority
+
+When choosing a selector:
+
+1. **@ref** — fastest, unambiguous
+2. **id=** — stable across UI changes
+3. **id~=** — for compound IDs
+4. **name=** — when ID isn't available
+5. **role + name** — when name alone is ambiguous
+6. **css=** — for Electron apps (CDP)
+7. **coordinates** — last resort

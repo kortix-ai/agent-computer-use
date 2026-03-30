@@ -1,0 +1,28 @@
+#!/bin/sh
+
+echo "🔍 Running pre-commit checks..."
+echo ""
+
+echo "📝 Checking staged files..."
+npx lint-staged
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ Lint-staged failed. Fix the issues above and try again."
+  exit 1
+fi
+
+if git diff --cached --name-only | grep -q "^cli/"; then
+  echo ""
+  echo "🧪 Rust files changed — running tests..."
+  cd cli && cargo test --quiet 2>&1
+  if [ $? -ne 0 ]; then
+    echo ""
+    echo "❌ Tests failed. Fix them before committing."
+    exit 1
+  fi
+  echo "✅ Tests passed"
+  cd ..
+fi
+
+echo ""
+echo "🚀 All checks passed — committing!"

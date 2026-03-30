@@ -1,0 +1,6 @@
+[tools]
+node = "22"
+rust = "1.82"
+
+[env]
+CARGO_TERM_COLOR = "always"

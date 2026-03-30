@@ -1,0 +1,20 @@
+[package]
+name = "agent-click-linux"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Linux backend for agent-click — uses AT-SPI2 via D-Bus"
+
+[dependencies]
+agent-click-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+async-trait = { workspace = true }
+tracing = { workspace = true }
+
+# TODO: Add when implementing Linux backend
+# [target.'cfg(target_os = "linux")'.dependencies]
+# zbus = "4"
