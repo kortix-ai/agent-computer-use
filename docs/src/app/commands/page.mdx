@@ -4,58 +4,58 @@ import { PageHeader } from '@/components/docs';
 
 ## Interaction
 
-| Command | Description |
-| --- | --- |
+| Command                               | Description                                |
+| ------------------------------------- | ------------------------------------------ |
 | `agent-click click [selector] -a App` | Click an element (AXPress, no focus steal) |
-| `agent-click type "text" -s @e3` | Clear and type into a field (AXSetValue) |
-| `agent-click type "text" -a App` | Type into focused field (keyboard sim) |
-| `agent-click key cmd+k -a Slack` | Press a key or combo |
-| `agent-click scroll down -a Music` | Scroll within an app |
-| `agent-click scroll-to @e42` | Scroll element into view (headless) |
-| `agent-click drag @e5 @e10 -a Finder` | Drag from one element to another |
+| `agent-click type "text" -s @e3`      | Clear and type into a field (AXSetValue)   |
+| `agent-click type "text" -a App`      | Type into focused field (keyboard sim)     |
+| `agent-click key cmd+k -a Slack`      | Press a key or combo                       |
+| `agent-click scroll down -a Music`    | Scroll within an app                       |
+| `agent-click scroll-to @e42`          | Scroll element into view (headless)        |
+| `agent-click drag @e5 @e10 -a Finder` | Drag from one element to another           |
 
 ## Discovery
 
-| Command | Description |
-| --- | --- |
-| `agent-click snapshot -a App -i -c` | Get accessibility tree with refs |
-| `agent-click find 'selector' -a App` | Find elements matching a selector |
-| `agent-click get-value @e5` | Get element value, name, role, position |
-| `agent-click text -a App` | Get all visible text |
-| `agent-click tree -a App` | Raw accessibility tree (JSON) |
-| `agent-click windows -a App` | List windows with positions |
-| `agent-click apps` | List running applications |
-| `agent-click focused` | Get the focused element |
+| Command                              | Description                             |
+| ------------------------------------ | --------------------------------------- |
+| `agent-click snapshot -a App -i -c`  | Get accessibility tree with refs        |
+| `agent-click find 'selector' -a App` | Find elements matching a selector       |
+| `agent-click get-value @e5`          | Get element value, name, role, position |
+| `agent-click text -a App`            | Get all visible text                    |
+| `agent-click tree -a App`            | Raw accessibility tree (JSON)           |
+| `agent-click windows -a App`         | List windows with positions             |
+| `agent-click apps`                   | List running applications               |
+| `agent-click focused`                | Get the focused element                 |
 
 ## Window Management
 
-| Command | Description |
-| --- | --- |
-| `agent-click open App --wait` | Launch an application |
-| `agent-click move-window -a App --x 100 --y 100` | Move window position (headless) |
-| `agent-click resize-window -a App --width 800 --height 600` | Resize window (headless) |
-| `agent-click screenshot -a App --path shot.png` | Take a screenshot |
+| Command                                                     | Description                     |
+| ----------------------------------------------------------- | ------------------------------- |
+| `agent-click open App --wait`                               | Launch an application           |
+| `agent-click move-window -a App --x 100 --y 100`            | Move window position (headless) |
+| `agent-click resize-window -a App --width 800 --height 600` | Resize window (headless)        |
+| `agent-click screenshot -a App --path shot.png`             | Take a screenshot               |
 
 ## Wait & Verify
 
-| Command | Description |
-| --- | --- |
-| `agent-click wait-for 'selector'` | Wait for an element to appear |
-| `agent-click ensure-text @e3 "hello"` | Only types if current value differs |
+| Command                                        | Description                         |
+| ---------------------------------------------- | ----------------------------------- |
+| `agent-click wait-for 'selector'`              | Wait for an element to appear       |
+| `agent-click ensure-text @e3 "hello"`          | Only types if current value differs |
 | `agent-click click @e5 --expect 'name="Done"'` | Click then verify a result appeared |
 
 ## Automation
 
-| Command | Description |
-| --- | --- |
-| `agent-click batch --bail` | Execute commands from stdin JSON array |
-| `agent-click run workflow.yaml` | Run a multi-step YAML workflow |
-| `agent-click observe -a App` | Interactive TUI tree explorer |
+| Command                         | Description                            |
+| ------------------------------- | -------------------------------------- |
+| `agent-click batch --bail`      | Execute commands from stdin JSON array |
+| `agent-click run workflow.yaml` | Run a multi-step YAML workflow         |
+| `agent-click observe -a App`    | Interactive TUI tree explorer          |
 
 ## System
 
-| Command | Description |
-| --- | --- |
+| Command                         | Description                 |
+| ------------------------------- | --------------------------- |
 | `agent-click check-permissions` | Verify accessibility access |
 
 ## Snapshot Options
@@ -68,21 +68,21 @@ agent-click snapshot -a Calculator -d 3         # limit depth
 agent-click snapshot -a Calculator -i -c -d 5   # combine options
 ```
 
-| Option | Description |
-| --- | --- |
-| `-a, --app` | Target application |
+| Option              | Description                                        |
+| ------------------- | -------------------------------------------------- |
+| `-a, --app`         | Target application                                 |
 | `-i, --interactive` | Only interactive elements (buttons, inputs, links) |
-| `-c, --compact` | Remove empty structural elements |
-| `-d, --depth` | Limit tree depth |
+| `-c, --compact`     | Remove empty structural elements                   |
+| `-d, --depth`       | Limit tree depth                                   |
 
 ## Global Options
 
-| Option | Description |
-| --- | --- |
-| `--human` | Human-readable output |
-| `--compact` | Compact single-line JSON |
-| `--timeout <s>` | Global timeout in seconds (default: 5) |
-| `-v, --verbose` | Debug traces |
-| `--cdp` | Force CDP mode for Electron apps |
-| `--cdp-port <port>` | Override CDP port |
-| `--no-cdp` | Disable CDP auto-detection |
+| Option              | Description                            |
+| ------------------- | -------------------------------------- |
+| `--human`           | Human-readable output                  |
+| `--compact`         | Compact single-line JSON               |
+| `--timeout <s>`     | Global timeout in seconds (default: 5) |
+| `-v, --verbose`     | Debug traces                           |
+| `--cdp`             | Force CDP mode for Electron apps       |
+| `--cdp-port <port>` | Override CDP port                      |
+| `--no-cdp`          | Disable CDP auto-detection             |

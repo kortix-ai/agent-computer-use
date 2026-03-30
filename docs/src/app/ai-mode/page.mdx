@@ -42,12 +42,13 @@ You have access to `agent-click` for Computer use. See SKILL.md for the full gui
 Core workflow: snapshot → identify refs → act → re-snapshot to verify.
 
 Key commands:
-- agent-click snapshot -a App -i -c     # see interactive elements
-- agent-click click @e5                  # click by ref
-- agent-click type "text" -s @e3        # type into element
-- agent-click key cmd+k -a Slack        # press key combo
-- agent-click text -a App                # read all text
-- agent-click get-value @e5              # read element value
+
+- agent-click snapshot -a App -i -c # see interactive elements
+- agent-click click @e5 # click by ref
+- agent-click type "text" -s @e3 # type into element
+- agent-click key cmd+k -a Slack # press key combo
+- agent-click text -a App # read all text
+- agent-click get-value @e5 # read element value
 ```
 
 ## JSON output
@@ -55,19 +56,29 @@ Key commands:
 All commands return JSON by default:
 
 ```json
-{"success": true, "message": "pressed \"7\" at (453, 354)"}
+{ "success": true, "message": "pressed \"7\" at (453, 354)" }
 ```
 
 Errors:
 
 ```json
-{"error": true, "type": "element_not_found", "message": "no element found matching selector chain"}
+{
+  "error": true,
+  "type": "element_not_found",
+  "message": "no element found matching selector chain"
+}
 ```
 
 Elements:
 
 ```json
-{"role": "button", "name": "Submit", "value": null, "position": {"x": 450, "y": 320}, "enabled": true}
+{
+  "role": "button",
+  "name": "Submit",
+  "value": null,
+  "position": { "x": 450, "y": 320 },
+  "enabled": true
+}
 ```
 
 ## Tips for agents

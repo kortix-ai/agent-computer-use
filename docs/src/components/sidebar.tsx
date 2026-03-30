@@ -12,7 +12,6 @@ import {
   Layers,
   FileText,
   Cpu,
-  Monitor,
   BookOpen,
   MousePointerClick,
   ChevronRight,
@@ -65,9 +64,7 @@ const navigation: NavGroup[] = [
   },
   {
     title: 'Reference',
-    items: [
-      { title: 'Global Options', href: '/options', icon: Terminal },
-    ],
+    items: [{ title: 'Global Options', href: '/options', icon: Terminal }],
   },
 ];
 

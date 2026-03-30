@@ -1,7 +1,7 @@
 [
   {
     "title": "Quick Start",
-    "content": "Quick Start Install and try it in 2 minutes Computer use CLI for AI Agents. Agent-click lets you control desktop apps from the terminal. Click buttons, type into fields, read\n        what's on screen. All using a single CLI. Star it on GitHub How it works agent-click reads the accessibility tree — the same structure screen readers use. It sees every\n        button, text field, and menu item in any app. You point, it acts. Capture every interactive element. Each gets a ref. Use refs to click, type, or read. UI changed? Snapshot again for fresh refs. What can you do with it? Anything you'd do by clicking around:",
+    "content": "Quick Start Install and try it in 2 minutes agent-click Computer use CLI for AI Agents. macOS — available now Windows — coming soon Linux — coming soon Agent-click lets you control desktop apps from the terminal. Click buttons, type into fields, read\n        what's on screen. All using a single CLI. Star it on GitHub How it works agent-click reads the accessibility tree — the same structure screen readers use. It sees every\n        button, text field, and menu item in any app. You point, it acts. Capture every interactive element. Each gets a ref. Use refs to click, type, or read. UI changed? Snapshot again for fresh refs. What can you do with it? Anything you'd do by clicking around:",
     "href": "/",
     "pageTitle": "Quick Start"
   },
@@ -346,36 +346,6 @@
     "content": "1. Always snapshot before acting — you can't interact with what you can't see 2. Re-snapshot after every action — refs go stale 3. Use -i -c flags on every snapshot — reduces output by 10x 4. Use get-value to check state, not text (faster, targeted) 5. Use id= selectors when available — most stable 6. Add sleep 2-3 after page navigations 7. Use --expect on clicks for built-in verification 8. For Electron apps, CDP is automatic — no extra flags needed",
     "href": "/ai-mode",
     "pageTitle": "AI Agent Mode"
-  },
-  {
-    "title": "Architecture",
-    "content": "How agent-click is built. Reference for contributors.",
-    "href": "/architecture#crate-structure",
-    "pageTitle": "Architecture"
-  },
-  {
-    "title": "Platform trait",
-    "content": "Every platform implements the Platform trait from agent-click-core:",
-    "href": "/architecture#cdp-decorator",
-    "pageTitle": "Architecture"
-  },
-  {
-    "title": "CDP decorator",
-    "content": "ElectronAwarePlatform<P> wraps any Platform and intercepts methods for Electron apps: 1. Detects Electron via bundle check (Electron Framework.framework) 2. Auto-relaunches with --remote-debugging-port 3. Connects via WebSocket, caches URL in ~/.agent-click/cdp-*.json 4. Routes press(), set_value(), perform(), text() through CDP when available 5. Falls through to native platform when CDP is unavailable",
-    "href": "/architecture#click-strategy",
-    "pageTitle": "Architecture"
-  },
-  {
-    "title": "Batch attribute fetch",
-    "content": "macOS backend uses AXUIElementCopyMultipleAttributeValues to fetch 10 attributes per element in a single IPC call (role, title, description, value, id, position, size, focused, enabled, children). This is ~5x faster than individual AXUIElementCopyAttributeValue calls.",
-    "href": "/architecture#search-optimization",
-    "pageTitle": "Architecture"
-  },
-  {
-    "title": "Search optimization",
-    "content": "- BFS with default depth cap of 20 - Menu subtrees (AXMenuBar, AXMenu, AXMenuItem) are skipped when searching for non-menu elements - find_first stops at first match (early termination) - Path-based ref resolution: O(depth) vs O(tree_size)",
-    "href": "/architecture",
-    "pageTitle": "Architecture"
   },
   {
     "title": "Global Options",

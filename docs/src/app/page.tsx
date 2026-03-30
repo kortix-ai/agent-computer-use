@@ -24,8 +24,8 @@ export default function Home() {
       </div>
 
       <p className="mb-4 text-[15px] leading-relaxed text-muted-foreground">
-        Agent-click lets you control desktop apps from the terminal. Click buttons, type into fields, read
-        what's on screen. All using a single CLI.
+        Agent-click lets you control desktop apps from the terminal. Click buttons, type into
+        fields, read what&apos;s on screen. All using a single CLI.
       </p>
 
       <p className="mb-4 text-[15px] leading-relaxed text-muted-foreground">
@@ -83,8 +83,8 @@ export default function Home() {
       <h2 className="mt-10 mb-4 text-xl font-semibold tracking-tight scroll-mt-20">How it works</h2>
 
       <p className="mb-4 text-[15px] leading-relaxed text-muted-foreground">
-        agent-click reads the accessibility tree — the same structure screen readers use. It sees every
-        button, text field, and menu item in any app. You point, it acts.
+        agent-click reads the accessibility tree — the same structure screen readers use. It sees
+        every button, text field, and menu item in any app. You point, it acts.
       </p>
 
       <div className="mt-6 mb-2">
@@ -114,7 +114,7 @@ $ agent-click text -a Calculator
       </h2>
 
       <p className="mb-4 text-[15px] leading-relaxed text-muted-foreground">
-        Anything you'd do by clicking around:
+        Anything you&apos;d do by clicking around:
       </p>
 
       <div className="grid grid-cols-1 gap-2 my-4 text-sm">

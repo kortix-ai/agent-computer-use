@@ -4,10 +4,10 @@ These flags can be added to any agent-click command.
 
 ## Output format
 
-| Flag | Description |
-| --- | --- |
-| (default) | JSON output |
-| `--human` | Human-readable output |
+| Flag        | Description              |
+| ----------- | ------------------------ |
+| (default)   | JSON output              |
+| `--human`   | Human-readable output    |
 | `--compact` | Compact single-line JSON |
 
 ```bash
@@ -35,11 +35,11 @@ Shows debug traces: selector resolution, element lookup, timing, CDP connection 
 
 ## CDP flags
 
-| Flag | Description |
-| --- | --- |
-| `--cdp` | Force CDP mode (even for non-Electron apps) |
-| `--cdp-port <port>` | Override the auto-detected CDP port |
-| `--no-cdp` | Disable CDP entirely, use native accessibility only |
+| Flag                | Description                                         |
+| ------------------- | --------------------------------------------------- |
+| `--cdp`             | Force CDP mode (even for non-Electron apps)         |
+| `--cdp-port <port>` | Override the auto-detected CDP port                 |
+| `--no-cdp`          | Disable CDP entirely, use native accessibility only |
 
 CDP is automatic for Electron apps — you rarely need these flags. They're power-user overrides.
 
