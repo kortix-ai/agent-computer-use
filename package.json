@@ -4,6 +4,7 @@
   "description": "Computer use CLI for AI agents",
   "license": "MIT",
   "repository": "https://github.com/kortix-ai/agent-click",
+  "packageManager": "pnpm@10.7.0",
   "bin": {
     "agent-click": "./bin/agent-click.js"
   },
