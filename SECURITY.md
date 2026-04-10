@@ -12,7 +12,7 @@ We will respond within 48 hours and issue a fix as soon as possible.
 
 ## Scope
 
-agent-click requires macOS Accessibility permissions to function. This is an OS-level
+agent-click requires Accessibility permissions to function. This is an OS-level
 security boundary — the user must explicitly grant access. agent-click does not:
 
 - Transmit data over the network
@@ -24,7 +24,8 @@ security boundary — the user must explicitly grant access. agent-click does no
 
 agent-click uses the following OS permissions:
 
-| Permission    | Why                                               | Platform        |
-| ------------- | ------------------------------------------------- | --------------- |
-| Accessibility | Read/write the accessibility tree, simulate input | macOS           |
-| AT-SPI2       | Read/write the accessibility tree                 | Linux (planned) |
+| Permission    | Why                                               | Platform |
+| ------------- | ------------------------------------------------- | -------- |
+| Accessibility | Read/write the accessibility tree, simulate input | macOS    |
+| AT-SPI2       | Read/write the accessibility tree                 | Linux    |
+| UI Automation | Read/write the accessibility tree, simulate input | Windows  |

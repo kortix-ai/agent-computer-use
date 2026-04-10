@@ -7,14 +7,14 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'agent-click — Computer use CLI for AI agents',
   description:
-    'Control any desktop app from the terminal. Click buttons, type text, read screens — all through the accessibility tree. Built in Rust for macOS. Windows and Linux coming soon.',
+    'Control any desktop app from the terminal. Click buttons, type text, read screens — all through the accessibility tree. Built in Rust.',
   keywords: [
     'Computer use',
     'AI agent',
     'computer use',
     'accessibility',
     'CLI',
-    'macOS automation',
+    'desktop automation',
     'Rust',
     'Electron',
     'CDP',

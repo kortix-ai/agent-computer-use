@@ -12,8 +12,8 @@ agent-click/
 │       ├── agent-click-core/  Platform trait, AccessibilityNode, Selector, element utils
 │       ├── agent-click-macos/ macOS backend (AXUIElement, CGEvent, batch attribute fetch)
 │       ├── agent-click-cdp/   CDP bridge for Electron apps (WebSocket, DOM walker, JS interaction)
-│       ├── agent-click-linux/ Linux backend (AT-SPI2) [stub]
-│       ├── agent-click-windows/ Windows backend (UIAutomation) [stub]
+│       ├── agent-click-linux/ Linux backend (AT-SPI2)
+│       ├── agent-click-windows/ Windows backend (UIAutomation)
 │       └── agent-click-mcp/   MCP server wrapper
 ├── docs/               Next.js docs site
 ├── benchmark/          E2E benchmarks, stress tests, comparison

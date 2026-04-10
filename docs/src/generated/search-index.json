@@ -1,7 +1,7 @@
 [
   {
     "title": "Quick Start",
-    "content": "Quick Start Install and try it in 2 minutes agent-click Computer use CLI for AI Agents. macOS — available now Windows — coming soon Linux — coming soon Agent-click lets you control desktop apps from the terminal. Click buttons, type into\n        fields, read what&apos;s on screen. All using a single CLI. Star it on GitHub How it works agent-click reads the accessibility tree — the same structure screen readers use. It sees\n        every button, text field, and menu item in any app. You point, it acts. Capture every interactive element. Each gets a ref. Use refs to click, type, or read. UI changed? Snapshot again for fresh refs. What can you do with it? Anything you&apos;d do by clicking around:",
+    "content": "Quick Start Install and try it in 2 minutes agent-click Computer use CLI for AI Agents. macOS Windows Linux Agent-click lets you control desktop apps from the terminal. Click buttons, type into\n        fields, read what&apos;s on screen. All using a single CLI. Star it on GitHub How it works agent-click reads the accessibility tree — the same structure screen readers use. It sees\n        every button, text field, and menu item in any app. You point, it acts. Capture every interactive element. Each gets a ref. Use refs to click, type, or read. UI changed? Snapshot again for fresh refs. What can you do with it? Anything you&apos;d do by clicking around:",
     "href": "/",
     "pageTitle": "Quick Start"
   },
@@ -25,18 +25,18 @@
   },
   {
     "title": "Installation",
-    "content": "title=\"Installation\" description=\"Get agent-click running in under a minute. Currently macOS only — Windows and Linux support is underway.\" />",
+    "content": "title=\"Installation\" description=\"Get agent-click running in under a minute.\" />",
     "href": "/installation#quick-setup-recommended",
     "pageTitle": "Installation"
   },
   {
     "title": "Quick setup (recommended)",
-    "content": "The setup script: 1. Installs Rust (if needed) 2. Installs dependencies 3. Builds and installs agent-click to ~/.cargo/bin 4. Prompts for accessibility permissions (macOS)",
+    "content": "The setup script: 1. Installs Rust (if needed) 2. Installs dependencies 3. Builds and installs agent-click to ~/.cargo/bin 4. Prompts for accessibility permissions",
     "href": "/installation#cargo",
     "pageTitle": "Installation"
   },
   {
-    "title": "Permissions (macOS)",
+    "title": "Permissions",
     "content": "agent-click needs accessibility access to control apps: 1. Open System Settings → Privacy & Security → Accessibility 2. Add your terminal app (Terminal, iTerm2, Warp, Cursor, VS Code) 3. Toggle it on Verify:",
     "href": "/installation#verify-installation",
     "pageTitle": "Installation"
@@ -140,11 +140,11 @@
   {
     "title": "Background-first",
     "content": "agent-click is designed to run actions without bringing apps to the foreground. Most operations work while the app is minimized or behind other windows.",
-    "href": "/background#native-apps-macos",
+    "href": "/background#native-apps",
     "pageTitle": "Background Operation"
   },
   {
-    "title": "Native apps (macOS)",
+    "title": "Native apps",
     "content": "Action               Headless?   Method Click (single)       Yes         AXPress Type with selector   Yes         AXSetValue Read text            Yes         Accessibility tree Snapshot             Yes         Accessibility tree Get value            Yes         Accessibility tree Move window          Yes         AXSetPosition Resize window        Yes         AXSetSize Scroll to element    Yes         AXScrollToVisible Key press            No          CGEvent (needs focus) Scroll direction     No          CGEvent (needs focus) Double-click         No          Mouse simulation Right-click          No          Mouse simulation Drag                 No          Mouse simulation Screenshot           No          Needs visible window",
     "href": "/background#electron-apps-cdp",
     "pageTitle": "Background Operation"
@@ -157,13 +157,13 @@
   },
   {
     "title": "How AXPress works",
-    "content": "When you run agent-click click @e5, agent-click sends an AXPress action to the element via the macOS accessibility API. This is the same mechanism VoiceOver uses — it doesn't move the mouse cursor or activate the window. The app processes the press in its event loop without becoming frontmost. If AXPress isn't supported for a particular element (rare), agent-click falls back to coordinate-based mouse clicking, which does require the window to be visible.",
+    "content": "When you run agent-click click @e5, agent-click sends an AXPress action to the element via the accessibility API. This is the same mechanism VoiceOver uses — it doesn't move the mouse cursor or activate the window. The app processes the press in its event loop without becoming frontmost. If AXPress isn't supported for a particular element (rare), agent-click falls back to coordinate-based mouse clicking, which does require the window to be visible.",
     "href": "/background#why-scroll-and-key-need-focus",
     "pageTitle": "Background Operation"
   },
   {
     "title": "Why scroll and key need focus",
-    "content": "macOS routes keyboard and scroll events to the frontmost application. There's no accessibility equivalent of AXPress for keyboard input. The OS security model prevents injecting keystrokes into background apps. For Electron apps, this limitation doesn't apply — CDP dispatches events directly to the Chromium process via WebSocket, bypassing the OS event system entirely.",
+    "content": "The OS routes keyboard and scroll events to the frontmost application. There's no accessibility equivalent of AXPress for keyboard input. The OS security model prevents injecting keystrokes into background apps. For Electron apps, this limitation doesn't apply — CDP dispatches events directly to the Chromium process via WebSocket, bypassing the OS event system entirely.",
     "href": "/background",
     "pageTitle": "Background Operation"
   },

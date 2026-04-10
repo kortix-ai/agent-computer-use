@@ -112,7 +112,7 @@ agent-click scroll down --amount 10 -a Music  # scroll more
 agent-click scroll-to @e42                    # scroll element into view (headless)
 ```
 
-Scroll needs the app to be focused (macOS limitation). Use `scroll-to` for headless.
+Scroll needs the app to be focused. Use `scroll-to` for headless.
 
 ## Reading content
 

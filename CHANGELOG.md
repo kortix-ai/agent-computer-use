@@ -30,6 +30,6 @@
 
 ### Platforms
 
-- macOS (AXUIElement + CGEvent) — production ready
-- Linux (AT-SPI2) — stub, contributions welcome
-- Windows (UI Automation) — stub, contributions welcome
+- macOS (AXUIElement + CGEvent)
+- Linux (AT-SPI2)
+- Windows (UI Automation)

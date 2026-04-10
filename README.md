@@ -4,7 +4,7 @@ Computer use CLI for AI agents. Control any app from the terminal.
 
 Click buttons, type text, read screens, drag files, move windows, just like how a human would.
 
-Built in Rust. Works on macOS today — Windows and Linux support is underway.
+Built in Rust.
 
 ## Installation
 
@@ -16,7 +16,7 @@ cd agent-click
 ./scripts/setup.sh
 ```
 
-The setup script installs Rust (if needed), builds the CLI, installs it to `~/.cargo/bin/agent-click`, and prompts for accessibility permissions on macOS.
+The setup script installs Rust (if needed), builds the CLI, installs it to `~/.cargo/bin/agent-click`, and prompts for accessibility permissions.
 
 ### Cargo
 
@@ -207,8 +207,8 @@ agent-click/
 │       ├── agent-click-core/      Platform trait, AccessibilityNode, Selector, element utils
 │       ├── agent-click-macos/     macOS backend (AXUIElement, CGEvent, batch attribute fetch)
 │       ├── agent-click-cdp/       CDP bridge (WebSocket, DOM walker, JS interaction)
-│       ├── agent-click-linux/     Linux backend (AT-SPI2) [planned]
-│       └── agent-click-windows/   Windows backend (UIAutomation) [planned]
+│       ├── agent-click-linux/     Linux backend (AT-SPI2)
+│       └── agent-click-windows/   Windows backend (UIAutomation)
 ├── docs/                   Next.js docs site
 ├── benchmark/              E2E benchmarks, stress tests, comparison tools
 ├── docker/                 Cross-compilation Dockerfiles
@@ -230,13 +230,13 @@ pnpm bench:diff     # compare benchmark runs
 
 ## Platform support
 
-| Platform               | Status      |
-| ---------------------- | ----------- |
-| macOS (Apple Silicon)  | Preview     |
-| macOS (Intel)          | Preview     |
-| Electron apps (CDP)    | Preview     |
-| Windows (UIAutomation) | In progress |
-| Linux (AT-SPI2)        | In progress |
+| Platform               | Status  |
+| ---------------------- | ------- |
+| macOS (Apple Silicon)  | Preview |
+| macOS (Intel)          | Preview |
+| Electron apps (CDP)    | Preview |
+| Windows (UIAutomation) | Preview |
+| Linux (AT-SPI2)        | Preview |
 
 ## License
 

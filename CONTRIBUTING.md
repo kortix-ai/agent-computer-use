@@ -68,10 +68,10 @@ cargo run -- snapshot Calculator -i
 
 - Rust 1.75+
 - macOS: Xcode Command Line Tools + Accessibility permissions
-- Linux: `libdbus-1-dev` (for AT-SPI2, when implemented)
-- Windows: Visual Studio Build Tools (when implemented)
+- Linux: `libdbus-1-dev` (for AT-SPI2)
+- Windows: Visual Studio Build Tools
 
-### Accessibility permissions (macOS)
+### Accessibility permissions
 
 ```
 System Settings > Privacy & Security > Accessibility > [your terminal]
