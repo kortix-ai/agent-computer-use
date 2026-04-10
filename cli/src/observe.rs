@@ -123,9 +123,9 @@ impl AppState {
     fn copy_selector(&self) {
         if let Some(idx) = self.list_state.selected() {
             if let Some(node) = self.flat_nodes.get(idx) {
-                let dsl = build_selector_dsl(node);
                 #[cfg(target_os = "macos")]
                 {
+                    let dsl = build_selector_dsl(node);
                     let _ = std::process::Command::new("pbcopy")
                         .stdin(std::process::Stdio::piped())
                         .spawn()
@@ -136,6 +136,10 @@ impl AppState {
                             }
                             child.wait()
                         });
+                }
+                #[cfg(not(target_os = "macos"))]
+                {
+                    let _ = node;
                 }
             }
         }

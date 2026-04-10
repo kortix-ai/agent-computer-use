@@ -7,6 +7,7 @@ use windows::Win32::UI::WindowsAndMessaging::*;
 const MOUSE_MOVE_DELAY: std::time::Duration = std::time::Duration::from_millis(10);
 const MULTI_CLICK_DELAY: std::time::Duration = std::time::Duration::from_millis(50);
 const CHAR_DELAY: std::time::Duration = std::time::Duration::from_millis(15);
+const DRAG_STEP_DELAY: std::time::Duration = std::time::Duration::from_millis(5);
 
 fn screen_dimensions() -> (i32, i32) {
     unsafe {
@@ -75,6 +76,76 @@ pub fn click(point: Point, button: MouseButton, count: u32) -> Result<()> {
         send_inputs(&[down, up])?;
     }
     Ok(())
+}
+
+pub fn mouse_down(point: Point, button: MouseButton) -> Result<()> {
+    move_mouse(point)?;
+    std::thread::sleep(MOUSE_MOVE_DELAY);
+
+    let down_flag = match button {
+        MouseButton::Left => MOUSEEVENTF_LEFTDOWN,
+        MouseButton::Right => MOUSEEVENTF_RIGHTDOWN,
+        MouseButton::Middle => MOUSEEVENTF_MIDDLEDOWN,
+    };
+
+    let input = INPUT {
+        r#type: INPUT_MOUSE,
+        Anonymous: INPUT_0 {
+            mi: MOUSEINPUT {
+                dwFlags: down_flag,
+                ..Default::default()
+            },
+        },
+    };
+    send_inputs(&[input])
+}
+
+pub fn mouse_up(button: MouseButton) -> Result<()> {
+    let up_flag = match button {
+        MouseButton::Left => MOUSEEVENTF_LEFTUP,
+        MouseButton::Right => MOUSEEVENTF_RIGHTUP,
+        MouseButton::Middle => MOUSEEVENTF_MIDDLEUP,
+    };
+
+    let input = INPUT {
+        r#type: INPUT_MOUSE,
+        Anonymous: INPUT_0 {
+            mi: MOUSEINPUT {
+                dwFlags: up_flag,
+                ..Default::default()
+            },
+        },
+    };
+    send_inputs(&[input])
+}
+
+pub fn drag(from: Point, to: Point) -> Result<()> {
+    mouse_down(from, MouseButton::Left)?;
+    std::thread::sleep(std::time::Duration::from_millis(100));
+
+    let steps = 20;
+    for i in 1..=steps {
+        let t = i as f64 / steps as f64;
+        let x = from.x + (to.x - from.x) * t;
+        let y = from.y + (to.y - from.y) * t;
+        let (abs_x, abs_y) = to_absolute(x, y);
+        let input = INPUT {
+            r#type: INPUT_MOUSE,
+            Anonymous: INPUT_0 {
+                mi: MOUSEINPUT {
+                    dx: abs_x,
+                    dy: abs_y,
+                    dwFlags: MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE,
+                    ..Default::default()
+                },
+            },
+        };
+        send_inputs(&[input])?;
+        std::thread::sleep(DRAG_STEP_DELAY);
+    }
+
+    std::thread::sleep(std::time::Duration::from_millis(50));
+    mouse_up(MouseButton::Left)
 }
 
 pub fn scroll(direction: ScrollDirection, amount: u32) -> Result<()> {

@@ -167,11 +167,17 @@ fn now_secs() -> u64 {
         .as_secs()
 }
 
+fn home_dir() -> String {
+    std::env::var("HOME")
+        .or_else(|_| std::env::var("USERPROFILE"))
+        .unwrap_or_else(|_| ".".to_string())
+}
+
 pub fn save_refs(
     refs: &HashMap<String, RefEntry>,
     app: Option<&str>,
 ) -> agent_click_core::Result<()> {
-    let home = std::env::var("HOME").unwrap_or_else(|_| ".".to_string());
+    let home = home_dir();
     let dir = format!("{home}/{}", REFS_PATH.rsplit_once('/').unwrap().0);
     std::fs::create_dir_all(&dir).map_err(agent_click_core::Error::Io)?;
 
@@ -191,7 +197,7 @@ pub fn save_refs(
 }
 
 fn load_refs() -> agent_click_core::Result<HashMap<String, RefEntry>> {
-    let home = std::env::var("HOME").unwrap_or_else(|_| ".".to_string());
+    let home = home_dir();
     let path = format!("{home}/{REFS_PATH}");
 
     let contents =

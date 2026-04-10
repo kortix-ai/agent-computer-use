@@ -68,12 +68,13 @@ pub use stub::WindowsPlatform;
 
 #[cfg(target_os = "windows")]
 mod real {
-    use agent_click_core::action::{Action, ActionResult, MouseButton};
+    use agent_click_core::action::{Action, ActionResult};
     use agent_click_core::node::{AccessibilityNode, Point};
     use agent_click_core::platform::{AppInfo, Platform, WindowInfo};
     use agent_click_core::selector::Selector;
     use agent_click_core::{Error, Result};
     use async_trait::async_trait;
+    use std::collections::HashMap;
     use std::sync::OnceLock;
     use windows::Win32::Foundation::*;
     use windows::Win32::System::Threading::*;
@@ -85,6 +86,9 @@ mod real {
     pub struct WindowsPlatform {
         uia: UiaContext,
     }
+
+    unsafe impl Send for WindowsPlatform {}
+    unsafe impl Sync for WindowsPlatform {}
 
     static INIT: OnceLock<()> = OnceLock::new();
 
@@ -268,6 +272,18 @@ mod real {
                     if let Some(app_name) = app {
                         self.activate(app_name).await?;
                         std::thread::sleep(std::time::Duration::from_millis(100));
+                        unsafe {
+                            let pid = self.find_app_pid(app_name)?;
+                            if let Some(hwnd) = find_window_for_pid(pid) {
+                                let mut rect = RECT::default();
+                                if GetWindowRect(hwnd, &mut rect).is_ok() {
+                                    let cx = (rect.left + rect.right) as f64 / 2.0;
+                                    let cy = (rect.top + rect.bottom) as f64 / 2.0;
+                                    input::move_mouse(Point { x: cx, y: cy })?;
+                                    std::thread::sleep(std::time::Duration::from_millis(20));
+                                }
+                            }
+                        }
                     }
                     input::scroll(*direction, *amount)?;
                     Ok(ActionResult {
@@ -309,17 +325,37 @@ mod real {
                 Action::Screenshot { path, app: _ } => {
                     let save_path = path.clone().unwrap_or_else(|| {
                         format!(
-                            "{}/agent-click-screenshot.png",
+                            "{}\\agent-click-screenshot.png",
                             std::env::temp_dir().display()
                         )
                     });
-                    // TODO: Implement proper screenshot using GDI or similar
-                    Ok(ActionResult {
-                        success: false,
-                        message: Some("screenshot not yet implemented on Windows".into()),
-                        path: Some(save_path),
-                        data: None,
-                    })
+
+                    let ps_script = format!(
+                        r#"Add-Type -AssemblyName System.Windows.Forms; Add-Type -AssemblyName System.Drawing; $bounds = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds; $bmp = New-Object System.Drawing.Bitmap($bounds.Width, $bounds.Height); $g = [System.Drawing.Graphics]::FromImage($bmp); $g.CopyFromScreen($bounds.Location, [System.Drawing.Point]::Empty, $bounds.Size); $bmp.Save('{}', [System.Drawing.Imaging.ImageFormat]::Png); $g.Dispose(); $bmp.Dispose()"#,
+                        save_path.replace('\'', "''")
+                    );
+
+                    let result = std::process::Command::new("powershell")
+                        .args(["-NoProfile", "-Command", &ps_script])
+                        .output();
+
+                    match result {
+                        Ok(output) if output.status.success() => Ok(ActionResult {
+                            success: true,
+                            message: Some(format!("screenshot saved to {save_path}")),
+                            path: Some(save_path),
+                            data: None,
+                        }),
+                        Ok(output) => {
+                            let stderr = String::from_utf8_lossy(&output.stderr);
+                            Err(Error::PlatformError {
+                                message: format!("screenshot failed: {stderr}"),
+                            })
+                        }
+                        Err(e) => Err(Error::PlatformError {
+                            message: format!("failed to run powershell for screenshot: {e}"),
+                        }),
+                    }
                 }
 
                 Action::Focus { selector } => {
@@ -338,13 +374,20 @@ mod real {
                 }
 
                 Action::Drag { from, to } => {
-                    input::move_mouse(*from)?;
-                    std::thread::sleep(std::time::Duration::from_millis(50));
-                    input::click(*from, MouseButton::Left, 1)?;
-                    std::thread::sleep(std::time::Duration::from_millis(100));
-                    input::move_mouse(*to)?;
-                    std::thread::sleep(std::time::Duration::from_millis(50));
-
+                    unsafe {
+                        let pt = POINT {
+                            x: from.x as i32,
+                            y: from.y as i32,
+                        };
+                        let hwnd = WindowFromPoint(pt);
+                        if hwnd != HWND::default() {
+                            let root = GetAncestor(hwnd, GA_ROOT);
+                            let target = if root != HWND::default() { root } else { hwnd };
+                            force_foreground(target);
+                            std::thread::sleep(std::time::Duration::from_millis(80));
+                        }
+                    }
+                    input::drag(*from, *to)?;
                     Ok(ActionResult {
                         success: true,
                         message: Some(format!(
@@ -398,6 +441,8 @@ mod real {
             let target_pid = app.map(|name| self.find_app_pid(name)).transpose()?;
             let mut windows = Vec::new();
 
+            let pid_to_name: HashMap<u32, String> = self.list_processes()?.into_iter().collect();
+
             unsafe {
                 let foreground = GetForegroundWindow();
 
@@ -408,10 +453,13 @@ mod real {
                 .ok();
 
                 if let Some(pid) = target_pid {
-                    windows.retain(|w| w.pid == pid);
+                    windows.retain(|w: &WindowInfo| w.pid == pid);
                 }
 
                 for w in &mut windows {
+                    if let Some(name) = pid_to_name.get(&w.pid) {
+                        w.app = name.clone();
+                    }
                     let hwnd = find_window_by_title(&w.title);
                     if let Some(h) = hwnd {
                         w.frontmost = Some(h == foreground);
@@ -432,21 +480,12 @@ mod real {
         }
 
         async fn activate(&self, app: &str) -> Result<()> {
-            unsafe {
-                let pid = self.find_app_pid(app)?;
-                let hwnd = find_window_for_pid(pid);
-                if let Some(h) = hwnd {
-                    if IsIconic(h).as_bool() {
-                        let _ = ShowWindow(h, SW_RESTORE);
-                    }
-                    let _ = SetForegroundWindow(h);
-                    Ok(())
-                } else {
-                    Err(Error::PlatformError {
-                        message: format!("no window found for '{app}'"),
-                    })
-                }
-            }
+            let pid = self.find_app_pid(app)?;
+            let hwnd = find_window_for_pid(pid).ok_or_else(|| Error::PlatformError {
+                message: format!("no window found for '{app}'"),
+            })?;
+            force_foreground(hwnd);
+            Ok(())
         }
 
         async fn press(&self, selector: &Selector) -> Result<bool> {
@@ -488,6 +527,62 @@ mod real {
             }
         }
 
+        async fn move_window(&self, app: &str, x: f64, y: f64) -> Result<bool> {
+            unsafe {
+                let pid = self.find_app_pid(app)?;
+                let hwnd = find_window_for_pid(pid).ok_or_else(|| Error::PlatformError {
+                    message: format!("no window found for '{app}'"),
+                })?;
+
+                let mut rect = RECT::default();
+                let _ = GetWindowRect(hwnd, &mut rect);
+                let width = rect.right - rect.left;
+                let height = rect.bottom - rect.top;
+
+                SetWindowPos(
+                    hwnd,
+                    None,
+                    x as i32,
+                    y as i32,
+                    width,
+                    height,
+                    SWP_NOZORDER | SWP_NOSIZE | SWP_NOACTIVATE,
+                )
+                .map_err(|e| Error::PlatformError {
+                    message: format!("SetWindowPos failed: {e}"),
+                })?;
+
+                Ok(true)
+            }
+        }
+
+        async fn resize_window(&self, app: &str, width: f64, height: f64) -> Result<bool> {
+            unsafe {
+                let pid = self.find_app_pid(app)?;
+                let hwnd = find_window_for_pid(pid).ok_or_else(|| Error::PlatformError {
+                    message: format!("no window found for '{app}'"),
+                })?;
+
+                let mut rect = RECT::default();
+                let _ = GetWindowRect(hwnd, &mut rect);
+
+                SetWindowPos(
+                    hwnd,
+                    None,
+                    rect.left,
+                    rect.top,
+                    width as i32,
+                    height as i32,
+                    SWP_NOZORDER | SWP_NOMOVE | SWP_NOACTIVATE,
+                )
+                .map_err(|e| Error::PlatformError {
+                    message: format!("SetWindowPos failed: {e}"),
+                })?;
+
+                Ok(true)
+            }
+        }
+
         fn platform_name(&self) -> &'static str {
             "Windows"
         }
@@ -497,21 +592,53 @@ mod real {
         find_window_for_pid(pid).is_some()
     }
 
-    fn find_window_for_pid(pid: u32) -> Option<HWND> {
+    fn force_foreground(hwnd: HWND) {
         unsafe {
-            struct Context {
-                target_pid: u32,
-                found: Option<HWND>,
+            if IsIconic(hwnd).as_bool() {
+                let _ = ShowWindow(hwnd, SW_RESTORE);
             }
 
-            let mut ctx = Context {
+            let foreground = GetForegroundWindow();
+            if foreground == hwnd {
+                return;
+            }
+
+            let current_thread = GetCurrentThreadId();
+            let foreground_thread = if foreground != HWND::default() {
+                GetWindowThreadProcessId(foreground, None)
+            } else {
+                0
+            };
+
+            let attached = foreground_thread != 0
+                && foreground_thread != current_thread
+                && AttachThreadInput(current_thread, foreground_thread, true).as_bool();
+
+            let _ = BringWindowToTop(hwnd);
+            let _ = SetForegroundWindow(hwnd);
+            let _ = ShowWindow(hwnd, SW_SHOW);
+
+            if attached {
+                let _ = AttachThreadInput(current_thread, foreground_thread, false);
+            }
+        }
+    }
+
+    struct FindPidContext {
+        target_pid: u32,
+        found: Option<HWND>,
+    }
+
+    fn find_window_for_pid(pid: u32) -> Option<HWND> {
+        unsafe {
+            let mut ctx = FindPidContext {
                 target_pid: pid,
                 found: None,
             };
 
             let _ = EnumWindows(
                 Some(find_pid_callback),
-                LPARAM(&mut ctx as *mut Context as isize),
+                LPARAM(&mut ctx as *mut FindPidContext as isize),
             );
 
             ctx.found
@@ -531,11 +658,6 @@ mod real {
             }
         }
         TRUE
-    }
-
-    struct FindPidContext {
-        target_pid: u32,
-        found: Option<HWND>,
     }
 
     unsafe extern "system" fn enum_windows_callback(hwnd: HWND, lparam: LPARAM) -> BOOL {
@@ -584,11 +706,9 @@ mod real {
     fn find_window_by_title(title: &str) -> Option<HWND> {
         unsafe {
             let wide: Vec<u16> = title.encode_utf16().chain(std::iter::once(0)).collect();
-            let hwnd = FindWindowW(None, windows::core::PCWSTR(wide.as_ptr()));
-            if hwnd != HWND::default() {
-                Some(hwnd)
-            } else {
-                None
+            match FindWindowW(None, windows::core::PCWSTR(wide.as_ptr())) {
+                Ok(hwnd) if hwnd != HWND::default() => Some(hwnd),
+                _ => None,
             }
         }
     }
