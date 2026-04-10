@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.2
+
+### Patch Changes
+
+- [#11](https://github.com/kortix-ai/agent-click/pull/11) [`baedae2`](https://github.com/kortix-ai/agent-click/commit/baedae293d5a18e8f75a5ab29453cbc1df348d7a) Thanks [@Soumyadas15](https://github.com/Soumyadas15)! - support for linux platform
+
 ## 0.1.1
 
 ### Patch Changes
