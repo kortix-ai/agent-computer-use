@@ -176,6 +176,7 @@ fn find_app_binary(app_name: &str) -> Option<String> {
     None
 }
 
+#[cfg(target_os = "macos")]
 fn find_free_port() -> Option<u16> {
     let listener = std::net::TcpListener::bind("127.0.0.1:0").ok()?;
     let port = listener.local_addr().ok()?.port();

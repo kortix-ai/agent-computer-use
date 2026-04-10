@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <DocsLayout>
       <div className="mb-8 border-b border-border pb-6">
-        <h1 className="text-5xl mb-2 font-bold tracking-tight">agent-click</h1>
+        <h1 className="text-3xl md:text-5xl mb-2 font-bold tracking-tight">agent-click</h1>
         <p className="mt-2 text-lg text-muted-foreground">Computer use CLI for AI Agents.</p>
         <div className="mt-3 flex gap-2">
           <div className="inline-flex items-center rounded-full bg-foreground/10 px-3 py-1 text-xs font-medium text-foreground">

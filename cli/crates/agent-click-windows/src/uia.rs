@@ -2,28 +2,45 @@ use agent_click_core::node::{AccessibilityNode, Point, Role, Size};
 use agent_click_core::selector::Selector;
 use agent_click_core::{Error, Result};
 use std::collections::VecDeque;
+use std::sync::OnceLock;
 use windows::core::BSTR;
 use windows::Win32::System::Com::{CoInitializeEx, COINIT_MULTITHREADED};
 use windows::Win32::UI::Accessibility::*;
+
+struct SendSyncCondition(IUIAutomationCondition);
+unsafe impl Send for SendSyncCondition {}
+unsafe impl Sync for SendSyncCondition {}
+
+static TRUE_CONDITION: OnceLock<SendSyncCondition> = OnceLock::new();
 
 pub struct UiaContext {
     pub automation: IUIAutomation,
 }
 
+unsafe impl Send for UiaContext {}
+unsafe impl Sync for UiaContext {}
+
 impl UiaContext {
     pub fn new() -> Result<Self> {
         unsafe {
             let _ = CoInitializeEx(None, COINIT_MULTITHREADED);
-            let automation: IUIAutomation = windows::core::ComInterface::cast(
-                &windows::Win32::System::Com::CoCreateInstance(
+            let automation: IUIAutomation =
+                windows::Win32::System::Com::CoCreateInstance::<_, IUIAutomation>(
                     &CUIAutomation,
                     None,
                     windows::Win32::System::Com::CLSCTX_INPROC_SERVER,
                 )
                 .map_err(|e| Error::PlatformError {
                     message: format!("failed to create IUIAutomation: {e}"),
-                })?,
-            )?;
+                })?;
+            TRUE_CONDITION.get_or_init(|| {
+                SendSyncCondition(
+                    automation
+                        .CreateTrueCondition()
+                        .expect("CreateTrueCondition"),
+                )
+            });
+
             Ok(Self { automation })
         }
     }
@@ -48,6 +65,7 @@ impl UiaContext {
         }
     }
 
+    #[allow(dead_code)]
     pub fn element_for_pid(&self, pid: u32) -> Result<Option<IUIAutomationElement>> {
         unsafe {
             let root = self.root()?;
@@ -60,13 +78,6 @@ impl UiaContext {
                 .map_err(|e| Error::PlatformError {
                     message: format!("failed to create PID condition: {e}"),
                 })?;
-
-            match self
-                .automation
-                .ElementFromHandle(windows::Win32::Foundation::HWND(std::ptr::null_mut()))
-            {
-                _ => {}
-            }
 
             let found = root.FindFirst(TreeScope_Children, &condition);
             match found {
@@ -177,11 +188,13 @@ fn get_value(element: &IUIAutomationElement) -> Option<String> {
             element.GetCurrentPatternAs::<IUIAutomationTogglePattern>(UIA_TogglePatternId)
         {
             if let Ok(state) = pattern.CurrentToggleState() {
-                return Some(match state {
-                    ToggleState_On => "checked".to_string(),
-                    ToggleState_Off => "unchecked".to_string(),
-                    _ => "indeterminate".to_string(),
-                });
+                #[allow(non_upper_case_globals)]
+                let label = match state {
+                    ToggleState_On => "checked",
+                    ToggleState_Off => "unchecked",
+                    _ => "indeterminate",
+                };
+                return Some(label.to_string());
             }
         }
 
@@ -225,31 +238,29 @@ fn get_bounds(element: &IUIAutomationElement) -> (Option<Point>, Option<Size>) {
 fn get_children(element: &IUIAutomationElement) -> Vec<IUIAutomationElement> {
     unsafe {
         let mut children = Vec::new();
-        if let Ok(condition) = get_true_condition(element) {
-            if let Ok(array) = element.FindAll(TreeScope_Children, &condition) {
-                if let Ok(len) = array.Length() {
-                    for i in 0..len {
-                        if let Ok(child) = array.GetElement(i) {
-                            children.push(child);
-                        }
+        let wrapper = TRUE_CONDITION.get_or_init(|| {
+            let automation: IUIAutomation = windows::Win32::System::Com::CoCreateInstance(
+                &CUIAutomation,
+                None,
+                windows::Win32::System::Com::CLSCTX_INPROC_SERVER,
+            )
+            .expect("COM already initialized");
+            SendSyncCondition(
+                automation
+                    .CreateTrueCondition()
+                    .expect("CreateTrueCondition"),
+            )
+        });
+        if let Ok(array) = element.FindAll(TreeScope_Children, &wrapper.0) {
+            if let Ok(len) = array.Length() {
+                for i in 0..len {
+                    if let Ok(child) = array.GetElement(i) {
+                        children.push(child);
                     }
                 }
             }
         }
         children
-    }
-}
-
-fn get_true_condition(
-    _element: &IUIAutomationElement,
-) -> windows::core::Result<IUIAutomationCondition> {
-    unsafe {
-        let automation: IUIAutomation = windows::Win32::System::Com::CoCreateInstance(
-            &CUIAutomation,
-            None,
-            windows::Win32::System::Com::CLSCTX_INPROC_SERVER,
-        )?;
-        automation.CreateTrueCondition()
     }
 }
 
@@ -346,10 +357,23 @@ pub fn matches_selector(element: &IUIAutomationElement, selector: &Selector) -> 
 
 pub fn invoke_element(element: &IUIAutomationElement) -> bool {
     unsafe {
+        // Try Invoke pattern (buttons, menu items, etc.)
         if let Ok(pattern) =
             element.GetCurrentPatternAs::<IUIAutomationInvokePattern>(UIA_InvokePatternId)
         {
             return pattern.Invoke().is_ok();
+        }
+        // Try SelectionItem pattern (tabs, list items, radio buttons)
+        if let Ok(pattern) = element
+            .GetCurrentPatternAs::<IUIAutomationSelectionItemPattern>(UIA_SelectionItemPatternId)
+        {
+            return pattern.Select().is_ok();
+        }
+        // Try Toggle pattern (checkboxes, toggle buttons)
+        if let Ok(pattern) =
+            element.GetCurrentPatternAs::<IUIAutomationTogglePattern>(UIA_TogglePatternId)
+        {
+            return pattern.Toggle().is_ok();
         }
         false
     }
@@ -414,6 +438,10 @@ fn collect_text_recursive(
     }
 }
 
+// The UIA_*ControlTypeId values are PascalCase constants in windows-rs;
+// clippy mistakes them for new bindings inside a `match` and emits
+// `non_upper_case_globals` for each arm. Suppress at the function level.
+#[allow(non_upper_case_globals)]
 fn map_control_type(ct: UIA_CONTROLTYPE_ID) -> Role {
     match ct {
         UIA_ButtonControlTypeId => Role::Button,
