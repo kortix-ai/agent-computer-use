@@ -1,12 +1,16 @@
 {
-  "name": "agent-computer-use",
+  "name": "@kortix-ai/agent-computer-use",
   "version": "0.1.0",
   "description": "Computer use CLI for AI agents",
   "license": "MIT",
   "repository": "https://github.com/kortix-ai/agent-computer-use",
   "packageManager": "pnpm@10.7.0",
   "bin": {
-    "agent-computer-use": "./bin/agent-computer-use.js"
+    "agent-cu": "./bin/agent-cu.js"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "files": [
     "bin",

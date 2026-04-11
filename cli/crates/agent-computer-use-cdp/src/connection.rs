@@ -233,7 +233,7 @@ impl CdpConnection {
 
 fn cache_path(port: u16) -> PathBuf {
     let home = std::env::var("HOME").unwrap_or_else(|_| ".".into());
-    PathBuf::from(format!("{home}/.agent-computer-use/cdp-{port}.json"))
+    PathBuf::from(format!("{home}/.agent-cu/cdp-{port}.json"))
 }
 
 fn load_cached_ws_url(port: u16) -> Option<String> {

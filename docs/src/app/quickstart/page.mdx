@@ -5,7 +5,7 @@ import { PageHeader, Step } from '@/components/docs';
 <Step number={1} title="Open an app">
 
 ```bash
-agent-computer-use open Calculator --wait
+agent-cu open Calculator --wait
 ```
 
 The `--wait` flag ensures the app is fully loaded before continuing.
@@ -15,7 +15,7 @@ The `--wait` flag ensures the app is fully loaded before continuing.
 <Step number={2} title="Take a snapshot">
 
 ```bash
-agent-computer-use snapshot -a Calculator -i -c
+agent-cu snapshot -a Calculator -i -c
 ```
 
 This shows all interactive elements with refs:
@@ -36,11 +36,11 @@ application "Calculator"
 <Step number={3} title="Interact">
 
 ```bash
-agent-computer-use click 'id="AllClear"' -a Calculator
-agent-computer-use click 'id="Seven"' -a Calculator
-agent-computer-use click 'id="Add"' -a Calculator
-agent-computer-use click 'id="Eight"' -a Calculator
-agent-computer-use click 'id="Equals"' -a Calculator
+agent-cu click 'id="AllClear"' -a Calculator
+agent-cu click 'id="Seven"' -a Calculator
+agent-cu click 'id="Add"' -a Calculator
+agent-cu click 'id="Eight"' -a Calculator
+agent-cu click 'id="Equals"' -a Calculator
 ```
 
 </Step>
@@ -48,7 +48,7 @@ agent-computer-use click 'id="Equals"' -a Calculator
 <Step number={4} title="Read the result">
 
 ```bash
-agent-computer-use text -a Calculator | grep -A1 "Edit field"
+agent-cu text -a Calculator | grep -A1 "Edit field"
 # → 15
 ```
 

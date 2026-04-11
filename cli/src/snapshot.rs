@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-const REFS_PATH: &str = ".agent-computer-use/refs.json";
+const REFS_PATH: &str = ".agent-cu/refs.json";
 
 #[derive(Debug, Serialize)]
 pub struct SnapshotResult {

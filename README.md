@@ -16,7 +16,7 @@ cd agent-computer-use
 ./scripts/setup.sh
 ```
 
-The setup script installs Rust (if needed), builds the CLI, installs it to `~/.cargo/bin/agent-computer-use`, and prompts for accessibility permissions.
+The setup script installs Rust (if needed), builds the CLI, installs it to `~/.cargo/bin/agent-cu`, and prompts for accessibility permissions.
 
 ### Cargo
 
@@ -27,11 +27,11 @@ cargo install --git https://github.com/kortix-ai/agent-computer-use --path cli
 ## Quick start
 
 ```bash
-agent-computer-use apps                              # what's running?
-agent-computer-use snapshot -a Calculator -i -c      # see interactive elements
-agent-computer-use click @e5                         # click by ref
-agent-computer-use type "hello" -s @e3               # type into a field
-agent-computer-use text -a Music                     # read all visible text
+agent-cu apps                              # what's running?
+agent-cu snapshot -a Calculator -i -c      # see interactive elements
+agent-cu click @e5                         # click by ref
+agent-cu type "hello" -s @e3               # type into a field
+agent-cu text -a Music                     # read all visible text
 ```
 
 The workflow: **snapshot → identify refs → act → re-snapshot to verify**.
@@ -41,64 +41,64 @@ The workflow: **snapshot → identify refs → act → re-snapshot to verify**.
 ### Discovery
 
 ```bash
-agent-computer-use apps                              # list all running apps
-agent-computer-use snapshot -a Music -i -c           # interactive elements, compact
-agent-computer-use snapshot -a Safari -d 8           # deeper tree
-agent-computer-use tree -a Finder                    # raw accessibility tree (JSON)
-agent-computer-use find 'role=button' -a Calculator  # find matching elements
-agent-computer-use find 'id="play"' -a Music        # find by id
-agent-computer-use find 'name~="Submit"' -a Safari  # find by partial name
-agent-computer-use get-value @e5                     # read element value/state
-agent-computer-use text -a Calculator                # all visible text
-agent-computer-use focused                           # currently focused element
-agent-computer-use windows -a Finder                 # list windows with positions
+agent-cu apps                              # list all running apps
+agent-cu snapshot -a Music -i -c           # interactive elements, compact
+agent-cu snapshot -a Safari -d 8           # deeper tree
+agent-cu tree -a Finder                    # raw accessibility tree (JSON)
+agent-cu find 'role=button' -a Calculator  # find matching elements
+agent-cu find 'id="play"' -a Music        # find by id
+agent-cu find 'name~="Submit"' -a Safari  # find by partial name
+agent-cu get-value @e5                     # read element value/state
+agent-cu text -a Calculator                # all visible text
+agent-cu focused                           # currently focused element
+agent-cu windows -a Finder                 # list windows with positions
 ```
 
 ### Click
 
 ```bash
-agent-computer-use click @e5                         # click by ref (AXPress, no focus steal)
-agent-computer-use click 'name="Login"' -a Safari   # click by selector
-agent-computer-use click 'id~="track-123"' -a Music # partial id match
-agent-computer-use click @e5 --count 2              # double-click
-agent-computer-use click @e5 --button right         # right-click
-agent-computer-use click --x 500 --y 300 -a Finder  # coordinate click (last resort)
-agent-computer-use click @e5 --expect 'name="Done"' # click then verify element appeared
+agent-cu click @e5                         # click by ref (AXPress, no focus steal)
+agent-cu click 'name="Login"' -a Safari   # click by selector
+agent-cu click 'id~="track-123"' -a Music # partial id match
+agent-cu click @e5 --count 2              # double-click
+agent-cu click @e5 --button right         # right-click
+agent-cu click --x 500 --y 300 -a Finder  # coordinate click (last resort)
+agent-cu click @e5 --expect 'name="Done"' # click then verify element appeared
 ```
 
 ### Type
 
 ```bash
-agent-computer-use type "hello" -s @e3               # type into element (AXSetValue)
-agent-computer-use type "hello" -a Safari            # type into focused field (keyboard sim)
-agent-computer-use type "hello" -s @e3 --append      # append without clearing
-agent-computer-use type "hello" -s @e3 --submit      # type then press Return
+agent-cu type "hello" -s @e3               # type into element (AXSetValue)
+agent-cu type "hello" -a Safari            # type into focused field (keyboard sim)
+agent-cu type "hello" -s @e3 --append      # append without clearing
+agent-cu type "hello" -s @e3 --submit      # type then press Return
 ```
 
 ### Key
 
 ```bash
-agent-computer-use key Return -a Calculator          # press a key
-agent-computer-use key cmd+c -a TextEdit             # key combo
-agent-computer-use key cmd+shift+p -a "VS Code"      # complex combo
-agent-computer-use key Escape -a Slack               # escape
-agent-computer-use key space -a Music                # play/pause
+agent-cu key Return -a Calculator          # press a key
+agent-cu key cmd+c -a TextEdit             # key combo
+agent-cu key cmd+shift+p -a "VS Code"      # complex combo
+agent-cu key Escape -a Slack               # escape
+agent-cu key space -a Music                # play/pause
 ```
 
 ### Scroll
 
 ```bash
-agent-computer-use scroll down -a Music              # scroll the main content area
-agent-computer-use scroll down --amount 10 -a Music  # scroll more
-agent-computer-use scroll-to @e42                    # scroll element into view
+agent-cu scroll down -a Music              # scroll the main content area
+agent-cu scroll down --amount 10 -a Music  # scroll more
+agent-cu scroll-to @e42                    # scroll element into view
 ```
 
 ### Drag
 
 ```bash
-agent-computer-use drag @e5 @e10 -a Finder                           # drag by refs
-agent-computer-use drag 'name="file.txt"' 'name="Desktop"' -a Finder # drag by name
-agent-computer-use drag --from-x 200 --from-y 55 --to-x 900 --to-y 300 -a Finder  # by coordinates
+agent-cu drag @e5 @e10 -a Finder                           # drag by refs
+agent-cu drag 'name="file.txt"' 'name="Desktop"' -a Finder # drag by name
+agent-cu drag --from-x 200 --from-y 55 --to-x 900 --to-y 300 -a Finder  # by coordinates
 ```
 
 Drag uses smooth 20-step interpolation with easing — mimics natural mouse movement.
@@ -106,34 +106,34 @@ Drag uses smooth 20-step interpolation with easing — mimics natural mouse move
 ### Window management
 
 ```bash
-agent-computer-use move-window -a Notes --x 100 --y 100    # move window (instant)
-agent-computer-use resize-window -a Notes --width 800 --height 600  # resize (instant)
-agent-computer-use open Calculator --wait                   # launch and wait for ready
-agent-computer-use screenshot -a Music --path shot.png      # screenshot an app
-agent-computer-use screenshot --path full.png               # full screen
+agent-cu move-window -a Notes --x 100 --y 100    # move window (instant)
+agent-cu resize-window -a Notes --width 800 --height 600  # resize (instant)
+agent-cu open Calculator --wait                   # launch and wait for ready
+agent-cu screenshot -a Music --path shot.png      # screenshot an app
+agent-cu screenshot --path full.png               # full screen
 ```
 
 ### Wait and verify
 
 ```bash
-agent-computer-use wait-for 'name="Dashboard"'              # poll until element appears
-agent-computer-use wait-for 'role=button' --timeout 15      # custom timeout
-agent-computer-use ensure-text @e3 "hello"                  # only types if value differs
+agent-cu wait-for 'name="Dashboard"'              # poll until element appears
+agent-cu wait-for 'role=button' --timeout 15      # custom timeout
+agent-cu ensure-text @e3 "hello"                  # only types if value differs
 ```
 
 ### Batch and workflow
 
 ```bash
-echo '[["click","@e5"],["key","Return","-a","Music"]]' | agent-computer-use batch
-echo '[["click","@e5"]]' | agent-computer-use batch --bail  # stop on first error
-agent-computer-use run workflow.yaml                         # execute YAML workflow
+echo '[["click","@e5"],["key","Return","-a","Music"]]' | agent-cu batch
+echo '[["click","@e5"]]' | agent-cu batch --bail  # stop on first error
+agent-cu run workflow.yaml                         # execute YAML workflow
 ```
 
 ### System
 
 ```bash
-agent-computer-use check-permissions                 # verify accessibility access
-agent-computer-use observe -a Calculator             # interactive TUI explorer
+agent-cu check-permissions                 # verify accessibility access
+agent-cu observe -a Calculator             # interactive TUI explorer
 ```
 
 ## Selectors
@@ -167,15 +167,15 @@ agent-computer-use observe -a Calculator             # interactive TUI explorer
 
 ## CDP (Electron apps)
 
-Electron apps (Slack, Cursor, VS Code, Postman, Discord, Notion) get automatic CDP support. agent-computer-use detects Electron apps, auto-relaunches them with a debug port, and connects via WebSocket.
+Electron apps (Slack, Cursor, VS Code, Postman, Discord, Notion) get automatic CDP support. agent-cu detects Electron apps, auto-relaunches them with a debug port, and connects via WebSocket.
 
 ```bash
-agent-computer-use text -a Slack                     # just works — auto-detects Electron
-agent-computer-use snapshot -a Slack -i -c           # DOM tree merged with native shell
-agent-computer-use click @e5                         # JS element.click() via CDP
-agent-computer-use key cmd+k -a Slack                # CDP Input.dispatchKeyEvent
-agent-computer-use type "hello" -a Slack             # CDP Input.insertText
-agent-computer-use scroll down -a Slack              # JS scrollBy()
+agent-cu text -a Slack                     # just works — auto-detects Electron
+agent-cu snapshot -a Slack -i -c           # DOM tree merged with native shell
+agent-cu click @e5                         # JS element.click() via CDP
+agent-cu key cmd+k -a Slack                # CDP Input.dispatchKeyEvent
+agent-cu type "hello" -a Slack             # CDP Input.insertText
+agent-cu scroll down -a Slack              # JS scrollBy()
 ```
 
 First run auto-relaunches the Electron app with CDP (~5s). Every subsequent run uses cached connection (~15ms).
@@ -183,8 +183,8 @@ First run auto-relaunches the Electron app with CDP (~5s). Every subsequent run 
 Override auto-detection:
 
 ```bash
-agent-computer-use snapshot -a MyApp --cdp --cdp-port 9222   # force CDP with specific port
-agent-computer-use snapshot -a Slack --no-cdp                 # disable CDP, use native only
+agent-cu snapshot -a MyApp --cdp --cdp-port 9222   # force CDP with specific port
+agent-cu snapshot -a Slack --no-cdp                 # disable CDP, use native only
 ```
 
 ## Output
@@ -192,9 +192,9 @@ agent-computer-use snapshot -a Slack --no-cdp                 # disable CDP, use
 All output is JSON by default.
 
 ```bash
-agent-computer-use click @e5                         # {"success": true, "message": "pressed ..."}
-agent-computer-use click @e5 --human                 # human-readable output
-agent-computer-use click @e5 --compact               # single-line JSON
+agent-cu click @e5                         # {"success": true, "message": "pressed ..."}
+agent-cu click @e5 --human                 # human-readable output
+agent-cu click @e5 --compact               # single-line JSON
 ```
 
 ## Architecture

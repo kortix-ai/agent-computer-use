@@ -20,23 +20,23 @@ Refs resolve via cached path — O(depth) lookup, no tree search.
 ### By role
 
 ```bash
-agent-computer-use click 'role=button' -a Calculator
-agent-computer-use click 'button' -a Calculator         # shorthand
+agent-cu click 'role=button' -a Calculator
+agent-cu click 'button' -a Calculator         # shorthand
 ```
 
 ### By name
 
 ```bash
-agent-computer-use click 'name="Login"' -a Safari       # exact
-agent-computer-use click 'name~="Log"' -a Safari        # contains (case-insensitive)
-agent-computer-use click '"Login"' -a Safari             # shorthand
+agent-cu click 'name="Login"' -a Safari       # exact
+agent-cu click 'name~="Log"' -a Safari        # contains (case-insensitive)
+agent-cu click '"Login"' -a Safari             # shorthand
 ```
 
 ### By ID
 
 ```bash
-agent-computer-use click 'id="play"' -a Music           # exact
-agent-computer-use click 'id~="track-123"' -a Music     # contains (case-insensitive)
+agent-cu click 'id="play"' -a Music           # exact
+agent-cu click 'id~="track-123"' -a Music     # contains (case-insensitive)
 ```
 
 IDs are the most stable selectors — they don't change when UI text is localized.
@@ -44,8 +44,8 @@ IDs are the most stable selectors — they don't change when UI text is localize
 ### Combined
 
 ```bash
-agent-computer-use click 'role=button name="Submit"' -a Safari
-agent-computer-use click 'button "Submit"' -a Safari    # shorthand
+agent-cu click 'role=button name="Submit"' -a Safari
+agent-cu click 'button "Submit"' -a Safari    # shorthand
 ```
 
 ### By index
@@ -53,8 +53,8 @@ agent-computer-use click 'button "Submit"' -a Safari    # shorthand
 When multiple elements match:
 
 ```bash
-agent-computer-use click 'role=button index=0' -a Music    # first button
-agent-computer-use click 'role=button index=2' -a Music    # third button
+agent-cu click 'role=button index=0' -a Music    # first button
+agent-cu click 'role=button index=2' -a Music    # third button
 ```
 
 ### By depth
@@ -62,7 +62,7 @@ agent-computer-use click 'role=button index=2' -a Music    # third button
 Limit how deep to search:
 
 ```bash
-agent-computer-use find 'role=button depth=3' -a Calculator
+agent-cu find 'role=button depth=3' -a Calculator
 ```
 
 ## Chains (descendant selection)
@@ -70,9 +70,9 @@ agent-computer-use find 'role=button depth=3' -a Calculator
 Find elements inside other elements:
 
 ```bash
-agent-computer-use click 'id=sidebar >> role=button index=0' -a Safari
-agent-computer-use click 'name="Form" >> button "Submit"' -a Safari
-agent-computer-use click 'role=window >> role=group >> button "OK"' -a Finder
+agent-cu click 'id=sidebar >> role=button index=0' -a Safari
+agent-cu click 'name="Form" >> button "Submit"' -a Safari
+agent-cu click 'role=window >> role=group >> button "OK"' -a Finder
 ```
 
 ## CSS selectors (Electron apps only)
@@ -80,16 +80,16 @@ agent-computer-use click 'role=window >> role=group >> button "OK"' -a Finder
 For Electron apps with CDP:
 
 ```bash
-agent-computer-use click 'css=".submit-btn"' -a Slack
-agent-computer-use click 'css="#login-form button"' -a Cursor
+agent-cu click 'css=".submit-btn"' -a Slack
+agent-cu click 'css="#login-form button"' -a Cursor
 ```
 
 ## App scoping
 
 ```bash
-agent-computer-use click 'app="Safari" role=button name="Submit"'
+agent-cu click 'app="Safari" role=button name="Submit"'
 # equivalent to:
-agent-computer-use click 'role=button name="Submit"' -a Safari
+agent-cu click 'role=button name="Submit"' -a Safari
 ```
 
 ## Priority

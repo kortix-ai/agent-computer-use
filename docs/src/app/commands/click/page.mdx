@@ -5,7 +5,7 @@ import { PageHeader } from '@/components/docs';
 ## Usage
 
 ```bash
-agent-computer-use click [SELECTOR] [OPTIONS]
+agent-cu click [SELECTOR] [OPTIONS]
 ```
 
 ## Options
@@ -31,25 +31,25 @@ For single left-clicks, AXPress handles ~95% of cases headlessly. Double-click a
 
 ```bash
 # By ref (from snapshot)
-agent-computer-use click @e5
+agent-cu click @e5
 
 # By selector
-agent-computer-use click 'name="Login"' -a Safari
-agent-computer-use click 'id="play"' -a Music
-agent-computer-use click 'id~="track-123"' -a Music    # partial id match
-agent-computer-use click 'button "Submit"' -a Safari   # shorthand
+agent-cu click 'name="Login"' -a Safari
+agent-cu click 'id="play"' -a Music
+agent-cu click 'id~="track-123"' -a Music    # partial id match
+agent-cu click 'button "Submit"' -a Safari   # shorthand
 
 # Double-click (opens files, plays songs)
-agent-computer-use click @e5 --count 2
+agent-cu click @e5 --count 2
 
 # Right-click
-agent-computer-use click @e5 --button right
+agent-cu click @e5 --button right
 
 # Coordinate click (when no selector works)
-agent-computer-use click --x 500 --y 300 -a Finder
+agent-cu click --x 500 --y 300 -a Finder
 
 # Click then verify
-agent-computer-use click @e5 --expect 'name="Dashboard"'
+agent-cu click @e5 --expect 'name="Dashboard"'
 ```
 
 ## CDP (Electron apps)
@@ -57,7 +57,7 @@ agent-computer-use click @e5 --expect 'name="Dashboard"'
 For Electron apps (Slack, Cursor, VS Code), click routes through CDP automatically:
 
 ```bash
-agent-computer-use click @e5    # JS element.click() via CDP — fully headless
+agent-cu click @e5    # JS element.click() via CDP — fully headless
 ```
 
 No window activation, no mouse, no coordinates. The element is clicked via JavaScript.
@@ -67,4 +67,4 @@ No window activation, no mouse, no coordinates. The element is clicked via JavaS
 - Always snapshot first to get fresh refs
 - Use `id=` selectors when available — most stable across UI changes
 - Use `--count 2` for items that need double-click (file lists, track lists)
-- Check with `agent-computer-use get-value @e5` if unsure whether an element is clickable
+- Check with `agent-cu get-value @e5` if unsure whether an element is clickable

@@ -194,7 +194,7 @@ fn is_port_open(port: u16) -> bool {
 
 fn port_cache_path() -> PathBuf {
     let home = std::env::var("HOME").unwrap_or_else(|_| ".".into());
-    PathBuf::from(format!("{home}/.agent-computer-use/cdp-ports.json"))
+    PathBuf::from(format!("{home}/.agent-cu/cdp-ports.json"))
 }
 
 fn load_port_cache(app_name: &str) -> Option<u16> {

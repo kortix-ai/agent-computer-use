@@ -31,9 +31,9 @@ if [ $missing -eq 1 ]; then
   exit 1
 fi
 
-# Make sure agent-computer-use.js is there
-if [ ! -f "$BIN_DIR/agent-computer-use.js" ]; then
-  echo "❌ bin/agent-computer-use.js missing"
+# Make sure agent-cu.js is there
+if [ ! -f "$BIN_DIR/agent-cu.js" ]; then
+  echo "❌ bin/agent-cu.js missing"
   exit 1
 fi
 

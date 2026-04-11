@@ -43,7 +43,7 @@ pnpm bench:diff         # compare benchmark runs
 
 Rust code lives in `cli/`. The workspace has:
 
-- `agent-computer-use` (root) — binary, CLI args, handlers
+- `agent-computer-use` (crate) — produces the `agent-cu` binary, CLI args, handlers
 - `agent-computer-use-core` — platform-agnostic types (Platform trait, AccessibilityNode, Selector, element utilities)
 - `agent-computer-use-macos` — macOS backend (AXUIElement, CGEvent, batch `AXUIElementCopyMultipleAttributeValues`)
 - `agent-computer-use-cdp` — CDP bridge (auto-detects Electron, auto-relaunches with debug port, WebSocket connection caching)

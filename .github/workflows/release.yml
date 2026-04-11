@@ -59,7 +59,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p staged
-          cp "cli/target/${{ matrix.target }}/release/agent-computer-use${{ matrix.ext }}" "staged/${{ matrix.artifact }}"
+          cp "cli/target/${{ matrix.target }}/release/agent-cu${{ matrix.ext }}" "staged/${{ matrix.artifact }}"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -115,3 +115,6 @@ jobs:
           commit: 'chore: version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: 'true'

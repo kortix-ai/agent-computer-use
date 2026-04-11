@@ -11,12 +11,12 @@ mkdir -p "$BIN_DIR"
 if [ "$(uname)" = "Darwin" ]; then
   echo "→ macOS ARM64..."
   cd cli && cargo build --release --target aarch64-apple-darwin 2>/dev/null && cd ..
-  cp cli/target/aarch64-apple-darwin/release/agent-computer-use "$BIN_DIR/agent-computer-use-macos-arm64"
+  cp cli/target/aarch64-apple-darwin/release/agent-cu "$BIN_DIR/agent-computer-use-macos-arm64"
   echo "✅ agent-computer-use-macos-arm64"
 
   echo "→ macOS x64..."
   cd cli && cargo build --release --target x86_64-apple-darwin 2>/dev/null && cd ..
-  cp cli/target/x86_64-apple-darwin/release/agent-computer-use "$BIN_DIR/agent-computer-use-macos-x64"
+  cp cli/target/x86_64-apple-darwin/release/agent-cu "$BIN_DIR/agent-computer-use-macos-x64"
   echo "✅ agent-computer-use-macos-x64"
 else
   echo "⚠  Skipping macOS builds (not on macOS)"

@@ -17,18 +17,18 @@ Every AI agent should follow this loop:
 
 ```bash
 # 1. Snapshot
-agent-computer-use snapshot -a Calculator -i -c
+agent-cu snapshot -a Calculator -i -c
 # → reads output, finds @e2 is "All Clear", @e5 is "7", etc.
 
 # 2. Act
-agent-computer-use click 'id="AllClear"' -a Calculator
-agent-computer-use click 'id="Seven"' -a Calculator
-agent-computer-use click 'id="Multiply"' -a Calculator
-agent-computer-use click 'id="Eight"' -a Calculator
-agent-computer-use click 'id="Equals"' -a Calculator
+agent-cu click 'id="AllClear"' -a Calculator
+agent-cu click 'id="Seven"' -a Calculator
+agent-cu click 'id="Multiply"' -a Calculator
+agent-cu click 'id="Eight"' -a Calculator
+agent-cu click 'id="Equals"' -a Calculator
 
 # 3. Verify
-agent-computer-use text -a Calculator | grep -A1 "Edit field"
+agent-cu text -a Calculator | grep -A1 "Edit field"
 # → 56
 ```
 
@@ -43,12 +43,12 @@ Core workflow: snapshot → identify refs → act → re-snapshot to verify.
 
 Key commands:
 
-- agent-computer-use snapshot -a App -i -c # see interactive elements
-- agent-computer-use click @e5 # click by ref
-- agent-computer-use type "text" -s @e3 # type into element
-- agent-computer-use key cmd+k -a Slack # press key combo
-- agent-computer-use text -a App # read all text
-- agent-computer-use get-value @e5 # read element value
+- agent-cu snapshot -a App -i -c # see interactive elements
+- agent-cu click @e5 # click by ref
+- agent-cu type "text" -s @e3 # type into element
+- agent-cu key cmd+k -a Slack # press key combo
+- agent-cu text -a App # read all text
+- agent-cu get-value @e5 # read element value
 ```
 
 ## JSON output

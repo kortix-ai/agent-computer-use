@@ -41,7 +41,7 @@ repository.workspace = true
 description.workspace = true
 
 [[bin]]
-name = "agent-computer-use"
+name = "agent-cu"
 path = "src/main.rs"
 
 [dependencies]

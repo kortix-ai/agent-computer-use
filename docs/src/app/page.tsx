@@ -90,7 +90,7 @@ export default function Home() {
       <div className="mt-6 mb-2">
         <Step number={1} title="Snapshot">
           Capture every interactive element. Each gets a ref.
-          <CodeBlock>{`$ agent-computer-use snapshot -a Calculator -i -c
+          <CodeBlock>{`$ agent-cu snapshot -a Calculator -i -c
 [@e1] button "All Clear"   [@e5] button "7"
 [@e8] button "Multiply"    [@e11] button "6"
 [@e20] button "Equals"`}</CodeBlock>
@@ -98,14 +98,14 @@ export default function Home() {
 
         <Step number={2} title="Act">
           Use refs to click, type, or read.
-          <CodeBlock>{`$ agent-computer-use click @e5 && agent-computer-use click @e8 && agent-computer-use click @e11 && agent-computer-use click @e20
-$ agent-computer-use text -a Calculator
+          <CodeBlock>{`$ agent-cu click @e5 && agent-cu click @e8 && agent-cu click @e11 && agent-cu click @e20
+$ agent-cu text -a Calculator
 42`}</CodeBlock>
         </Step>
 
         <Step number={3} title="Re-snapshot">
           UI changed? Snapshot again for fresh refs.
-          <CodeBlock>{`$ agent-computer-use snapshot -a Calculator -i -c`}</CodeBlock>
+          <CodeBlock>{`$ agent-cu snapshot -a Calculator -i -c`}</CodeBlock>
         </Step>
       </div>
 

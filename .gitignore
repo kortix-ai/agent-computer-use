@@ -26,7 +26,7 @@ Desktop.ini
 *.dSYM/
 
 # Ref cache (user-specific)
-.agent-computer-use/
+.agent-cu/
 
 # Precompiled binaries (built by CI, not committed)
 bin/agent-computer-use-*

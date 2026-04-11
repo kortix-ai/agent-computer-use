@@ -15,7 +15,7 @@ The setup script:
 
 1. Installs Rust (if needed)
 2. Installs dependencies
-3. Builds and installs `agent-computer-use` to `~/.cargo/bin`
+3. Builds and installs the `agent-cu` binary to `~/.cargo/bin`
 4. Prompts for accessibility permissions
 
 ## Cargo
@@ -44,15 +44,15 @@ agent-computer-use needs accessibility access to control apps:
 Verify:
 
 ```bash
-agent-computer-use check-permissions
+agent-cu check-permissions
 # → Accessibility permissions: granted
 ```
 
 ## Verify installation
 
 ```bash
-agent-computer-use --version
-agent-computer-use apps           # should list running applications
+agent-cu --version
+agent-cu apps           # should list running applications
 ```
 
 ## Uninstall
@@ -67,10 +67,10 @@ If you installed via a Node package manager:
 
 <InstallTabs
   commands={[
-    { id: 'npm', label: 'npm', cmd: 'npm uninstall -g agent-computer-use' },
-    { id: 'pnpm', label: 'pnpm', cmd: 'pnpm remove -g agent-computer-use' },
-    { id: 'yarn', label: 'yarn', cmd: 'yarn global remove agent-computer-use' },
-    { id: 'bun', label: 'bun', cmd: 'bun remove -g agent-computer-use' },
+    { id: 'npm', label: 'npm', cmd: 'npm uninstall -g @kortix-ai/agent-computer-use' },
+    { id: 'pnpm', label: 'pnpm', cmd: 'pnpm remove -g @kortix-ai/agent-computer-use' },
+    { id: 'yarn', label: 'yarn', cmd: 'yarn global remove @kortix-ai/agent-computer-use' },
+    { id: 'bun', label: 'bun', cmd: 'bun remove -g @kortix-ai/agent-computer-use' },
   ]}
 />
 
