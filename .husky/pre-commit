@@ -4,7 +4,8 @@ echo "🔍 Running pre-commit checks..."
 echo ""
 
 echo "📝 Checking staged files..."
-npx lint-staged
+
+npx lint-staged --concurrent false
 if [ $? -ne 0 ]; then
   echo ""
   echo "❌ Lint-staged failed. Fix the issues above and try again."

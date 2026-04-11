@@ -1,7 +1,7 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
-// The selector_dsl module is private in the agent-click binary crate.
-// We test the public interface by importing agent_click_core types and
+// The selector_dsl module is private in the agent-computer-use binary crate.
+// We test the public interface by importing agent_computer_use_core types and
 // re-implementing the DSL parser inline for benchmarking purposes.
 // Since the binary re-exports the parse function, we include the
 // source directly.
@@ -11,7 +11,7 @@ mod selector_dsl;
 #[path = "../src/snapshot.rs"]
 mod snapshot;
 
-use agent_click_core::node::{AccessibilityNode, Point, Role, Size};
+use agent_computer_use_core::node::{AccessibilityNode, Point, Role, Size};
 
 // ---------------------------------------------------------------------------
 // Helpers

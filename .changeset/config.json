@@ -2,7 +2,7 @@
   "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
   "changelog": [
     "@changesets/changelog-github",
-    { "repo": "kortix-ai/agent-click" }
+    { "repo": "kortix-ai/agent-computer-use" }
   ],
   "commit": false,
   "fixed": [],

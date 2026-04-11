@@ -3,21 +3,23 @@
 import { useState } from 'react';
 import { CodeBlock } from './code-block';
 
-const managers = [
-  { id: 'npm', label: 'npm', cmd: 'npm install -g agent-click' },
-  { id: 'pnpm', label: 'pnpm', cmd: 'pnpm add -g agent-click' },
-  { id: 'yarn', label: 'yarn', cmd: 'yarn global add agent-click' },
-  { id: 'bun', label: 'bun', cmd: 'bun add -g agent-click' },
+type ManagerCommand = { id: string; label: string; cmd: string };
+
+const installCommands: ManagerCommand[] = [
+  { id: 'npm', label: 'npm', cmd: 'npm install -g @kortix-ai/agent-computer-use' },
+  { id: 'pnpm', label: 'pnpm', cmd: 'pnpm add -g @kortix-ai/agent-computer-use' },
+  { id: 'yarn', label: 'yarn', cmd: 'yarn global add @kortix-ai/agent-computer-use' },
+  { id: 'bun', label: 'bun', cmd: 'bun add -g @kortix-ai/agent-computer-use' },
 ];
 
-export function InstallTabs() {
-  const [active, setActive] = useState('npm');
-  const current = managers.find((m) => m.id === active)!;
+export function InstallTabs({ commands = installCommands }: { commands?: ManagerCommand[] }) {
+  const [active, setActive] = useState(commands[0].id);
+  const current = commands.find((m) => m.id === active) ?? commands[0];
 
   return (
     <div className="my-4">
       <div className="flex items-center gap-1 mb-0 bg-muted/60 rounded-t-lg border border-b-0 border-border px-1.5 py-2">
-        {managers.map((m) => (
+        {commands.map((m) => (
           <button
             key={m.id}
             onClick={() => setActive(m.id)}

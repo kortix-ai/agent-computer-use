@@ -35,7 +35,7 @@ export function CodeBlock({
   return (
     <div
       className={cn(
-        'group relative flex flex-col p-1 rounded-lg border border-border bg-muted/60 overflow-hidden my-4',
+        'group relative flex flex-col p-1 rounded-lg border border-border bg-muted overflow-hidden my-4',
         minimal && 'border-none p-0',
       )}
     >

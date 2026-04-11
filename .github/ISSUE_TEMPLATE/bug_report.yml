@@ -27,8 +27,8 @@ body:
       description: Minimal commands to reproduce the issue.
       render: bash
       placeholder: |
-        agent-click snapshot Calculator -i
-        agent-click click @e5
+        agent-computer-use snapshot Calculator -i
+        agent-computer-use click @e5
     validations:
       required: true
 
@@ -54,8 +54,8 @@ body:
   - type: input
     id: version
     attributes:
-      label: agent-click version
-      description: 'Run: agent-click --version'
+      label: agent-computer-use version
+      description: 'Run: agent-computer-use --version'
       placeholder: '0.1.0'
     validations:
       required: true

@@ -1,6 +1,6 @@
-use agent_click_core::action::{Action, MouseButton};
-use agent_click_core::selector::{Selector, SelectorChain};
-use agent_click_core::Platform;
+use agent_computer_use_core::action::{Action, MouseButton};
+use agent_computer_use_core::selector::{Selector, SelectorChain};
+use agent_computer_use_core::Platform;
 use serde::{Deserialize, Serialize};
 use std::time::Duration;
 
@@ -103,7 +103,7 @@ pub struct StepResult {
 pub struct WorkflowError {
     pub step: usize,
     pub description: String,
-    pub source: agent_click_core::Error,
+    pub source: agent_computer_use_core::Error,
 }
 
 impl std::fmt::Display for WorkflowError {
@@ -157,7 +157,7 @@ async fn execute_step(
     step: &Step,
     app: Option<&str>,
     timeout: Duration,
-) -> agent_click_core::Result<(String, Option<String>)> {
+) -> agent_computer_use_core::Result<(String, Option<String>)> {
     if let Some(ref dsl) = step.click {
         let chain = actions::parse_selector_with_app(dsl, app)?;
         let result = actions::click(platform, &chain, MouseButton::Left, 1, timeout).await?;
@@ -204,11 +204,11 @@ async fn execute_step(
         if let Some(ref at_dsl) = scroll_step.at {
             let chain = actions::parse_selector_with_app(at_dsl, app)?;
             let node = actions::find_element(platform, &chain, timeout).await?;
-            let center = node
-                .center()
-                .ok_or_else(|| agent_click_core::Error::PlatformError {
-                    message: "element has no position/size".into(),
-                })?;
+            let center =
+                node.center()
+                    .ok_or_else(|| agent_computer_use_core::Error::PlatformError {
+                        message: "element has no position/size".into(),
+                    })?;
             platform
                 .perform(&Action::MoveMouse {
                     selector: None,
@@ -266,7 +266,7 @@ async fn execute_step(
         return Ok(("ensure-text".into(), result.message));
     }
 
-    Err(agent_click_core::Error::PlatformError {
+    Err(agent_computer_use_core::Error::PlatformError {
         message: "step has no action defined".into(),
     })
 }

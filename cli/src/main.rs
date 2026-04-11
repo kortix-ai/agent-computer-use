@@ -7,7 +7,7 @@ pub mod snapshot;
 pub mod wait;
 pub mod workflow;
 
-use agent_click_core::Platform;
+use agent_computer_use_core::Platform;
 use clap::Parser;
 use cli::output::{ExpectOutcome, ExpectResult, RunError};
 use cli::{Cli, Output};
@@ -40,7 +40,7 @@ async fn main() {
         Err(RunError::Core(e)) => {
             output.error(&e);
             match e {
-                agent_click_core::Error::Timeout { .. } => std::process::exit(EXIT_TIMEOUT),
+                agent_computer_use_core::Error::Timeout { .. } => std::process::exit(EXIT_TIMEOUT),
                 _ => std::process::exit(1),
             }
         }
@@ -64,12 +64,12 @@ async fn main() {
 
 fn create_platform(cdp: bool, cdp_port: Option<u16>, no_cdp: bool) -> Box<dyn Platform> {
     let native = create_native_platform();
-    let cdp_config = agent_click_cdp::CdpConfig {
+    let cdp_config = agent_computer_use_cdp::CdpConfig {
         port: cdp_port,
         force: cdp,
         disabled: no_cdp,
     };
-    Box::new(agent_click_cdp::ElectronAwarePlatform::new(
+    Box::new(agent_computer_use_cdp::ElectronAwarePlatform::new(
         native, cdp_config,
     ))
 }
@@ -77,15 +77,15 @@ fn create_platform(cdp: bool, cdp_port: Option<u16>, no_cdp: bool) -> Box<dyn Pl
 fn create_native_platform() -> impl Platform {
     #[cfg(target_os = "macos")]
     {
-        agent_click_macos::MacOSPlatform::new()
+        agent_computer_use_macos::MacOSPlatform::new()
     }
     #[cfg(target_os = "linux")]
     {
-        agent_click_linux::LinuxPlatform::new()
+        agent_computer_use_linux::LinuxPlatform::new()
     }
     #[cfg(target_os = "windows")]
     {
-        agent_click_windows::WindowsPlatform::new()
+        agent_computer_use_windows::WindowsPlatform::new()
     }
     #[cfg(not(any(target_os = "macos", target_os = "linux", target_os = "windows")))]
     {

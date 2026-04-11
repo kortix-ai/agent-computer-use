@@ -1,6 +1,6 @@
-use agent_click_core::element;
-use agent_click_core::selector::SelectorChain;
-use agent_click_core::{AccessibilityNode, Error, Platform};
+use agent_computer_use_core::element;
+use agent_computer_use_core::selector::SelectorChain;
+use agent_computer_use_core::{AccessibilityNode, Error, Platform};
 use std::time::{Duration, Instant};
 
 pub async fn poll_for_element(
@@ -8,7 +8,7 @@ pub async fn poll_for_element(
     chain: &SelectorChain,
     timeout: Duration,
     interval: Duration,
-) -> agent_click_core::Result<AccessibilityNode> {
+) -> agent_computer_use_core::Result<AccessibilityNode> {
     let start = Instant::now();
 
     loop {
@@ -36,7 +36,7 @@ pub async fn poll_for_one_element(
     chain: &SelectorChain,
     timeout: Duration,
     interval: Duration,
-) -> agent_click_core::Result<AccessibilityNode> {
+) -> agent_computer_use_core::Result<AccessibilityNode> {
     let start = Instant::now();
 
     loop {
@@ -60,7 +60,7 @@ pub async fn poll_for_one_element(
 pub async fn find_by_chain(
     platform: &dyn Platform,
     chain: &SelectorChain,
-) -> agent_click_core::Result<Vec<AccessibilityNode>> {
+) -> agent_computer_use_core::Result<Vec<AccessibilityNode>> {
     let first = &chain.selectors[0];
 
     if let Some(ref path) = first.path {
@@ -84,7 +84,7 @@ const CHAIN_TREE_DEPTH: u32 = 15;
 async fn find_by_chain_in_tree(
     platform: &dyn Platform,
     chain: &SelectorChain,
-) -> agent_click_core::Result<Vec<AccessibilityNode>> {
+) -> agent_computer_use_core::Result<Vec<AccessibilityNode>> {
     let first = &chain.selectors[0];
     let depth = first.max_depth.unwrap_or(CHAIN_TREE_DEPTH);
     let tree = platform.tree(first.app.as_deref(), Some(depth)).await?;
@@ -109,7 +109,7 @@ async fn find_by_chain_in_tree(
 }
 
 fn apply_index(
-    selector: &agent_click_core::Selector,
+    selector: &agent_computer_use_core::Selector,
     results: Vec<AccessibilityNode>,
 ) -> Vec<AccessibilityNode> {
     match selector.index {
@@ -121,9 +121,9 @@ fn apply_index(
 
 async fn resolve_by_path(
     platform: &dyn Platform,
-    selector: &agent_click_core::Selector,
+    selector: &agent_computer_use_core::Selector,
     path: &[usize],
-) -> agent_click_core::Result<Option<AccessibilityNode>> {
+) -> agent_computer_use_core::Result<Option<AccessibilityNode>> {
     let tree = platform.tree(selector.app.as_deref(), None).await?;
 
     let node = match tree.walk_path(path) {
@@ -141,7 +141,7 @@ async fn resolve_by_path(
 pub async fn find_one_by_chain(
     platform: &dyn Platform,
     chain: &SelectorChain,
-) -> agent_click_core::Result<AccessibilityNode> {
+) -> agent_computer_use_core::Result<AccessibilityNode> {
     let mut results = find_by_chain(platform, chain).await?;
     match results.len() {
         0 => Err(Error::ElementNotFound {

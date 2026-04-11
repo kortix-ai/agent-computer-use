@@ -4,7 +4,7 @@ set -e
 echo "📦 Bundling binaries for npm publish..."
 
 BIN_DIR="$(pwd)/bin"
-REQUIRED=("agent-click-macos-arm64" "agent-click-macos-x64")
+REQUIRED=("agent-computer-use-macos-arm64" "agent-computer-use-macos-x64")
 
 missing=0
 for bin in "${REQUIRED[@]}"; do
@@ -17,7 +17,7 @@ for bin in "${REQUIRED[@]}"; do
 done
 
 # Optional (from Docker)
-for bin in agent-click-linux-x64 agent-click-linux-arm64 agent-click-windows-x64.exe; do
+for bin in agent-computer-use-linux-x64 agent-computer-use-linux-arm64 agent-computer-use-windows-x64.exe; do
   if [ -f "$BIN_DIR/$bin" ]; then
     echo "  ✅ $bin ($(du -h "$BIN_DIR/$bin" | awk '{print $1}'))"
   else
@@ -31,9 +31,9 @@ if [ $missing -eq 1 ]; then
   exit 1
 fi
 
-# Make sure agent-click.js is there
-if [ ! -f "$BIN_DIR/agent-click.js" ]; then
-  echo "❌ bin/agent-click.js missing"
+# Make sure agent-cu.js is there
+if [ ! -f "$BIN_DIR/agent-cu.js" ]; then
+  echo "❌ bin/agent-cu.js missing"
   exit 1
 fi
 

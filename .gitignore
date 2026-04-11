@@ -26,10 +26,10 @@ Desktop.ini
 *.dSYM/
 
 # Ref cache (user-specific)
-.agent-click/
+.agent-cu/
 
 # Precompiled binaries (built by CI, not committed)
-bin/agent-click-*
+bin/agent-computer-use-*
 
 # Personal
 TEST_CASES.md

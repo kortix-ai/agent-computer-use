@@ -2,7 +2,7 @@
 
 Execute multiple commands in a single process invocation.
 
-Pipe a JSON array of commands to `agent-click batch` to avoid per-command startup overhead.
+Pipe a JSON array of commands to `agent-cu batch` to avoid per-command startup overhead.
 
 ## Usage
 
@@ -13,7 +13,7 @@ echo '[
   ["click", "@e8"],
   ["click", "@e11"],
   ["click", "@e20"]
-]' | agent-click batch
+]' | agent-cu batch
 ```
 
 ## Stop on Error
@@ -21,7 +21,7 @@ echo '[
 Use `--bail` to stop at the first failure:
 
 ```bash
-echo '[["click","@e1"],["click","@e99"]]' | agent-click batch --bail
+echo '[["click","@e1"],["click","@e99"]]' | agent-cu batch --bail
 ```
 
 ## Interactive Explorer
@@ -29,9 +29,9 @@ echo '[["click","@e1"],["click","@e99"]]' | agent-click batch --bail
 Explore the accessibility tree in a TUI:
 
 ```bash
-agent-click observe Calculator        # TUI tree viewer
-agent-click observe Maps -d 5         # Custom depth
-agent-click observe Safari --refresh 1.0
+agent-cu observe Calculator        # TUI tree viewer
+agent-cu observe Maps -d 5         # Custom depth
+agent-cu observe Safari --refresh 1.0
 ```
 
 **Keys:** `j/k` navigate, `Enter` expand, `/` search, `y` copy selector, `q` quit

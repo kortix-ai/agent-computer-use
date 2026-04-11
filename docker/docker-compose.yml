@@ -11,14 +11,14 @@ services:
         set -e
         echo '→ Building Linux x86_64...'
         cargo zigbuild --release --target x86_64-unknown-linux-gnu
-        cp target/x86_64-unknown-linux-gnu/release/agent-click /output/agent-click-linux-x64
-        chmod +x /output/agent-click-linux-x64
+        cp target/x86_64-unknown-linux-gnu/release/agent-cu /output/agent-computer-use-linux-x64
+        chmod +x /output/agent-computer-use-linux-x64
         echo '✓ Linux x86_64 done'
 
         echo '→ Building Linux ARM64...'
         cargo zigbuild --release --target aarch64-unknown-linux-gnu
-        cp target/aarch64-unknown-linux-gnu/release/agent-click /output/agent-click-linux-arm64
-        chmod +x /output/agent-click-linux-arm64
+        cp target/aarch64-unknown-linux-gnu/release/agent-cu /output/agent-computer-use-linux-arm64
+        chmod +x /output/agent-computer-use-linux-arm64
         echo '✓ Linux ARM64 done'
       "
 
@@ -34,6 +34,6 @@ services:
         set -e
         echo '→ Building Windows x86_64...'
         cargo build --release --target x86_64-pc-windows-gnu
-        cp target/x86_64-pc-windows-gnu/release/agent-click.exe /output/agent-click-windows-x64.exe
+        cp target/x86_64-pc-windows-gnu/release/agent-cu.exe /output/agent-computer-use-windows-x64.exe
         echo '✓ Windows x86_64 done'
       "

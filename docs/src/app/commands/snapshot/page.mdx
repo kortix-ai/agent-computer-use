@@ -5,7 +5,7 @@ Dump the accessibility tree of any application and get refs you can use with eve
 ## Usage
 
 ```bash
-agent-click snapshot [OPTIONS]
+agent-cu snapshot [OPTIONS]
 ```
 
 ## Options
@@ -20,9 +20,9 @@ agent-click snapshot [OPTIONS]
 ## Examples
 
 ```bash
-agent-click snapshot -a Calculator -i -c        # interactive + compact (best for AI)
-agent-click snapshot -a Safari -i -c -d 8       # deeper tree
-agent-click snapshot -a Music                   # full tree (verbose)
+agent-cu snapshot -a Calculator -i -c        # interactive + compact (best for AI)
+agent-cu snapshot -a Safari -i -c -d 8       # deeper tree
+agent-cu snapshot -a Music                   # full tree (verbose)
 ```
 
 ## Output
@@ -43,15 +43,15 @@ application "Calculator"
 Each `[@eN]` is a ref you can use in other commands:
 
 ```bash
-agent-click click @e3          # clicks "7"
-agent-click get-value @e1      # reads "Delete" button info
+agent-cu click @e3          # clicks "7"
+agent-cu get-value @e1      # reads "Delete" button info
 ```
 
 ## Refs
 
 - Refs are assigned sequentially: `@e1`, `@e2`, `@e3`...
 - With `-i`, only interactive elements get refs (reduces noise)
-- Refs are cached in `~/.agent-click/refs.json` with a 5-minute staleness warning
+- Refs are cached in `~/.agent-cu/refs.json` with a 5-minute staleness warning
 - **Refs go stale after any UI change** — always re-snapshot after acting
 
 ## CDP (Electron apps)
@@ -59,7 +59,7 @@ agent-click get-value @e1      # reads "Delete" button info
 For Electron apps, snapshot merges the native window shell (menus, title bar) with the CDP DOM tree:
 
 ```bash
-agent-click snapshot -a Slack -i -c
+agent-cu snapshot -a Slack -i -c
 ```
 
 CDP elements get `id=__cdp:N` identifiers and are clickable via JavaScript.

@@ -5,7 +5,7 @@ import { roobertMono } from './fonts/roobert-mono';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'agent-click — Computer use CLI for AI agents',
+  title: 'agent-computer-use — Computer use CLI for AI agents',
   description:
     'Control any desktop app from the terminal. Click buttons, type text, read screens — all through the accessibility tree. Built in Rust.',
   keywords: [
@@ -19,20 +19,20 @@ export const metadata: Metadata = {
     'Electron',
     'CDP',
     'screen reader',
-    'agent-click',
+    'agent-computer-use',
   ],
-  metadataBase: new URL('https://agent-click.dev'),
+  metadataBase: new URL('https://agent-computer-use.dev'),
   openGraph: {
-    title: 'agent-click — Computer use CLI for AI agents',
+    title: 'agent-computer-use — Computer use CLI for AI agents',
     description:
       'Control any desktop app from the terminal. Click buttons, type text, read screens. Built in Rust.',
-    url: 'https://agent-click.dev',
-    siteName: 'agent-click',
+    url: 'https://agent-computer-use.dev',
+    siteName: 'agent-computer-use',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'agent-click — Computer use CLI for AI agents',
+    title: 'agent-computer-use — Computer use CLI for AI agents',
     description:
       'Control any desktop app from the terminal. Click buttons, type text, read screens. Built in Rust.',
   },

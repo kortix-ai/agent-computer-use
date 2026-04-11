@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const pages = [
-  { href: '/', title: 'What is agent-click?' },
+  { href: '/', title: 'Introduction' },
   { href: '/quickstart', title: 'Quick Start' },
   { href: '/installation', title: 'Installation' },
   { href: '/snapshots', title: 'Snapshots & Refs' },

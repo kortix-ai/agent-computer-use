@@ -1,4 +1,4 @@
-use agent_click_core::action::ActionResult;
+use agent_computer_use_core::action::ActionResult;
 use serde::Serialize;
 
 pub struct Output {
@@ -27,7 +27,7 @@ impl Output {
         }
     }
 
-    pub fn error(&self, err: &agent_click_core::Error) {
+    pub fn error(&self, err: &agent_computer_use_core::Error) {
         if self.compact || !self.human {
             let error_json = serde_json::json!({
                 "error": true,
@@ -55,34 +55,34 @@ pub struct ExpectOutcome {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub message: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub element: Option<agent_click_core::AccessibilityNode>,
+    pub element: Option<agent_computer_use_core::AccessibilityNode>,
 }
 
 pub enum RunError {
-    Core(agent_click_core::Error),
+    Core(agent_computer_use_core::Error),
     ExpectFailed {
         action_result: ActionResult,
         message: String,
     },
 }
 
-impl From<agent_click_core::Error> for RunError {
-    fn from(e: agent_click_core::Error) -> Self {
+impl From<agent_computer_use_core::Error> for RunError {
+    fn from(e: agent_computer_use_core::Error) -> Self {
         RunError::Core(e)
     }
 }
 
-fn error_type_name(err: &agent_click_core::Error) -> &'static str {
+fn error_type_name(err: &agent_computer_use_core::Error) -> &'static str {
     match err {
-        agent_click_core::Error::ElementNotFound { .. } => "element_not_found",
-        agent_click_core::Error::AmbiguousSelector { .. } => "ambiguous_selector",
-        agent_click_core::Error::ActionNotSupported { .. } => "action_not_supported",
-        agent_click_core::Error::PermissionDenied { .. } => "permission_denied",
-        agent_click_core::Error::ApplicationNotFound { .. } => "application_not_found",
-        agent_click_core::Error::PlatformError { .. } => "platform_error",
-        agent_click_core::Error::UnsupportedPlatform { .. } => "unsupported_platform",
-        agent_click_core::Error::Timeout { .. } => "timeout",
-        agent_click_core::Error::Serialization(_) => "serialization",
-        agent_click_core::Error::Io(_) => "io",
+        agent_computer_use_core::Error::ElementNotFound { .. } => "element_not_found",
+        agent_computer_use_core::Error::AmbiguousSelector { .. } => "ambiguous_selector",
+        agent_computer_use_core::Error::ActionNotSupported { .. } => "action_not_supported",
+        agent_computer_use_core::Error::PermissionDenied { .. } => "permission_denied",
+        agent_computer_use_core::Error::ApplicationNotFound { .. } => "application_not_found",
+        agent_computer_use_core::Error::PlatformError { .. } => "platform_error",
+        agent_computer_use_core::Error::UnsupportedPlatform { .. } => "unsupported_platform",
+        agent_computer_use_core::Error::Timeout { .. } => "timeout",
+        agent_computer_use_core::Error::Serialization(_) => "serialization",
+        agent_computer_use_core::Error::Io(_) => "io",
     }
 }

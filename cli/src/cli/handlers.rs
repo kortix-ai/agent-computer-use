@@ -1,7 +1,7 @@
-use agent_click_core::action::{Action, ActionResult, MouseButton};
-use agent_click_core::node::Point;
-use agent_click_core::selector::{Selector, SelectorChain};
-use agent_click_core::Platform;
+use agent_computer_use_core::action::{Action, ActionResult, MouseButton};
+use agent_computer_use_core::node::Point;
+use agent_computer_use_core::selector::{Selector, SelectorChain};
+use agent_computer_use_core::Platform;
 use std::time::Duration;
 
 use crate::actions;
@@ -134,14 +134,14 @@ pub async fn run(
                 let chain = actions::parse_selector_with_app(&sel, app.as_deref())?;
                 let node = actions::find_element(platform, &chain, timeout).await?;
                 node.center()
-                    .ok_or_else(|| agent_click_core::Error::PlatformError {
+                    .ok_or_else(|| agent_computer_use_core::Error::PlatformError {
                         message: "drag source has no position".into(),
                     })?
             } else {
                 match (from_x, from_y) {
                     (Some(x), Some(y)) => Point { x, y },
                     _ => {
-                        return Err(agent_click_core::Error::PlatformError {
+                        return Err(agent_computer_use_core::Error::PlatformError {
                             message: "drag requires either a selector or --from-x/--from-y".into(),
                         }
                         .into())
@@ -153,14 +153,14 @@ pub async fn run(
                 let chain = actions::parse_selector_with_app(&sel, app.as_deref())?;
                 let node = actions::find_element(platform, &chain, timeout).await?;
                 node.center()
-                    .ok_or_else(|| agent_click_core::Error::PlatformError {
+                    .ok_or_else(|| agent_computer_use_core::Error::PlatformError {
                         message: "drag target has no position".into(),
                     })?
             } else {
                 match (to_x, to_y) {
                     (Some(x), Some(y)) => Point { x, y },
                     _ => {
-                        return Err(agent_click_core::Error::PlatformError {
+                        return Err(agent_computer_use_core::Error::PlatformError {
                             message: "drag requires either a selector or --to-x/--to-y".into(),
                         }
                         .into())
@@ -184,7 +184,7 @@ pub async fn run(
         Command::ScrollTo { selector, app } => {
             let chain = actions::parse_selector_with_app(&selector, app.as_deref())?;
             let node = actions::find_element(platform, &chain, timeout).await?;
-            let sel = agent_click_core::Selector {
+            let sel = agent_computer_use_core::Selector {
                 app: chain.first().app.clone(),
                 role: Some(node.role.clone()),
                 name: node.name.clone(),
@@ -226,7 +226,7 @@ pub async fn run(
                 let node = actions::find_element(platform, &chain, timeout).await?;
                 let center =
                     node.center()
-                        .ok_or_else(|| agent_click_core::Error::PlatformError {
+                        .ok_or_else(|| agent_computer_use_core::Error::PlatformError {
                             message: "element has no position/size".into(),
                         })?;
                 platform
@@ -298,9 +298,10 @@ pub async fn run(
             app: cli_app,
             dry_run,
         } => {
-            let contents = std::fs::read_to_string(&file).map_err(agent_click_core::Error::Io)?;
+            let contents =
+                std::fs::read_to_string(&file).map_err(agent_computer_use_core::Error::Io)?;
             let wf: workflow::Workflow = serde_yaml::from_str(&contents).map_err(|e| {
-                agent_click_core::Error::PlatformError {
+                agent_computer_use_core::Error::PlatformError {
                     message: format!("invalid workflow YAML: {e}"),
                 }
             })?;
@@ -317,7 +318,7 @@ pub async fn run(
             match workflow::execute(platform, &wf, cli_app.as_deref(), timeout).await {
                 Ok(results) => output.print(&results),
                 Err(e) => {
-                    return Err(agent_click_core::Error::PlatformError {
+                    return Err(agent_computer_use_core::Error::PlatformError {
                         message: format!("workflow failed: {e}"),
                     }
                     .into());
@@ -377,7 +378,7 @@ pub async fn run(
         }
 
         Command::MoveWindow { app, x, y } => {
-            let app_name = app.ok_or_else(|| agent_click_core::Error::PlatformError {
+            let app_name = app.ok_or_else(|| agent_computer_use_core::Error::PlatformError {
                 message: "move-window requires --app".into(),
             })?;
             let moved = platform.move_window(&app_name, x, y).await?;
@@ -394,7 +395,7 @@ pub async fn run(
         }
 
         Command::ResizeWindow { app, width, height } => {
-            let app_name = app.ok_or_else(|| agent_click_core::Error::PlatformError {
+            let app_name = app.ok_or_else(|| agent_computer_use_core::Error::PlatformError {
                 message: "resize-window requires --app".into(),
             })?;
             let resized = platform.resize_window(&app_name, width, height).await?;
@@ -427,7 +428,12 @@ pub async fn run(
 
         Command::Completions { shell } => {
             let mut cmd = <Cli as clap::CommandFactory>::command();
-            clap_complete::generate(shell, &mut cmd, "agent-click", &mut std::io::stdout());
+            clap_complete::generate(
+                shell,
+                &mut cmd,
+                "agent-computer-use",
+                &mut std::io::stdout(),
+            );
         }
 
         Command::CheckPermissions => {
@@ -477,7 +483,7 @@ async fn output_or_expect(
                     });
                     Ok(())
                 }
-                Err(agent_click_core::Error::Timeout { seconds, message }) => {
+                Err(agent_computer_use_core::Error::Timeout { seconds, message }) => {
                     Err(RunError::ExpectFailed {
                         action_result: result,
                         message: format!("expect timed out after {seconds}s: {message}"),

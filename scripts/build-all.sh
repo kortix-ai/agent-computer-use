@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "🔨 Building agent-click for all platforms..."
+echo "🔨 Building agent-computer-use for all platforms..."
 echo ""
 
 BIN_DIR="$(pwd)/bin"
@@ -11,13 +11,13 @@ mkdir -p "$BIN_DIR"
 if [ "$(uname)" = "Darwin" ]; then
   echo "→ macOS ARM64..."
   cd cli && cargo build --release --target aarch64-apple-darwin 2>/dev/null && cd ..
-  cp cli/target/aarch64-apple-darwin/release/agent-click "$BIN_DIR/agent-click-macos-arm64"
-  echo "✅ agent-click-macos-arm64"
+  cp cli/target/aarch64-apple-darwin/release/agent-cu "$BIN_DIR/agent-computer-use-macos-arm64"
+  echo "✅ agent-computer-use-macos-arm64"
 
   echo "→ macOS x64..."
   cd cli && cargo build --release --target x86_64-apple-darwin 2>/dev/null && cd ..
-  cp cli/target/x86_64-apple-darwin/release/agent-click "$BIN_DIR/agent-click-macos-x64"
-  echo "✅ agent-click-macos-x64"
+  cp cli/target/x86_64-apple-darwin/release/agent-cu "$BIN_DIR/agent-computer-use-macos-x64"
+  echo "✅ agent-computer-use-macos-x64"
 else
   echo "⚠  Skipping macOS builds (not on macOS)"
 fi
@@ -33,4 +33,4 @@ fi
 
 echo ""
 echo "📦 Built binaries:"
-ls -lh "$BIN_DIR"/agent-click-* 2>/dev/null || echo "   (none)"
+ls -lh "$BIN_DIR"/agent-computer-use-* 2>/dev/null || echo "   (none)"

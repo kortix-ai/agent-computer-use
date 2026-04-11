@@ -32,7 +32,7 @@ const releases: Release[] = [
           'Clicks send mouseMoved first (3-event sequence)',
           'Auto scroll-into-view before clicking',
           'type clears field by default (--append to keep)',
-          'Shared element utilities in agent-click-core',
+          'Shared element utilities in agent-computer-use-core',
         ],
       },
       {

@@ -1,6 +1,6 @@
 # Global Options
 
-These flags can be added to any agent-click command.
+These flags can be added to any agent-cu command.
 
 ## Output format
 
@@ -11,16 +11,16 @@ These flags can be added to any agent-click command.
 | `--compact` | Compact single-line JSON |
 
 ```bash
-agent-click click @e5                    # {"success": true, "message": "pressed ..."}
-agent-click click @e5 --human            # pressed "7" at (453, 354)
-agent-click click @e5 --compact          # {"success":true,"message":"pressed ..."}
+agent-cu click @e5                    # {"success": true, "message": "pressed ..."}
+agent-cu click @e5 --human            # pressed "7" at (453, 354)
+agent-cu click @e5 --compact          # {"success":true,"message":"pressed ..."}
 ```
 
 ## Timeout
 
 ```bash
-agent-click wait-for 'name="Dashboard"' --timeout 15
-agent-click click @e5 --expect 'name="Done"' --timeout 10
+agent-cu wait-for 'name="Dashboard"' --timeout 15
+agent-cu click @e5 --expect 'name="Done"' --timeout 10
 ```
 
 Default: 5 seconds. Applies to `wait-for`, `--expect`, and element polling.
@@ -28,7 +28,7 @@ Default: 5 seconds. Applies to `wait-for`, `--expect`, and element polling.
 ## Verbose
 
 ```bash
-agent-click click @e5 -v
+agent-cu click @e5 -v
 ```
 
 Shows debug traces: selector resolution, element lookup, timing, CDP connection status.
@@ -44,7 +44,7 @@ Shows debug traces: selector resolution, element lookup, timing, CDP connection 
 CDP is automatic for Electron apps — you rarely need these flags. They're power-user overrides.
 
 ```bash
-agent-click snapshot -a Slack -i -c              # auto-detects Electron, uses CDP
-agent-click snapshot -a MyApp --cdp --cdp-port 9222   # force CDP with specific port
-agent-click snapshot -a Slack --no-cdp           # disable CDP, native only
+agent-cu snapshot -a Slack -i -c              # auto-detects Electron, uses CDP
+agent-cu snapshot -a MyApp --cdp --cdp-port 9222   # force CDP with specific port
+agent-cu snapshot -a Slack --no-cdp           # disable CDP, native only
 ```

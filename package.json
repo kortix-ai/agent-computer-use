@@ -1,12 +1,16 @@
 {
-  "name": "agent-click",
-  "version": "0.1.2",
+  "name": "@kortix-ai/agent-computer-use",
+  "version": "0.1.0",
   "description": "Computer use CLI for AI agents",
   "license": "MIT",
-  "repository": "https://github.com/kortix-ai/agent-click",
+  "repository": "https://github.com/kortix-ai/agent-computer-use",
   "packageManager": "pnpm@10.7.0",
   "bin": {
-    "agent-click": "./bin/agent-click.js"
+    "agent-cu": "./bin/agent-cu.js"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "files": [
     "bin",

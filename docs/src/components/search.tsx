@@ -39,7 +39,7 @@ interface SearchEntry {
 
 const quickLinks = [
   {
-    title: 'What is agent-click?',
+    title: 'Introduction',
     href: '/',
     icon: BookOpen,
     group: 'Getting Started',

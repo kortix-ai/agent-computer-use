@@ -3,7 +3,8 @@ node_modules
 out
 cli/target
 target
-bin/agent-click-*
+bin/agent-computer-use-*
 *.rs
 pnpm-lock.yaml
 .changeset
+docs/src/generated

@@ -1,5 +1,5 @@
 # Search for a song in Apple Music
-# Usage: agent-click run examples/music-search.yaml
+# Usage: agent-computer-use run examples/music-search.yaml
 #
 # Demonstrates:
 # - App launching with wait

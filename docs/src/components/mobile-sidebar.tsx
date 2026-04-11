@@ -25,7 +25,7 @@ const navigation = [
   {
     title: 'Getting Started',
     items: [
-      { title: 'What is agent-click?', href: '/', icon: BookOpen },
+      { title: 'Introduction', href: '/', icon: BookOpen },
       { title: 'Quick Start', href: '/quickstart', icon: Rocket },
       { title: 'Installation', href: '/installation', icon: Terminal },
     ],

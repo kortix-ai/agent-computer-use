@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in agent-click, please report it responsibly:
+If you discover a security vulnerability in agent-computer-use, please report it responsibly:
 
 1. **Do not** open a public GitHub issue
 2. Email the maintainers directly (see Cargo.toml for contact)
@@ -12,8 +12,8 @@ We will respond within 48 hours and issue a fix as soon as possible.
 
 ## Scope
 
-agent-click requires Accessibility permissions to function. This is an OS-level
-security boundary — the user must explicitly grant access. agent-click does not:
+agent-computer-use requires Accessibility permissions to function. This is an OS-level
+security boundary — the user must explicitly grant access. agent-computer-use does not:
 
 - Transmit data over the network
 - Store credentials or sensitive data (refs cache contains only element names/roles)
@@ -22,7 +22,7 @@ security boundary — the user must explicitly grant access. agent-click does no
 
 ## Permissions
 
-agent-click uses the following OS permissions:
+agent-computer-use uses the following OS permissions:
 
 | Permission    | Why                                               | Platform |
 | ------------- | ------------------------------------------------- | -------- |

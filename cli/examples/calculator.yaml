@@ -1,5 +1,5 @@
 # Calculator: 7 x 6 = 42
-# Usage: agent-click run examples/calculator.yaml
+# Usage: agent-computer-use run examples/calculator.yaml
 
 app: Calculator
 timeout: 5

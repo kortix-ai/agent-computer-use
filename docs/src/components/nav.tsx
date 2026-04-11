@@ -39,7 +39,7 @@ export function Nav() {
               height={16}
               className="h-4 w-auto dark:hidden"
             />
-            <span className="text-xl font-semibold tracking-tight">agent-click</span>
+            <span className="text-xl font-semibold tracking-tight">agent-computer-use</span>
             <div className="h-3.5 w-px bg-border/60 hidden sm:block" />
             <span className="text-[11px] text-muted-foreground/50 hidden sm:block">by Kortix</span>
           </Link>
@@ -52,7 +52,7 @@ export function Nav() {
           <MobileSidebar />
           <ThemeToggle />
           <a
-            href="https://github.com/kortix-ai/agent-click"
+            href="https://github.com/kortix-ai/agent-computer-use"
             className="flex h-7 w-7 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground hover:bg-foreground/[0.05]"
           >
             <GithubIcon className="h-4 w-4" />

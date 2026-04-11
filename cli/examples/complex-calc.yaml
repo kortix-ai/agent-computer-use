@@ -1,5 +1,5 @@
 # Calculator: (123 + 456) x 7 - 89 = 3964
-# Usage: agent-click run examples/complex-calc.yaml
+# Usage: agent-computer-use run examples/complex-calc.yaml
 
 app: Calculator
 timeout: 5

@@ -18,7 +18,7 @@ body:
       render: bash
       placeholder: |
         # Example usage
-        agent-click new-command --flag value
+        agent-computer-use new-command --flag value
     validations:
       required: true
 

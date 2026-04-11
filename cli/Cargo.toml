@@ -7,19 +7,19 @@ version = "0.1.0"
 edition = "2021"
 rust-version = "1.82"
 license = "MIT"
-repository = "https://github.com/kortix-ai/agent-click"
-homepage = "https://github.com/kortix-ai/agent-click"
+repository = "https://github.com/kortix-ai/agent-computer-use"
+homepage = "https://github.com/kortix-ai/agent-computer-use"
 description = "Computer use CLI for AI agents — control any app via the accessibility tree"
 keywords = ["accessibility", "automation", "cli", "desktop", "ai-agent"]
 categories = ["command-line-utilities", "accessibility", "os"]
 
 [workspace.dependencies]
-agent-click-core = { path = "crates/agent-click-core" }
-agent-click-macos = { path = "crates/agent-click-macos" }
-agent-click-windows = { path = "crates/agent-click-windows" }
-agent-click-linux = { path = "crates/agent-click-linux" }
-agent-click-mcp = { path = "crates/agent-click-mcp" }
-agent-click-cdp = { path = "crates/agent-click-cdp" }
+agent-computer-use-core = { path = "crates/agent-computer-use-core" }
+agent-computer-use-macos = { path = "crates/agent-computer-use-macos" }
+agent-computer-use-windows = { path = "crates/agent-computer-use-windows" }
+agent-computer-use-linux = { path = "crates/agent-computer-use-linux" }
+agent-computer-use-mcp = { path = "crates/agent-computer-use-mcp" }
+agent-computer-use-cdp = { path = "crates/agent-computer-use-cdp" }
 
 # Shared dependencies
 serde = { version = "1", features = ["derive"] }
@@ -32,7 +32,7 @@ clap = { version = "4", features = ["derive"] }
 clap_complete = "4"
 
 [package]
-name = "agent-click"
+name = "agent-computer-use"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -41,11 +41,11 @@ repository.workspace = true
 description.workspace = true
 
 [[bin]]
-name = "agent-click"
+name = "agent-cu"
 path = "src/main.rs"
 
 [dependencies]
-agent-click-core = { workspace = true }
+agent-computer-use-core = { workspace = true }
 clap = { workspace = true }
 clap_complete = { workspace = true }
 serde = { workspace = true }
@@ -53,19 +53,19 @@ serde_json = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 tokio = { workspace = true }
-agent-click-cdp = { workspace = true }
+agent-computer-use-cdp = { workspace = true }
 serde_yaml = "0.9"
 ratatui = "0.29"
 crossterm = "0.28"
 
 [target.'cfg(target_os = "macos")'.dependencies]
-agent-click-macos = { workspace = true }
+agent-computer-use-macos = { workspace = true }
 
 [target.'cfg(target_os = "linux")'.dependencies]
-agent-click-linux = { workspace = true }
+agent-computer-use-linux = { workspace = true }
 
 [target.'cfg(target_os = "windows")'.dependencies]
-agent-click-windows = { workspace = true }
+agent-computer-use-windows = { workspace = true }
 
 [dev-dependencies]
 criterion = { version = "0.5", features = ["html_reports"] }

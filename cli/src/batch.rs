@@ -1,4 +1,4 @@
-use agent_click_core::Platform;
+use agent_computer_use_core::Platform;
 use clap::Parser;
 use serde::Serialize;
 use std::time::Duration;
@@ -21,7 +21,7 @@ pub fn execute_batch<'a>(
     timeout: Duration,
     bail: bool,
 ) -> std::pin::Pin<
-    Box<dyn std::future::Future<Output = agent_click_core::Result<Vec<BatchResult>>> + 'a>,
+    Box<dyn std::future::Future<Output = agent_computer_use_core::Result<Vec<BatchResult>>> + 'a>,
 > {
     Box::pin(async move { execute_batch_inner(platform, output, timeout, bail).await })
 }
@@ -31,12 +31,14 @@ async fn execute_batch_inner(
     output: &Output,
     timeout: Duration,
     bail: bool,
-) -> agent_click_core::Result<Vec<BatchResult>> {
-    let stdin = std::io::read_to_string(std::io::stdin()).map_err(agent_click_core::Error::Io)?;
-    let commands: Vec<Vec<String>> =
-        serde_json::from_str(&stdin).map_err(|e| agent_click_core::Error::PlatformError {
+) -> agent_computer_use_core::Result<Vec<BatchResult>> {
+    let stdin =
+        std::io::read_to_string(std::io::stdin()).map_err(agent_computer_use_core::Error::Io)?;
+    let commands: Vec<Vec<String>> = serde_json::from_str(&stdin).map_err(|e| {
+        agent_computer_use_core::Error::PlatformError {
             message: format!("invalid batch JSON: {e} — expected [[\"cmd\", \"arg\"], ...]"),
-        })?;
+        }
+    })?;
 
     let mut results = Vec::new();
 
@@ -45,7 +47,7 @@ async fn execute_batch_inner(
             continue;
         }
 
-        let mut full_args = vec!["agent-click".to_string()];
+        let mut full_args = vec!["agent-computer-use".to_string()];
         full_args.extend(cmd_args.clone());
 
         let parsed = match Cli::try_parse_from(&full_args) {

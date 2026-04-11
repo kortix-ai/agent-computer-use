@@ -1,6 +1,6 @@
-use agent_click_core::action::{Action, ActionResult, MouseButton, ScrollDirection};
-use agent_click_core::selector::{Selector, SelectorChain};
-use agent_click_core::Platform;
+use agent_computer_use_core::action::{Action, ActionResult, MouseButton, ScrollDirection};
+use agent_computer_use_core::selector::{Selector, SelectorChain};
+use agent_computer_use_core::Platform;
 use std::time::Duration;
 
 use crate::selector_dsl;
@@ -19,17 +19,17 @@ fn is_cdp_element(selector: &Selector) -> bool {
         .is_some_and(|id| id.starts_with(CDP_ID_PREFIX))
 }
 
-fn is_cdp_node(node: &agent_click_core::AccessibilityNode) -> bool {
+fn is_cdp_node(node: &agent_computer_use_core::AccessibilityNode) -> bool {
     node.id
         .as_ref()
         .is_some_and(|id| id.starts_with(CDP_ID_PREFIX))
 }
 
-pub fn parse_selector(dsl: &str) -> Result<SelectorChain, agent_click_core::Error> {
+pub fn parse_selector(dsl: &str) -> Result<SelectorChain, agent_computer_use_core::Error> {
     if dsl.starts_with('@') {
         return snapshot::resolve_ref(dsl);
     }
-    selector_dsl::parse(dsl).map_err(|e| agent_click_core::Error::PlatformError {
+    selector_dsl::parse(dsl).map_err(|e| agent_computer_use_core::Error::PlatformError {
         message: format!("invalid selector: {e}"),
     })
 }
@@ -37,7 +37,7 @@ pub fn parse_selector(dsl: &str) -> Result<SelectorChain, agent_click_core::Erro
 pub fn parse_selector_with_app(
     dsl: &str,
     app: Option<&str>,
-) -> Result<SelectorChain, agent_click_core::Error> {
+) -> Result<SelectorChain, agent_computer_use_core::Error> {
     let mut chain = parse_selector(dsl)?;
     if let Some(a) = app {
         if chain.selectors[0].app.is_none() {
@@ -51,12 +51,12 @@ pub async fn find_element(
     platform: &dyn Platform,
     chain: &SelectorChain,
     timeout: Duration,
-) -> agent_click_core::Result<agent_click_core::AccessibilityNode> {
+) -> agent_computer_use_core::Result<agent_computer_use_core::AccessibilityNode> {
     wait::poll_for_one_element(platform, chain, timeout, POLL_INTERVAL).await
 }
 
 fn selector_from_node(
-    node: &agent_click_core::AccessibilityNode,
+    node: &agent_computer_use_core::AccessibilityNode,
     chain: &SelectorChain,
 ) -> Selector {
     Selector {
@@ -79,7 +79,7 @@ pub async fn click(
     button: MouseButton,
     count: u32,
     timeout: Duration,
-) -> agent_click_core::Result<ActionResult> {
+) -> agent_computer_use_core::Result<ActionResult> {
     // CDP elements — always JS click, no coordinates
     if is_cdp_element(chain.first()) && button == MouseButton::Left {
         let sel = chain.first().clone();
@@ -94,7 +94,7 @@ pub async fn click(
                 });
             }
             Ok(false) => {
-                return Err(agent_click_core::Error::PlatformError {
+                return Err(agent_computer_use_core::Error::PlatformError {
                     message: format!("CDP press failed for {:?}", name),
                 })
             }
@@ -160,11 +160,11 @@ pub async fn click(
 
     let center = node
         .center()
-        .ok_or_else(|| agent_click_core::Error::PlatformError {
+        .ok_or_else(|| agent_computer_use_core::Error::PlatformError {
             message: "element has no position/size and AXPress is unsupported".into(),
         })?;
 
-    agent_click_core::element::check_visible(&node)?;
+    agent_computer_use_core::element::check_visible(&node)?;
 
     if count > 1 || button != MouseButton::Left {
         tracing::debug!(
@@ -195,7 +195,7 @@ pub async fn type_into(
     text: &str,
     submit: bool,
     timeout: Duration,
-) -> agent_click_core::Result<ActionResult> {
+) -> agent_computer_use_core::Result<ActionResult> {
     if is_cdp_element(chain.first()) {
         let sel = chain.first().clone();
         match platform.set_value(&sel, text).await {
@@ -347,8 +347,8 @@ pub async fn type_into(
         .await
 }
 
-pub fn parse_direction(direction: &str) -> agent_click_core::Result<ScrollDirection> {
-    ScrollDirection::parse(direction).ok_or_else(|| agent_click_core::Error::PlatformError {
+pub fn parse_direction(direction: &str) -> agent_computer_use_core::Result<ScrollDirection> {
+    ScrollDirection::parse(direction).ok_or_else(|| agent_computer_use_core::Error::PlatformError {
         message: format!(
             "invalid scroll direction: '{}' (use up/down/left/right)",
             direction

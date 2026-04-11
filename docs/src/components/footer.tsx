@@ -20,13 +20,13 @@ export function Footer() {
               height={9}
               className="h-[9px] w-auto dark:hidden opacity-30"
             />
-            <span>agent-click by Kortix</span>
+            <span>agent-computer-use by Kortix</span>
             <span>&middot;</span>
             <span>MIT</span>
           </div>
           <div className="flex items-center gap-3">
             <a
-              href="https://github.com/kortix-ai/agent-click"
+              href="https://github.com/kortix-ai/agent-computer-use"
               className="hover:text-muted-foreground transition-colors"
             >
               GitHub
@@ -35,7 +35,7 @@ export function Footer() {
               Changelog
             </a>
             <a
-              href="https://www.npmjs.com/package/agent-click"
+              href="https://www.npmjs.com/package/agent-computer-use"
               className="hover:text-muted-foreground transition-colors"
             >
               npm

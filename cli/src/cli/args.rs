@@ -2,20 +2,20 @@ use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
 #[command(
-    name = "agent-click",
+    name = "agent-cu",
     version,
     about = "Computer use for AI agents",
-    long_about = "agent-click — control any desktop app from the command line via the accessibility tree.\n\n\
+    long_about = "agent-computer-use — control any desktop app from the command line via the accessibility tree.\n\n\
                   Click buttons, type text, read screens — all without stealing focus.\n\
                   Built for AI agents. Works for humans too.\n\n\
                   All output is JSON by default (machine-readable). Use --human for pretty output.",
     after_help = "Quick start:\n  \
-                  agent-click apps                              # list running apps\n  \
-                  agent-click snapshot Calculator -i -c          # interactive elements with refs\n  \
-                  agent-click click @e5                          # click by ref\n  \
-                  agent-click type @e3 \"hello\"                   # type into element\n  \
-                  agent-click key cmd+c --app Safari             # press key combo\n\n\
-                  Docs: https://github.com/kortix-ai/agent-click"
+                  agent-cu apps                              # list running apps\n  \
+                  agent-cu snapshot Calculator -i -c          # interactive elements with refs\n  \
+                  agent-cu click @e5                          # click by ref\n  \
+                  agent-cu type @e3 \"hello\"                   # type into element\n  \
+                  agent-cu key cmd+c --app Safari             # press key combo\n\n\
+                  Docs: https://github.com/kortix-ai/agent-computer-use"
 )]
 pub struct Cli {
     #[command(subcommand)]
@@ -71,9 +71,9 @@ pub enum Command {
     /// Returns all matching elements as a JSON array.
     ///
     /// Examples:
-    ///   agent-click find 'role=button' --app Calculator
-    ///   agent-click find 'name~="Submit"' --app Safari
-    ///   agent-click find 'id="login-btn"' -d 5
+    ///   agent-cu find 'role=button' --app Calculator
+    ///   agent-cu find 'name~="Submit"' --app Safari
+    ///   agent-cu find 'id="login-btn"' -d 5
     #[command(alias = "f")]
     Find {
         /// Selector DSL expression or @ref
@@ -92,10 +92,10 @@ pub enum Command {
     /// Falls back to coordinate click if AXPress is unsupported.
     ///
     /// Examples:
-    ///   agent-click click @e5
-    ///   agent-click click 'name="Login"' --app Safari
-    ///   agent-click click @e5 --count 2        # double-click
-    ///   agent-click click @e5 --expect 'name="Dashboard"'
+    ///   agent-cu click @e5
+    ///   agent-cu click 'name="Login"' --app Safari
+    ///   agent-cu click @e5 --count 2        # double-click
+    ///   agent-cu click @e5 --expect 'name="Dashboard"'
     #[command(alias = "c")]
     Click {
         /// Selector DSL expression or @ref
@@ -126,9 +126,9 @@ pub enum Command {
     /// Without: simulates keypresses into the focused app.
     ///
     /// Examples:
-    ///   agent-click type "hello" -s @e3           # type into element (AXValue)
-    ///   agent-click type "hello" --app Safari     # keyboard simulation
-    ///   agent-click type "more" -s @e3 --append   # append without clearing
+    ///   agent-cu type "hello" -s @e3           # type into element (AXValue)
+    ///   agent-cu type "hello" --app Safari     # keyboard simulation
+    ///   agent-cu type "more" -s @e3 --append   # append without clearing
     #[command(name = "type")]
     Type {
         /// Text to type
@@ -153,9 +153,9 @@ pub enum Command {
     /// Press a key or key combination
     ///
     /// Examples:
-    ///   agent-click key Return --app Calculator
-    ///   agent-click key cmd+c --app TextEdit
-    ///   agent-click key cmd+shift+p --app "VS Code"
+    ///   agent-cu key Return --app Calculator
+    ///   agent-cu key cmd+c --app TextEdit
+    ///   agent-cu key cmd+shift+p --app "VS Code"
     #[command(alias = "k")]
     Key {
         /// Key expression (e.g., Return, cmd+c, ctrl+shift+p)
@@ -171,8 +171,8 @@ pub enum Command {
     /// Scroll an element into view using AXScrollToVisible
     ///
     /// Examples:
-    ///   agent-click scroll-to @e42
-    ///   agent-click scroll-to 'name="Submit"' --app Safari
+    ///   agent-cu scroll-to @e42
+    ///   agent-cu scroll-to 'name="Submit"' --app Safari
     #[command(name = "scroll-to")]
     ScrollTo {
         /// Element to scroll into view (selector DSL or @ref)
@@ -185,9 +185,9 @@ pub enum Command {
     /// Scroll within an app
     ///
     /// Examples:
-    ///   agent-click scroll down --app Music
-    ///   agent-click scroll down --amount 10 --app Music
-    ///   agent-click scroll down --at 'name="List"' --app Music
+    ///   agent-cu scroll down --app Music
+    ///   agent-cu scroll down --amount 10 --app Music
+    ///   agent-cu scroll down --at 'name="List"' --app Music
     #[command(alias = "s")]
     Scroll {
         /// Direction: up, down, left, right
@@ -235,8 +235,8 @@ pub enum Command {
     /// Returns the element when found, or errors on timeout.
     ///
     /// Examples:
-    ///   agent-click wait-for 'name="Dashboard"'
-    ///   agent-click wait-for 'role=button' --interval 500
+    ///   agent-cu wait-for 'name="Dashboard"'
+    ///   agent-cu wait-for 'role=button' --interval 500
     #[command(name = "wait-for", alias = "wait")]
     WaitFor {
         /// Element to wait for (selector DSL)
@@ -251,7 +251,7 @@ pub enum Command {
     /// Idempotent: won't type if the value already matches.
     ///
     /// Examples:
-    ///   agent-click ensure-text @e3 "hello@example.com"
+    ///   agent-cu ensure-text @e3 "hello@example.com"
     #[command(name = "ensure-text")]
     EnsureText {
         /// Target element (selector DSL or @ref)
@@ -265,8 +265,8 @@ pub enum Command {
     /// Lighter than `snapshot` — reads a single element.
     ///
     /// Examples:
-    ///   agent-click get-value @e3
-    ///   agent-click gv 'name="Email"' --app Safari
+    ///   agent-cu get-value @e3
+    ///   agent-cu gv 'name="Email"' --app Safari
     #[command(name = "get-value", alias = "gv")]
     GetValue {
         /// Target element (selector DSL or @ref)
@@ -279,8 +279,8 @@ pub enum Command {
     /// Launch an application
     ///
     /// Examples:
-    ///   agent-click open Safari --wait
-    ///   agent-click open Calculator
+    ///   agent-cu open Safari --wait
+    ///   agent-cu open Calculator
     Open {
         /// Application name
         app: String,
@@ -295,9 +295,9 @@ pub enum Command {
     /// See examples/ folder for workflow templates.
     ///
     /// Examples:
-    ///   agent-click run examples/calculator.yaml
-    ///   agent-click run workflow.yaml --app Calculator
-    ///   agent-click run workflow.yaml --dry-run
+    ///   agent-cu run examples/calculator.yaml
+    ///   agent-cu run workflow.yaml --app Calculator
+    ///   agent-cu run workflow.yaml --dry-run
     #[command(alias = "r")]
     Run {
         /// Path to YAML workflow file
@@ -330,11 +330,11 @@ pub enum Command {
     ///
     /// The primary command for AI agent workflows. Returns a
     /// compact tree with @refs (e.g., @e1, @e2) for each element.
-    /// Use refs with other commands: `agent-click click @e5`
+    /// Use refs with other commands: `agent-cu click @e5`
     ///
     /// Examples:
-    ///   agent-click snapshot --app Calculator -i -c
-    ///   agent-click snapshot --app Music -i -c -d 8
+    ///   agent-cu snapshot --app Calculator -i -c
+    ///   agent-cu snapshot --app Music -i -c -d 8
     #[command(alias = "snap")]
     Snapshot {
         /// Target application name
@@ -356,8 +356,8 @@ pub enum Command {
     /// Pipe a JSON array of commands to avoid per-command startup cost.
     ///
     /// Examples:
-    ///   echo '[["click","@e5"],["click","@e8"]]' | agent-click batch
-    ///   echo '[["click","@e1"]]' | agent-click batch --bail
+    ///   echo '[["click","@e5"],["click","@e8"]]' | agent-cu batch
+    ///   echo '[["click","@e1"]]' | agent-cu batch --bail
     Batch {
         /// Stop on first error
         #[arg(long)]
@@ -367,9 +367,9 @@ pub enum Command {
     /// Take a screenshot
     ///
     /// Examples:
-    ///   agent-click screenshot
-    ///   agent-click screenshot --path /tmp/screen.png
-    ///   agent-click screenshot --app Calculator
+    ///   agent-cu screenshot
+    ///   agent-cu screenshot --path /tmp/screen.png
+    ///   agent-cu screenshot --app Calculator
     Screenshot {
         /// Save path (auto-generated if omitted)
         #[arg(long)]
@@ -438,9 +438,9 @@ pub enum Command {
     /// Output shell completions to stdout.
     ///
     /// Setup:
-    ///   agent-click completions bash > /etc/bash_completion.d/agent-click
-    ///   agent-click completions zsh  > "${fpath[1]}/_agent-click"
-    ///   agent-click completions fish > ~/.config/fish/completions/agent-click.fish
+    ///   agent-cu completions bash > /etc/bash_completion.d/agent-computer-use
+    ///   agent-cu completions zsh  > "${fpath[1]}/_agent-computer-use"
+    ///   agent-cu completions fish > ~/.config/fish/completions/agent-computer-use.fish
     Completions {
         /// Shell to generate completions for
         #[arg(value_enum)]

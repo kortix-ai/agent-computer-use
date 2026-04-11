@@ -1,5 +1,5 @@
-use agent_click_core::node::{AccessibilityNode, Role};
-use agent_click_core::Platform;
+use agent_computer_use_core::node::{AccessibilityNode, Role};
+use agent_computer_use_core::Platform;
 use crossterm::event::{self, Event, KeyCode, KeyEventKind};
 use crossterm::terminal::{self, EnterAlternateScreen, LeaveAlternateScreen};
 use ratatui::prelude::*;
@@ -291,21 +291,21 @@ pub async fn run_observe(
     app: Option<String>,
     depth: u32,
     refresh_interval: Duration,
-) -> agent_click_core::Result<()> {
-    terminal::enable_raw_mode().map_err(|e| agent_click_core::Error::PlatformError {
+) -> agent_computer_use_core::Result<()> {
+    terminal::enable_raw_mode().map_err(|e| agent_computer_use_core::Error::PlatformError {
         message: format!("failed to enable raw mode: {e}"),
     })?;
 
     let mut stdout = io::stdout();
     crossterm::execute!(stdout, EnterAlternateScreen).map_err(|e| {
-        agent_click_core::Error::PlatformError {
+        agent_computer_use_core::Error::PlatformError {
             message: format!("failed to enter alternate screen: {e}"),
         }
     })?;
 
     let backend = CrosstermBackend::new(stdout);
     let mut terminal =
-        Terminal::new(backend).map_err(|e| agent_click_core::Error::PlatformError {
+        Terminal::new(backend).map_err(|e| agent_computer_use_core::Error::PlatformError {
             message: format!("failed to create terminal: {e}"),
         })?;
 
@@ -338,10 +338,10 @@ async fn run_event_loop(
     app: Option<&str>,
     depth: u32,
     refresh_interval: Duration,
-) -> agent_click_core::Result<()> {
+) -> agent_computer_use_core::Result<()> {
     loop {
         terminal.draw(|f| render(f, state)).map_err(|e| {
-            agent_click_core::Error::PlatformError {
+            agent_computer_use_core::Error::PlatformError {
                 message: format!("render error: {e}"),
             }
         })?;
@@ -351,13 +351,13 @@ async fn run_event_loop(
             .unwrap_or(Duration::ZERO);
 
         let has_event = event::poll(time_until_refresh).map_err(|e| {
-            agent_click_core::Error::PlatformError {
+            agent_computer_use_core::Error::PlatformError {
                 message: format!("event poll error: {e}"),
             }
         })?;
 
         if has_event {
-            let ev = event::read().map_err(|e| agent_click_core::Error::PlatformError {
+            let ev = event::read().map_err(|e| agent_computer_use_core::Error::PlatformError {
                 message: format!("event read error: {e}"),
             })?;
 
@@ -444,7 +444,7 @@ fn render(f: &mut Frame, state: &AppState) {
         .split(f.area());
 
     let title = format!(
-        " agent-click observe | {} | refreshed {:.0}s ago",
+        " agent-computer-use observe | {} | refreshed {:.0}s ago",
         state.status_msg,
         state.last_refresh.elapsed().as_secs_f64()
     );

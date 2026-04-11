@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "🔧 Setting up agent-click development environment..."
+echo "🔧 Setting up agent-computer-use development environment..."
 echo ""
 
 # Check Rust
@@ -49,4 +49,4 @@ echo "   pnpm test         # Run tests"
 echo "   pnpm test:e2e     # Run e2e tests (needs macOS)"
 echo "   pnpm lint         # Check formatting + clippy"
 echo ""
-echo "   ./cli/target/release/agent-click --help"
+echo "   ./cli/target/release/agent-cu --help"

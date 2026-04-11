@@ -17,18 +17,18 @@ Every AI agent should follow this loop:
 
 ```bash
 # 1. Snapshot
-agent-click snapshot -a Calculator -i -c
+agent-cu snapshot -a Calculator -i -c
 # → reads output, finds @e2 is "All Clear", @e5 is "7", etc.
 
 # 2. Act
-agent-click click 'id="AllClear"' -a Calculator
-agent-click click 'id="Seven"' -a Calculator
-agent-click click 'id="Multiply"' -a Calculator
-agent-click click 'id="Eight"' -a Calculator
-agent-click click 'id="Equals"' -a Calculator
+agent-cu click 'id="AllClear"' -a Calculator
+agent-cu click 'id="Seven"' -a Calculator
+agent-cu click 'id="Multiply"' -a Calculator
+agent-cu click 'id="Eight"' -a Calculator
+agent-cu click 'id="Equals"' -a Calculator
 
 # 3. Verify
-agent-click text -a Calculator | grep -A1 "Edit field"
+agent-cu text -a Calculator | grep -A1 "Edit field"
 # → 56
 ```
 
@@ -37,18 +37,18 @@ agent-click text -a Calculator | grep -A1 "Edit field"
 Add to your system prompt or CLAUDE.md:
 
 ```markdown
-You have access to `agent-click` for Computer use. See SKILL.md for the full guide.
+You have access to `agent-computer-use` for Computer use. See SKILL.md for the full guide.
 
 Core workflow: snapshot → identify refs → act → re-snapshot to verify.
 
 Key commands:
 
-- agent-click snapshot -a App -i -c # see interactive elements
-- agent-click click @e5 # click by ref
-- agent-click type "text" -s @e3 # type into element
-- agent-click key cmd+k -a Slack # press key combo
-- agent-click text -a App # read all text
-- agent-click get-value @e5 # read element value
+- agent-cu snapshot -a App -i -c # see interactive elements
+- agent-cu click @e5 # click by ref
+- agent-cu type "text" -s @e3 # type into element
+- agent-cu key cmd+k -a Slack # press key combo
+- agent-cu text -a App # read all text
+- agent-cu get-value @e5 # read element value
 ```
 
 ## JSON output

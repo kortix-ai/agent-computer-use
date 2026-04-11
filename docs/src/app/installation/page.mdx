@@ -1,15 +1,13 @@
 import { PageHeader } from '@/components/docs';
+import { InstallTabs } from '@/components/install-tabs';
 
-<PageHeader
-  title="Installation"
-  description="Get agent-click running in under a minute."
-/>
+<PageHeader title="Installation" description="Get agent-computer-use running in under a minute." />
 
 ## Quick setup (recommended)
 
 ```bash
-git clone https://github.com/kortix-ai/agent-click
-cd agent-click
+git clone https://github.com/kortix-ai/agent-computer-use
+cd agent-computer-use
 ./scripts/setup.sh
 ```
 
@@ -17,27 +15,27 @@ The setup script:
 
 1. Installs Rust (if needed)
 2. Installs dependencies
-3. Builds and installs `agent-click` to `~/.cargo/bin`
+3. Builds and installs the `agent-cu` binary to `~/.cargo/bin`
 4. Prompts for accessibility permissions
 
 ## Cargo
 
 ```bash
-cargo install --git https://github.com/kortix-ai/agent-click --path cli
+cargo install --git https://github.com/kortix-ai/agent-computer-use --path cli
 ```
 
 ## From source
 
 ```bash
-git clone https://github.com/kortix-ai/agent-click
-cd agent-click/cli
+git clone https://github.com/kortix-ai/agent-computer-use
+cd agent-computer-use/cli
 cargo build --release
 cargo install --path .
 ```
 
 ## Permissions
 
-agent-click needs accessibility access to control apps:
+agent-computer-use needs accessibility access to control apps:
 
 1. Open **System Settings → Privacy & Security → Accessibility**
 2. Add your terminal app (Terminal, iTerm2, Warp, Cursor, VS Code)
@@ -46,13 +44,34 @@ agent-click needs accessibility access to control apps:
 Verify:
 
 ```bash
-agent-click check-permissions
+agent-cu check-permissions
 # → Accessibility permissions: granted
 ```
 
 ## Verify installation
 
 ```bash
-agent-click --version
-agent-click apps           # should list running applications
+agent-cu --version
+agent-cu apps           # should list running applications
 ```
+
+## Uninstall
+
+If you installed via Cargo (setup script, `cargo install`, or from source):
+
+```bash
+cargo uninstall agent-computer-use
+```
+
+If you installed via a Node package manager:
+
+<InstallTabs
+  commands={[
+    { id: 'npm', label: 'npm', cmd: 'npm uninstall -g @kortix-ai/agent-computer-use' },
+    { id: 'pnpm', label: 'pnpm', cmd: 'pnpm remove -g @kortix-ai/agent-computer-use' },
+    { id: 'yarn', label: 'yarn', cmd: 'yarn global remove @kortix-ai/agent-computer-use' },
+    { id: 'bun', label: 'bun', cmd: 'bun remove -g @kortix-ai/agent-computer-use' },
+  ]}
+/>
+
+You can also revoke accessibility access in **System Settings → Privacy & Security → Accessibility** by removing your terminal app from the list.

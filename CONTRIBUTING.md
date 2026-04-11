@@ -1,26 +1,26 @@
-# Contributing to agent-click
+# Contributing to agent-computer-use
 
-Thanks for your interest! agent-click aims to be the universal CLI for desktop
+Thanks for your interest! agent-cu aims to be the universal CLI for desktop
 automation — and that's only possible with community help.
 
 ## Where to contribute
 
 ### High-impact areas
 
-- **Linux backend** (`crates/agent-click-linux/`) — Implement AT-SPI2 via D-Bus
+- **Linux backend** (`crates/agent-computer-use-linux/`) — Implement AT-SPI2 via D-Bus
   using the `zbus` and `atspi` crates. The `Platform` trait is defined in
-  `crates/agent-click-core/src/platform.rs`.
+  `crates/agent-computer-use-core/src/platform.rs`.
 
-- **Windows backend** (`crates/agent-click-windows/`) — Implement UI Automation
+- **Windows backend** (`crates/agent-computer-use-windows/`) — Implement UI Automation
   using `windows-rs`. Focus on `IUIAutomationInvokePattern::Invoke()` for
-  background clicks (agent-click's killer feature).
+  background clicks (agent-computer-use's killer feature).
 
-- **MCP server** (`crates/agent-click-mcp/`) — Expose agent-click as an MCP tool server
+- **MCP server** (`crates/agent-computer-use-mcp/`) — Expose agent-cu as an MCP tool server
   so AI agents can use it directly.
 
 ### Good first issues
 
-- Add missing role mappings in `crates/agent-click-macos/src/ax.rs`
+- Add missing role mappings in `crates/agent-computer-use-macos/src/ax.rs`
 - Add shell completions (bash, zsh, fish) via `clap_complete`
 - Improve error messages with actionable suggestions
 - Add tests for `src/wait.rs` ranking logic
@@ -44,21 +44,21 @@ src/
 └── observe.rs            # TUI tree explorer
 
 crates/
-├── agent-click-core/            # Platform-agnostic contract
-├── agent-click-macos/           # macOS: AXUIElement + CGEvent
-├── agent-click-linux/           # Linux: AT-SPI2 (stub)
-├── agent-click-windows/         # Windows: UIA (stub)
-└── agent-click-mcp/             # MCP server (stub)
+├── agent-computer-use-core/            # Platform-agnostic contract
+├── agent-computer-use-macos/           # macOS: AXUIElement + CGEvent
+├── agent-computer-use-linux/           # Linux: AT-SPI2 (stub)
+├── agent-computer-use-windows/         # Windows: UIA (stub)
+└── agent-computer-use-mcp/             # MCP server (stub)
 ```
 
 **Key principle:** All platform-specific code lives in backend crates.
-The `src/` directory and `agent-click-core` are platform-agnostic.
+The `src/` directory and `agent-computer-use-core` are platform-agnostic.
 
 ## Development setup
 
 ```bash
-git clone https://github.com/kortix-ai/agent-click
-cd agent-click
+git clone https://github.com/kortix-ai/agent-computer-use
+cd agent-computer-use
 cargo build
 cargo test
 cargo run -- snapshot Calculator -i

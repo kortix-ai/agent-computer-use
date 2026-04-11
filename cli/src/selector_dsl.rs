@@ -1,5 +1,5 @@
-use agent_click_core::node::Role;
-use agent_click_core::selector::{Selector, SelectorChain};
+use agent_computer_use_core::node::Role;
+use agent_computer_use_core::selector::{Selector, SelectorChain};
 
 pub fn parse(input: &str) -> Result<SelectorChain, String> {
     let input = input.trim();
@@ -187,7 +187,7 @@ fn consume_until_quote(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use agent_click_core::node::Role;
+    use agent_computer_use_core::node::Role;
 
     #[test]
     fn test_simple_role() {

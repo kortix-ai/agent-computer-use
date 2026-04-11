@@ -1,7 +1,7 @@
 [
   {
     "title": "Quick Start",
-    "content": "Quick Start Install and try it in 2 minutes agent-click Computer use CLI for AI Agents. macOS Windows Linux Agent-click lets you control desktop apps from the terminal. Click buttons, type into\n        fields, read what&apos;s on screen. All using a single CLI. Star it on GitHub How it works agent-click reads the accessibility tree — the same structure screen readers use. It sees\n        every button, text field, and menu item in any app. You point, it acts. Capture every interactive element. Each gets a ref. Use refs to click, type, or read. UI changed? Snapshot again for fresh refs. What can you do with it? Anything you&apos;d do by clicking around:",
+    "content": "Quick Start Install and try it in 2 minutes agent-computer-use Computer use CLI for AI Agents. Windows agent-computer-use lets you control desktop apps from the terminal. Click buttons, type into\n        fields, read what&apos;s on screen. All using a single CLI. Star it on GitHub How it works agent-computer-use reads the accessibility tree — the same structure screen readers use. It\n        sees every button, text field, and menu item in any app. You point, it acts. Capture every interactive element. Each gets a ref. Use refs to click, type, or read. UI changed? Snapshot again for fresh refs. What can you do with it? Anything you&apos;d do by clicking around:",
     "href": "/",
     "pageTitle": "Quick Start"
   },
@@ -24,20 +24,14 @@
     "pageTitle": "Quick Start"
   },
   {
-    "title": "Installation",
-    "content": "title=\"Installation\" description=\"Get agent-click running in under a minute.\" />",
-    "href": "/installation#quick-setup-recommended",
-    "pageTitle": "Installation"
-  },
-  {
     "title": "Quick setup (recommended)",
-    "content": "The setup script: 1. Installs Rust (if needed) 2. Installs dependencies 3. Builds and installs agent-click to ~/.cargo/bin 4. Prompts for accessibility permissions",
+    "content": "The setup script: 1. Installs Rust (if needed) 2. Installs dependencies 3. Builds and installs agent-computer-use to ~/.cargo/bin 4. Prompts for accessibility permissions",
     "href": "/installation#cargo",
     "pageTitle": "Installation"
   },
   {
     "title": "Permissions",
-    "content": "agent-click needs accessibility access to control apps: 1. Open System Settings → Privacy & Security → Accessibility 2. Add your terminal app (Terminal, iTerm2, Warp, Cursor, VS Code) 3. Toggle it on Verify:",
+    "content": "agent-computer-use needs accessibility access to control apps: 1. Open System Settings → Privacy & Security → Accessibility 2. Add your terminal app (Terminal, iTerm2, Warp, Cursor, VS Code) 3. Toggle it on Verify:",
     "href": "/installation#verify-installation",
     "pageTitle": "Installation"
   },
@@ -61,13 +55,13 @@
   },
   {
     "title": "Ref lifecycle",
-    "content": "1. Created when you run agent-click snapshot 2. Cached in ~/.agent-click/refs.json 3. Stale after any UI change (click, navigation, typing) 4. Warning after 5 minutes Always re-snapshot after acting. The UI changed — your refs are stale.",
+    "content": "1. Created when you run agent-computer-use snapshot 2. Cached in ~/.agent-computer-use/refs.json 3. Stale after any UI change (click, navigation, typing) 4. Warning after 5 minutes Always re-snapshot after acting. The UI changed — your refs are stale.",
     "href": "/snapshots#path-based-resolution",
     "pageTitle": "Snapshots & Refs"
   },
   {
     "title": "Path-based resolution",
-    "content": "Each ref stores the element's path in the tree (e.g., [0, 1, 3, 2]). When you use @e5, agent-click walks the tree using this path — O(depth) lookup, much faster than searching. If the path becomes stale (element moved), agent-click falls back to matching by role + name + id.",
+    "content": "Each ref stores the element's path in the tree (e.g., [0, 1, 3, 2]). When you use @e5, agent-computer-use walks the tree using this path — O(depth) lookup, much faster than searching. If the path becomes stale (element moved), agent-computer-use falls back to matching by role + name + id.",
     "href": "/snapshots#cdp-refs",
     "pageTitle": "Snapshots & Refs"
   },
@@ -139,7 +133,7 @@
   },
   {
     "title": "Background-first",
-    "content": "agent-click is designed to run actions without bringing apps to the foreground. Most operations work while the app is minimized or behind other windows.",
+    "content": "agent-computer-use is designed to run actions without bringing apps to the foreground. Most operations work while the app is minimized or behind other windows.",
     "href": "/background#native-apps",
     "pageTitle": "Background Operation"
   },
@@ -157,7 +151,7 @@
   },
   {
     "title": "How AXPress works",
-    "content": "When you run agent-click click @e5, agent-click sends an AXPress action to the element via the accessibility API. This is the same mechanism VoiceOver uses — it doesn't move the mouse cursor or activate the window. The app processes the press in its event loop without becoming frontmost. If AXPress isn't supported for a particular element (rare), agent-click falls back to coordinate-based mouse clicking, which does require the window to be visible.",
+    "content": "When you run agent-computer-use click @e5, agent-computer-use sends an AXPress action to the element via the accessibility API. This is the same mechanism VoiceOver uses — it doesn't move the mouse cursor or activate the window. The app processes the press in its event loop without becoming frontmost. If AXPress isn't supported for a particular element (rare), agent-computer-use falls back to coordinate-based mouse clicking, which does require the window to be visible.",
     "href": "/background#why-scroll-and-key-need-focus",
     "pageTitle": "Background Operation"
   },
@@ -169,37 +163,37 @@
   },
   {
     "title": "Interaction",
-    "content": "Command                                 Description agent-click click [selector] -a App   Click an element (AXPress, no focus steal) agent-click type \"text\" -s @e3        Clear and type into a field (AXSetValue) agent-click type \"text\" -a App        Type into focused field (keyboard sim) agent-click key cmd+k -a Slack        Press a key or combo agent-click scroll down -a Music      Scroll within an app agent-click scroll-to @e42            Scroll element into view (headless) agent-click drag @e5 @e10 -a Finder   Drag from one element to another",
+    "content": "Command                                        Description agent-computer-use click [selector] -a App   Click an element (AXPress, no focus steal) agent-computer-use type \"text\" -s @e3        Clear and type into a field (AXSetValue) agent-computer-use type \"text\" -a App        Type into focused field (keyboard sim) agent-computer-use key cmd+k -a Slack        Press a key or combo agent-computer-use scroll down -a Music      Scroll within an app agent-computer-use scroll-to @e42            Scroll element into view (headless) agent-computer-use drag @e5 @e10 -a Finder   Drag from one element to another",
     "href": "/commands#discovery",
     "pageTitle": "Commands"
   },
   {
     "title": "Discovery",
-    "content": "Command                                Description agent-click snapshot -a App -i -c    Get accessibility tree with refs agent-click find 'selector' -a App   Find elements matching a selector agent-click get-value @e5            Get element value, name, role, position agent-click text -a App              Get all visible text agent-click tree -a App              Raw accessibility tree (JSON) agent-click windows -a App           List windows with positions agent-click apps                     List running applications agent-click focused                  Get the focused element",
+    "content": "Command                                       Description agent-computer-use snapshot -a App -i -c    Get accessibility tree with refs agent-computer-use find 'selector' -a App   Find elements matching a selector agent-computer-use get-value @e5            Get element value, name, role, position agent-computer-use text -a App              Get all visible text agent-computer-use tree -a App              Raw accessibility tree (JSON) agent-computer-use windows -a App           List windows with positions agent-computer-use apps                     List running applications agent-computer-use focused                  Get the focused element",
     "href": "/commands#window-management",
     "pageTitle": "Commands"
   },
   {
     "title": "Window Management",
-    "content": "Command                                                       Description agent-click open App --wait                                 Launch an application agent-click move-window -a App --x 100 --y 100              Move window position (headless) agent-click resize-window -a App --width 800 --height 600   Resize window (headless) agent-click screenshot -a App --path shot.png               Take a screenshot",
+    "content": "Command                                                              Description agent-computer-use open App --wait                                 Launch an application agent-computer-use move-window -a App --x 100 --y 100              Move window position (headless) agent-computer-use resize-window -a App --width 800 --height 600   Resize window (headless) agent-computer-use screenshot -a App --path shot.png               Take a screenshot",
     "href": "/commands#wait-verify",
     "pageTitle": "Commands"
   },
   {
     "title": "Wait & Verify",
-    "content": "Command                                          Description agent-click wait-for 'selector'                Wait for an element to appear agent-click ensure-text @e3 \"hello\"            Only types if current value differs agent-click click @e5 --expect 'name=\"Done\"'   Click then verify a result appeared",
+    "content": "Command                                                 Description agent-computer-use wait-for 'selector'                Wait for an element to appear agent-computer-use ensure-text @e3 \"hello\"            Only types if current value differs agent-computer-use click @e5 --expect 'name=\"Done\"'   Click then verify a result appeared",
     "href": "/commands#automation",
     "pageTitle": "Commands"
   },
   {
     "title": "Automation",
-    "content": "Command                           Description agent-click batch --bail        Execute commands from stdin JSON array agent-click run workflow.yaml   Run a multi-step YAML workflow agent-click observe -a App      Interactive TUI tree explorer",
+    "content": "Command                                  Description agent-computer-use batch --bail        Execute commands from stdin JSON array agent-computer-use run workflow.yaml   Run a multi-step YAML workflow agent-computer-use observe -a App      Interactive TUI tree explorer",
     "href": "/commands#system",
     "pageTitle": "Commands"
   },
   {
     "title": "System",
-    "content": "Command                           Description agent-click check-permissions   Verify accessibility access",
+    "content": "Command                                  Description agent-computer-use check-permissions   Verify accessibility access",
     "href": "/commands#snapshot-options",
     "pageTitle": "Commands"
   },
@@ -235,7 +229,7 @@
   },
   {
     "title": "Tips",
-    "content": "- Always snapshot first to get fresh refs - Use id= selectors when available — most stable across UI changes - Use --count 2 for items that need double-click (file lists, track lists) - Check with agent-click get-value @e5 if unsure whether an element is clickable",
+    "content": "- Always snapshot first to get fresh refs - Use id= selectors when available — most stable across UI changes - Use --count 2 for items that need double-click (file lists, track lists) - Check with agent-computer-use get-value @e5 if unsure whether an element is clickable",
     "href": "/commands/click",
     "pageTitle": "click"
   },
@@ -289,7 +283,7 @@
   },
   {
     "title": "Refs",
-    "content": "- Refs are assigned sequentially: @e1, @e2, @e3... - With -i, only interactive elements get refs (reduces noise) - Refs are cached in ~/.agent-click/refs.json with a 5-minute staleness warning - Refs go stale after any UI change — always re-snapshot after acting",
+    "content": "- Refs are assigned sequentially: @e1, @e2, @e3... - With -i, only interactive elements get refs (reduces noise) - Refs are cached in ~/.agent-computer-use/refs.json with a 5-minute staleness warning - Refs go stale after any UI change — always re-snapshot after acting",
     "href": "/commands/snapshot#cdp-electron-apps",
     "pageTitle": "snapshot"
   },
@@ -307,13 +301,13 @@
   },
   {
     "title": "YAML Workflows",
-    "content": "Define multi-step automations in YAML files. Workflows let you chain multiple agent-click commands into a single replayable file.",
+    "content": "Define multi-step automations in YAML files. Workflows let you chain multiple agent-computer-use commands into a single replayable file.",
     "href": "/workflows#example-workflow",
     "pageTitle": "YAML Workflows"
   },
   {
     "title": "Batch Execution",
-    "content": "Execute multiple commands in a single process invocation. Pipe a JSON array of commands to agent-click batch to avoid per-command startup overhead.",
+    "content": "Execute multiple commands in a single process invocation. Pipe a JSON array of commands to agent-computer-use batch to avoid per-command startup overhead.",
     "href": "/batch#usage",
     "pageTitle": "Batch Execution"
   },
@@ -361,7 +355,7 @@
   },
   {
     "title": "Global Options",
-    "content": "These flags can be added to any agent-click command.",
+    "content": "These flags can be added to any agent-computer-use command.",
     "href": "/options#output-format",
     "pageTitle": "Global Options"
   },

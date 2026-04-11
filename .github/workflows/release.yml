@@ -17,19 +17,19 @@ jobs:
         include:
           - os: macos-latest
             target: aarch64-apple-darwin
-            artifact: agent-click-macos-arm64
+            artifact: agent-computer-use-macos-arm64
             ext: ''
           - os: macos-latest
             target: x86_64-apple-darwin
-            artifact: agent-click-macos-x64
+            artifact: agent-computer-use-macos-x64
             ext: ''
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            artifact: agent-click-linux-x64
+            artifact: agent-computer-use-linux-x64
             ext: ''
           - os: windows-latest
             target: x86_64-pc-windows-msvc
-            artifact: agent-click-windows-x64.exe
+            artifact: agent-computer-use-windows-x64.exe
             ext: '.exe'
     runs-on: ${{ matrix.os }}
     steps:
@@ -59,7 +59,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p staged
-          cp "cli/target/${{ matrix.target }}/release/agent-click${{ matrix.ext }}" "staged/${{ matrix.artifact }}"
+          cp "cli/target/${{ matrix.target }}/release/agent-cu${{ matrix.ext }}" "staged/${{ matrix.artifact }}"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -99,9 +99,9 @@ jobs:
 
       - name: Make binaries executable
         run: |
-          chmod +x bin/agent-click-macos-arm64 || true
-          chmod +x bin/agent-click-macos-x64 || true
-          chmod +x bin/agent-click-linux-x64 || true
+          chmod +x bin/agent-computer-use-macos-arm64 || true
+          chmod +x bin/agent-computer-use-macos-x64 || true
+          chmod +x bin/agent-computer-use-linux-x64 || true
           ls -lh bin/
 
       - name: Verify bundle is ready
@@ -115,3 +115,6 @@ jobs:
           commit: 'chore: version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: 'true'

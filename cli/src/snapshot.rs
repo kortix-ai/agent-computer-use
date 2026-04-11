@@ -1,10 +1,10 @@
-use agent_click_core::node::{AccessibilityNode, Role};
-use agent_click_core::selector::{Selector, SelectorChain};
+use agent_computer_use_core::node::{AccessibilityNode, Role};
+use agent_computer_use_core::selector::{Selector, SelectorChain};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-const REFS_PATH: &str = ".agent-click/refs.json";
+const REFS_PATH: &str = ".agent-cu/refs.json";
 
 #[derive(Debug, Serialize)]
 pub struct SnapshotResult {
@@ -26,7 +26,7 @@ pub struct RefEntry {
     pub path: Vec<usize>,
 }
 
-use agent_click_core::element::is_interactive;
+use agent_computer_use_core::element::is_interactive;
 
 pub fn create_snapshot(
     tree: &AccessibilityNode,
@@ -176,10 +176,10 @@ fn home_dir() -> String {
 pub fn save_refs(
     refs: &HashMap<String, RefEntry>,
     app: Option<&str>,
-) -> agent_click_core::Result<()> {
+) -> agent_computer_use_core::Result<()> {
     let home = home_dir();
     let dir = format!("{home}/{}", REFS_PATH.rsplit_once('/').unwrap().0);
-    std::fs::create_dir_all(&dir).map_err(agent_click_core::Error::Io)?;
+    std::fs::create_dir_all(&dir).map_err(agent_computer_use_core::Error::Io)?;
 
     let cache = RefsCache {
         timestamp: now_secs(),
@@ -188,52 +188,55 @@ pub fn save_refs(
     };
 
     let path = format!("{home}/{REFS_PATH}");
-    let json =
-        serde_json::to_string_pretty(&cache).map_err(agent_click_core::Error::Serialization)?;
-    std::fs::write(&path, json).map_err(agent_click_core::Error::Io)?;
+    let json = serde_json::to_string_pretty(&cache)
+        .map_err(agent_computer_use_core::Error::Serialization)?;
+    std::fs::write(&path, json).map_err(agent_computer_use_core::Error::Io)?;
 
     tracing::debug!("saved {} refs to {}", refs.len(), path);
     Ok(())
 }
 
-fn load_refs() -> agent_click_core::Result<HashMap<String, RefEntry>> {
+fn load_refs() -> agent_computer_use_core::Result<HashMap<String, RefEntry>> {
     let home = home_dir();
     let path = format!("{home}/{REFS_PATH}");
 
-    let contents =
-        std::fs::read_to_string(&path).map_err(|_| agent_click_core::Error::PlatformError {
-            message: "no snapshot refs cached — run `agent-click snapshot` first".into(),
-        })?;
+    let contents = std::fs::read_to_string(&path).map_err(|_| {
+        agent_computer_use_core::Error::PlatformError {
+            message: "no snapshot refs cached — run `agent-computer-use snapshot` first".into(),
+        }
+    })?;
 
     if let Ok(cache) = serde_json::from_str::<RefsCache>(&contents) {
         let age = now_secs().saturating_sub(cache.timestamp);
         if age > STALE_THRESHOLD_SECS {
             tracing::warn!(
-                "refs are {}s old (snapshot taken {}s ago) — consider re-running `agent-click snapshot`",
+                "refs are {}s old (snapshot taken {}s ago) — consider re-running `agent-computer-use snapshot`",
                 age,
                 age
             );
             eprintln!(
-                "warning: snapshot refs are {age}s old — run `agent-click snapshot` to refresh"
+                "warning: snapshot refs are {age}s old — run `agent-computer-use snapshot` to refresh"
             );
         }
         return Ok(cache.refs);
     }
 
-    serde_json::from_str(&contents).map_err(|e| agent_click_core::Error::PlatformError {
+    serde_json::from_str(&contents).map_err(|e| agent_computer_use_core::Error::PlatformError {
         message: format!("invalid refs cache: {e}"),
     })
 }
 
-pub fn resolve_ref(ref_str: &str) -> agent_click_core::Result<SelectorChain> {
+pub fn resolve_ref(ref_str: &str) -> agent_computer_use_core::Result<SelectorChain> {
     let ref_id = ref_str.strip_prefix('@').unwrap_or(ref_str);
     let refs = load_refs()?;
 
-    let entry = refs
-        .get(ref_id)
-        .ok_or_else(|| agent_click_core::Error::ElementNotFound {
-            message: format!("ref '@{ref_id}' not found — run `agent-click snapshot` to refresh"),
-        })?;
+    let entry =
+        refs.get(ref_id)
+            .ok_or_else(|| agent_computer_use_core::Error::ElementNotFound {
+                message: format!(
+                    "ref '@{ref_id}' not found — run `agent-computer-use snapshot` to refresh"
+                ),
+            })?;
 
     let mut selector = Selector::new();
     selector.app = entry.app.clone();

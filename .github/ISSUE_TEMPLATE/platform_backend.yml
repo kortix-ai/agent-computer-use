@@ -5,17 +5,17 @@ body:
   - type: markdown
     attributes:
       value: |
-        Platform backends live in `cli/crates/agent-click-{macos,linux,windows}/`.
-        The `Platform` trait is in `cli/crates/agent-click-core/src/platform.rs`.
+        Platform backends live in `cli/crates/agent-computer-use-{macos,linux,windows}/`.
+        The `Platform` trait is in `cli/crates/agent-computer-use-core/src/platform.rs`.
 
   - type: dropdown
     id: platform
     attributes:
       label: Platform
       options:
-        - macOS (agent-click-macos)
-        - Linux (agent-click-linux)
-        - Windows (agent-click-windows)
+        - macOS (agent-computer-use-macos)
+        - Linux (agent-computer-use-linux)
+        - Windows (agent-computer-use-windows)
     validations:
       required: true
 

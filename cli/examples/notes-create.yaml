@@ -1,5 +1,5 @@
 # Create a new note in Apple Notes
-# Usage: agent-click run examples/notes-create.yaml
+# Usage: agent-computer-use run examples/notes-create.yaml
 #
 # Demonstrates:
 # - Key combos (cmd+n)
@@ -12,5 +12,5 @@ steps:
   - open: { app: Notes, wait: true }
   - key: cmd+n
   - wait-for: 'role=textArea'
-  - type: { selector: 'role=textArea', text: 'Meeting Notes — agent-click demo' }
+  - type: { selector: 'role=textArea', text: 'Meeting Notes — agent-computer-use demo' }
   - key: Return

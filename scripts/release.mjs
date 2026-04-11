@@ -66,7 +66,7 @@ function run(cmd, opts = {}) {
 
 async function main() {
   console.log();
-  console.log(pc.bold(pc.cyan('\u{1F680} agent-click')) + pc.bold(' \u2014 Release'));
+  console.log(pc.bold(pc.cyan('\u{1F680} agent-computer-use')) + pc.bold(' \u2014 Release'));
   console.log(pc.dim('\u2500'.repeat(24)));
   console.log();
 
