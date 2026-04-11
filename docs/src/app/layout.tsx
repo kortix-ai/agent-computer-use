@@ -29,12 +29,21 @@ export const metadata: Metadata = {
     url: 'https://agent-computer-use.dev',
     siteName: 'agent-computer-use',
     type: 'website',
+    images: [
+      {
+        url: '/meta.png',
+        width: 1200,
+        height: 630,
+        alt: 'agent-computer-use — Computer use CLI for AI agents',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'agent-computer-use — Computer use CLI for AI agents',
     description:
       'Control any desktop app from the terminal. Click buttons, type text, read screens. Built in Rust.',
+    images: ['/meta.png'],
   },
   robots: {
     index: true,
