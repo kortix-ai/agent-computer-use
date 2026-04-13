@@ -8,6 +8,32 @@ Built in Rust.
 
 ## Installation
 
+### npm (recommended)
+
+```bash
+npm install -g agent-cu       # npm
+pnpm add -g agent-cu          # pnpm
+yarn global add agent-cu      # yarn
+bun add -g agent-cu           # bun
+```
+
+Ships with precompiled binaries for macOS (Apple Silicon / Intel), Linux, and Windows. No Rust toolchain required.
+
+After install, grant accessibility permissions:
+
+```bash
+agent-cu check-permissions
+```
+
+### Uninstall
+
+```bash
+npm uninstall -g agent-cu     # npm
+pnpm remove -g agent-cu       # pnpm
+yarn global remove agent-cu   # yarn
+bun remove -g agent-cu        # bun
+```
+
 ### From source
 
 ```bash
