@@ -68,6 +68,31 @@ The setup script installs Rust (if needed), builds the CLI, installs it to `~/.c
 cargo install --git https://github.com/kortix-ai/agent-computer-use --path cli
 ```
 
+## Use with Claude Code, Cursor, Codex, Copilot, …
+
+agent-cu ships as a skill on [skills.sh](https://skills.sh). Install it and your AI agent will drive `agent-cu` directly whenever you ask it to operate a desktop app.
+
+```bash
+npx skills add kortix-ai/agent-computer-use -a claude-code -g
+```
+
+The `-a claude-code` flag installs for Claude Code; drop it to pick interactively from [40+ supported agents](https://skills.sh) (Cursor, Codex, Copilot, OpenCode, Cline, VS Code, etc.). `-g` installs globally — available in every project.
+
+### First-run setup (optional)
+
+The first time your agent runs an `agent-cu` command, Claude Code (or whichever agent you use) will ask for approval. You can:
+
+- **Approve once**: pick _"Yes, and don't ask again for: `agent-cu _`"\* — saved to project settings
+- **Preconfigure globally**: add this to `~/.claude/settings.json`:
+
+  ```json
+  {
+    "permissions": {
+      "allow": ["Bash(agent-cu *)"]
+    }
+  }
+  ```
+
 ## Quick start
 
 ```bash

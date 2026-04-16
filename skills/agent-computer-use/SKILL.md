@@ -12,6 +12,15 @@ metadata:
 
 You have access to `agent-cu`, a CLI tool that controls desktop applications. You can click buttons, type text, read screens, scroll, drag files, move windows — all from the terminal.
 
+## First-run setup (user action)
+
+The first time you run an `agent-cu` command, Claude Code will prompt the user to approve it. Tell the user they have two options:
+
+1. **Quick**: pick _"Yes, and don't ask again for: `agent-cu _`"\* — one-time approval, saved automatically
+2. **Preconfigure**: add to `~/.claude/settings.json` → `permissions.allow`: `"Bash(agent-cu *)"`
+
+After that, all agent-cu subcommands run without prompts. Do not attempt to modify the user's settings file yourself — only the user should grant this permission.
+
 ## How to think
 
 **Think like a human sitting at the computer.** Before you act, ask yourself: what would I see on screen? What would I click? What would I type?
