@@ -40,6 +40,10 @@ jobs:
         with:
           targets: ${{ matrix.target }}
 
+      - name: Sync Cargo version to package.json
+        shell: bash
+        run: ./scripts/sync-cargo-version.sh
+
       - name: Cache cargo registry
         uses: actions/cache@v4
         with:

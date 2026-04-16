@@ -4,7 +4,7 @@ version = 3
 
 [[package]]
 name = "agent-computer-use"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "agent-computer-use-cdp",
  "agent-computer-use-core",
@@ -27,7 +27,7 @@ dependencies = [
 
 [[package]]
 name = "agent-computer-use-cdp"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "agent-computer-use-core",
  "async-trait",
@@ -41,7 +41,7 @@ dependencies = [
 
 [[package]]
 name = "agent-computer-use-core"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "async-trait",
  "criterion",
@@ -53,7 +53,7 @@ dependencies = [
 
 [[package]]
 name = "agent-computer-use-linux"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "agent-computer-use-core",
  "async-trait",
@@ -67,7 +67,7 @@ dependencies = [
 
 [[package]]
 name = "agent-computer-use-macos"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "agent-computer-use-core",
  "async-trait",
@@ -82,7 +82,7 @@ dependencies = [
 
 [[package]]
 name = "agent-computer-use-mcp"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "agent-computer-use-core",
  "async-trait",
@@ -95,7 +95,7 @@ dependencies = [
 
 [[package]]
 name = "agent-computer-use-windows"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "agent-computer-use-core",
  "async-trait",
