@@ -1,10 +1,28 @@
 # agent-computer-use
 
-Computer use CLI for AI agents. Control any app from the terminal.
+> Control any desktop app from the command line using accessibility APIs. No vision tokens, no screenshots required, deterministic. Works with Claude, Cursor, local models, or just you.
 
-Click buttons, type text, read screens, drag files, move windows, just like how a human would.
+<p align="center">
+  <img src="assets/demo.gif" alt="agent-cu demo: opening Music, playing a song, launching Calculator, computing 7^8" />
+</p>
 
-Built in Rust.
+```bash
+# One prompt: "open Music, play Espresso by Sabrina Carpenter, then open Calculator and compute 7^8"
+# Claude drives agent-cu end-to-end — no app-specific code, no vision, just a11y primitives
+```
+
+## Why agent-cu
+
+|                     | **agent-cu**  | Anthropic Computer Use | OpenAI CUA | pyautogui |
+| ------------------- | ------------- | ---------------------- | ---------- | --------- |
+| Approach            | accessibility | vision                 | vision     | pixels    |
+| Tokens per click    | **0**         | ~1500                  | ~1200      | 0         |
+| Deterministic       | ✅            | ❌                     | ❌         | ✅        |
+| Reads element state | ✅            | limited                | limited    | ❌        |
+| Works on any app    | ✅ (a11y)     | ✅                     | ✅         | ✅        |
+| Open source, local  | ✅            | ❌                     | ❌         | ✅        |
+
+Built in Rust. Runs locally. Zero per-action cost.
 
 ## Installation
 
