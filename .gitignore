@@ -33,6 +33,7 @@ bin/agent-computer-use-*
 
 # Personal
 TEST_CASES.md
+.pr/
 
 # Env
 .env
