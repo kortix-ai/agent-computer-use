@@ -32,7 +32,8 @@
     "changeset": "node scripts/changeset.mjs",
     "release": "node scripts/release.mjs",
     "release:version": "changeset version",
-    "release:publish": "pnpm build && pnpm bundle && changeset publish",
+    "release:publish": "pnpm sync-version && pnpm build && pnpm bundle && changeset publish",
+    "sync-version": "./scripts/sync-cargo-version.sh",
     "prepare": "husky"
   },
   "lint-staged": {
