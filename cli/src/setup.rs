@@ -4,19 +4,31 @@ use inquire::{formatter::OptionFormatter, ui::RenderConfig, Select};
 use serde_json::{json, Value};
 use std::path::{Path, PathBuf};
 
+use crate::cli::args::{SetupMode, SetupScope};
+
 const ALLOW_RULE: &str = "Bash(agent-cu *)";
 
-// yellow-green (lime), primary brand accent
 const ACCENT: Color = Color::Rgb {
     r: 180,
     g: 220,
     b: 70,
 };
 
-pub fn run(yes: bool) -> Result<()> {
+pub fn run(yes: bool, mode: Option<SetupMode>, scope: Option<SetupScope>) -> Result<()> {
     print_banner();
 
-    let unsupervised = if yes { true } else { select_mode()? };
+    let effective_mode = mode.or(if yes {
+        Some(SetupMode::Unsupervised)
+    } else {
+        None
+    });
+    let effective_scope = scope.or(if yes { Some(SetupScope::Global) } else { None });
+
+    let unsupervised = match effective_mode {
+        Some(SetupMode::Unsupervised) => true,
+        Some(SetupMode::Supervised) => false,
+        None => select_mode()?,
+    };
 
     if !unsupervised {
         print_line();
@@ -30,7 +42,11 @@ pub fn run(yes: bool) -> Result<()> {
         return Ok(());
     }
 
-    let scope_global = if yes { true } else { select_scope()? };
+    let scope_global = match effective_scope {
+        Some(SetupScope::Global) => true,
+        Some(SetupScope::Project) => false,
+        None => select_scope()?,
+    };
 
     let settings_path = if scope_global {
         global_settings_path()?
@@ -69,8 +85,6 @@ fn print_line() {
     println!("  {}", "─".repeat(60).dark_grey());
 }
 
-/// Show full "Name — description" while navigating, but just "Name" once selected.
-/// Keeps the final answered line from wrapping on narrow terminals.
 fn short_formatter() -> OptionFormatter<'static, &'static str> {
     &|o| {
         o.value
@@ -113,7 +127,6 @@ fn select_scope() -> Result<bool> {
 fn render_config() -> RenderConfig<'static> {
     use inquire::ui::{Attributes, Color as IColor, StyleSheet, Styled};
 
-    // inquire's own Color type; match the accent yellow-green.
     let accent = IColor::Rgb {
         r: 180,
         g: 220,

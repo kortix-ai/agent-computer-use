@@ -93,18 +93,28 @@ The `-a claude-code` flag installs for Claude Code; drop it to pick interactivel
 
 ### First-run setup (optional)
 
-The first time your agent runs an `agent-cu` command, Claude Code (or whichever agent you use) will ask for approval. You can:
+By default, Claude Code asks approval on every `agent-cu` command. To run without prompts, pick one of:
 
-- **Approve once**: pick _"Yes, and don't ask again for: `agent-cu _`"\* — saved to project settings
-- **Preconfigure globally**: add this to `~/.claude/settings.json`:
+```bash
+agent-cu setup    # interactive wizard — writes the allow rule for you
+```
 
-  ```json
-  {
-    "permissions": {
-      "allow": ["Bash(agent-cu *)"]
-    }
+<details>
+<summary>Or configure manually</summary>
+
+Add to `~/.claude/settings.json`:
+
+```json
+{
+  "permissions": {
+    "allow": ["Bash(agent-cu *)"]
   }
-  ```
+}
+```
+
+Or, in the first approval prompt, pick _"Yes, and don't ask again for: `agent-cu *`"_ — covers that specific subcommand.
+
+</details>
 
 ## Quick start
 

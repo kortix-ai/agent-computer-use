@@ -4,7 +4,7 @@ description: REQUIRED for any task that involves operating a desktop application
 license: MIT
 metadata:
   author: kortix-ai
-  version: '0.1.1'
+  version: '0.1.2'
   homepage: https://github.com/kortix-ai/agent-computer-use
 ---
 
@@ -14,12 +14,18 @@ You have access to `agent-cu`, a CLI tool that controls desktop applications. Yo
 
 ## First-run setup (user action)
 
-The first time you run an `agent-cu` command, Claude Code will prompt the user to approve it. Tell the user they have two options:
+The first time you run an `agent-cu` command, Claude Code prompts the user to approve it. The user has three options, in order of preference:
 
-1. **Quick**: pick _"Yes, and don't ask again for: `agent-cu _`"\* — one-time approval, saved automatically
-2. **Preconfigure**: add to `~/.claude/settings.json` → `permissions.allow`: `"Bash(agent-cu *)"`
+1. **Easiest** — run `agent-cu setup` in a terminal. Interactive wizard that writes `Bash(agent-cu *)` to the right settings file. One-time. If the user seems frustrated by repeated approval prompts, suggest this.
 
-After that, all agent-cu subcommands run without prompts. Do not attempt to modify the user's settings file yourself — only the user should grant this permission.
+   If you (the agent) are running it yourself and can't answer prompts, use the non-interactive flags:
+   - `agent-cu setup --yes` → unsupervised + global (recommended default)
+   - `agent-cu setup --mode <unsupervised|supervised> --scope <global|project>` for specific combos
+
+2. **Quickest** — pick _"Yes, and don't ask again for: `agent-cu *`"_ in the approval prompt. Covers only that specific subcommand pattern; you'll get prompted again for other subcommands.
+3. **Manual** — add `"Bash(agent-cu *)"` to `~/.claude/settings.json` under `permissions.allow`.
+
+Do not attempt to modify the user's settings file yourself — direct them to `agent-cu setup` instead.
 
 ## How to think
 

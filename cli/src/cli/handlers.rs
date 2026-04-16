@@ -426,8 +426,8 @@ pub async fn run(
             output.print(&apps);
         }
 
-        Command::Setup { yes } => {
-            crate::setup::run(yes)?;
+        Command::Setup { yes, mode, scope } => {
+            crate::setup::run(yes, mode, scope)?;
             let _ = output;
         }
 

@@ -1,4 +1,22 @@
-use clap::{Parser, Subcommand};
+use clap::{Parser, Subcommand, ValueEnum};
+
+#[derive(Clone, Copy, Debug, ValueEnum)]
+#[value(rename_all = "lowercase")]
+pub enum SetupMode {
+    /// Auto-approve all agent-cu commands (writes Bash(agent-cu *) to settings)
+    Unsupervised,
+    /// Keep default Claude Code behaviour — ask before every command
+    Supervised,
+}
+
+#[derive(Clone, Copy, Debug, ValueEnum)]
+#[value(rename_all = "lowercase")]
+pub enum SetupScope {
+    /// ~/.claude/settings.json — applies to every project
+    Global,
+    /// ./.claude/settings.local.json — applies only to this directory
+    Project,
+}
 
 #[derive(Parser)]
 #[command(
@@ -435,17 +453,31 @@ pub enum Command {
 
     /// Configure Claude Code / agent integrations
     ///
-    /// Interactively adds `Bash(agent-cu *)` to Claude Code's permissions
-    /// allow-list so agent-cu runs without per-command approval prompts.
-    /// Respects the trust boundary — nothing happens without explicit consent.
+    /// Adds `Bash(agent-cu *)` to Claude Code's permissions allow-list so
+    /// agent-cu runs without per-command approval prompts. Respects the
+    /// trust boundary — nothing happens without explicit consent.
+    ///
+    /// Fully interactive by default. Use --mode and/or --scope to bypass
+    /// individual prompts; --yes is shorthand for --mode unsupervised
+    /// --scope global (scriptable for CI or AI agents).
     ///
     /// Examples:
-    ///   agent-cu setup          # interactive
-    ///   agent-cu setup --yes    # auto-approve, global scope
+    ///   agent-cu setup                                    # interactive
+    ///   agent-cu setup --yes                              # unsupervised + global
+    ///   agent-cu setup --mode unsupervised --scope project
+    ///   agent-cu setup --mode supervised                  # no-op, explicit
     Setup {
-        /// Skip prompts — apply unsupervised + global without asking
+        /// Skip prompts — alias for --mode unsupervised --scope global
         #[arg(short, long)]
         yes: bool,
+
+        /// Pre-select the mode
+        #[arg(long, value_enum)]
+        mode: Option<SetupMode>,
+
+        /// Pre-select the scope (only relevant when --mode is unsupervised)
+        #[arg(long, value_enum)]
+        scope: Option<SetupScope>,
     },
 
     /// Generate shell completions
