@@ -241,7 +241,7 @@
   },
   {
     "title": "type",
-    "content": "Type text into elements using AXSetValue or keyboard simulation.",
+    "content": "title=\"type\" description=\"Type text into elements using AXSetValue or keyboard simulation.\" />",
     "href": "/commands/type#usage",
     "pageTitle": "type"
   },
@@ -271,7 +271,7 @@
   },
   {
     "title": "snapshot",
-    "content": "Dump the accessibility tree of any application and get refs you can use with every other command.",
+    "content": "title=\"snapshot\" description=\"Dump the accessibility tree of any application and get refs you can use with every other command.\" />",
     "href": "/commands/snapshot#usage",
     "pageTitle": "snapshot"
   },
@@ -307,13 +307,13 @@
   },
   {
     "title": "YAML Workflows",
-    "content": "Define multi-step automations in YAML files. Workflows let you chain multiple agent-cu commands into a single replayable file.",
+    "content": "title=\"YAML Workflows\" description=\"Define multi-step automations in YAML files.\" /> Workflows let you chain multiple agent-cu commands into a single replayable file.",
     "href": "/workflows#example-workflow",
     "pageTitle": "YAML Workflows"
   },
   {
     "title": "Batch Execution",
-    "content": "Execute multiple commands in a single process invocation. Pipe a JSON array of commands to agent-cu batch to avoid per-command startup overhead.",
+    "content": "title=\"Batch Execution\" description=\"Execute multiple commands in a single process invocation.\" /> Pipe a JSON array of commands to agent-cu batch to avoid per-command startup overhead.",
     "href": "/batch#usage",
     "pageTitle": "Batch Execution"
   },
@@ -328,65 +328,5 @@
     "content": "Explore the accessibility tree in a TUI: Keys: j/k navigate, Enter expand, / search, y copy selector, q quit",
     "href": "/batch",
     "pageTitle": "Batch Execution"
-  },
-  {
-    "title": "AI Agent Mode",
-    "content": "Wire up an AI agent to control desktop apps. JSON output by default.",
-    "href": "/ai-mode#the-loop",
-    "pageTitle": "AI Agent Mode"
-  },
-  {
-    "title": "The loop",
-    "content": "Every AI agent should follow this loop:",
-    "href": "/ai-mode#example-agent-automates-calculator",
-    "pageTitle": "AI Agent Mode"
-  },
-  {
-    "title": "Integration with Claude/GPT",
-    "content": "Add to your system prompt or CLAUDE.md:",
-    "href": "/ai-mode#json-output",
-    "pageTitle": "AI Agent Mode"
-  },
-  {
-    "title": "JSON output",
-    "content": "All commands return JSON by default: Errors: Elements:",
-    "href": "/ai-mode#tips-for-agents",
-    "pageTitle": "AI Agent Mode"
-  },
-  {
-    "title": "Tips for agents",
-    "content": "1. Always snapshot before acting — you can't interact with what you can't see 2. Re-snapshot after every action — refs go stale 3. Use -i -c flags on every snapshot — reduces output by 10x 4. Use get-value to check state, not text (faster, targeted) 5. Use id= selectors when available — most stable 6. Add sleep 2-3 after page navigations 7. Use --expect on clicks for built-in verification 8. For Electron apps, CDP is automatic — no extra flags needed",
-    "href": "/ai-mode",
-    "pageTitle": "AI Agent Mode"
-  },
-  {
-    "title": "Global Options",
-    "content": "These flags can be added to any agent-cu command.",
-    "href": "/options#output-format",
-    "pageTitle": "Global Options"
-  },
-  {
-    "title": "Output format",
-    "content": "Flag          Description (default)     JSON output --human     Human-readable output --compact   Compact single-line JSON",
-    "href": "/options#timeout",
-    "pageTitle": "Global Options"
-  },
-  {
-    "title": "Timeout",
-    "content": "Default: 5 seconds. Applies to wait-for, --expect, and element polling.",
-    "href": "/options#verbose",
-    "pageTitle": "Global Options"
-  },
-  {
-    "title": "Verbose",
-    "content": "Shows debug traces: selector resolution, element lookup, timing, CDP connection status.",
-    "href": "/options#cdp-flags",
-    "pageTitle": "Global Options"
-  },
-  {
-    "title": "CDP flags",
-    "content": "Flag                  Description --cdp               Force CDP mode (even for non-Electron apps) --cdp-port <port>   Override the auto-detected CDP port --no-cdp            Disable CDP entirely, use native accessibility only CDP is automatic for Electron apps — you rarely need these flags. They're power-user overrides.",
-    "href": "/options",
-    "pageTitle": "Global Options"
   }
 ]
