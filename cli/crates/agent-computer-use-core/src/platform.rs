@@ -63,6 +63,12 @@ pub trait Platform: Send + Sync {
         Ok(false)
     }
 
+    /// Resolve the element under screen-coordinate (x, y). Returns None if unsupported
+    /// on the current platform or no element can be determined.
+    async fn element_at_point(&self, _x: f64, _y: f64) -> Result<Option<AccessibilityNode>> {
+        Ok(None)
+    }
+
     fn platform_name(&self) -> &'static str;
 }
 

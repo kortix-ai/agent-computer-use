@@ -37,6 +37,13 @@ extern "C" {
         options: u32,
         values: *mut core_foundation::array::CFArrayRef,
     ) -> i32;
+
+    fn AXUIElementCopyElementAtPosition(
+        application: AXUIElementRef,
+        x: f32,
+        y: f32,
+        element: *mut AXUIElementRef,
+    ) -> i32;
 }
 
 type AXUIElementRef = *mut std::ffi::c_void;
@@ -58,6 +65,21 @@ pub fn system_wide_element() -> AXUIElementRef {
 
 pub fn application_element(pid: i32) -> AXUIElementRef {
     unsafe { AXUIElementCreateApplication(pid) }
+}
+
+/// Returns the AX element under (x, y) in screen coordinates, if any.
+/// Walks up to ancestor with a meaningful role if the hit is a raw AXGroup.
+pub fn element_at_point(x: f64, y: f64) -> Option<AccessibilityNode> {
+    let sys = system_wide_element();
+    let mut out: AXUIElementRef = ptr::null_mut();
+    let rc = unsafe { AXUIElementCopyElementAtPosition(sys, x as f32, y as f32, &mut out) };
+    if rc != AX_ERROR_SUCCESS || out.is_null() {
+        return None;
+    }
+    // depth=0: just the hit element, no children.
+    let node = element_to_node_slow(out, Some(0), 0);
+    unsafe { CFRelease(out as core_foundation::base::CFTypeRef) };
+    Some(node)
 }
 
 pub fn get_string_attribute(element: AXUIElementRef, attribute: &str) -> Option<String> {

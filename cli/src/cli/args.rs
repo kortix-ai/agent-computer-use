@@ -433,6 +433,33 @@ pub enum Command {
     #[command(name = "check-permissions", alias = "check")]
     CheckPermissions,
 
+    /// Record a session of mouse, keyboard, and screen events
+    ///
+    /// Captures global input events + periodic screenshots into a session
+    /// directory. Writes `events.jsonl`, `frames/*.png`, `meta.json`.
+    /// Stop with Ctrl+C.
+    ///
+    /// The recorded data is suitable for replay, analysis, and training
+    /// data collection for AI agents.
+    ///
+    /// Examples:
+    ///   agent-cu record ./session-01
+    ///   agent-cu record ./session-01 --no-frames
+    ///   agent-cu record ./session-01 --frame-every-ms 250
+    Record {
+        /// Directory to write the session into (created if missing)
+        dir: String,
+        /// Don't capture screenshots (events only)
+        #[arg(long)]
+        no_frames: bool,
+        /// Minimum ms between screenshots [default: 100]
+        #[arg(long, default_value = "100")]
+        frame_every_ms: u64,
+        /// Also capture mouse move events (high volume)
+        #[arg(long)]
+        capture_moves: bool,
+    },
+
     /// Generate shell completions
     ///
     /// Output shell completions to stdout.
