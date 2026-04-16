@@ -27,6 +27,7 @@ import {
   Box,
   Settings,
   BookOpen,
+  Plug,
 } from 'lucide-react';
 import searchIndex from '@/generated/search-index.json';
 
@@ -54,6 +55,12 @@ const quickLinks = [
     title: 'Installation',
     href: '/installation',
     icon: Terminal,
+    group: 'Getting Started',
+  },
+  {
+    title: 'Claude Code & Agents',
+    href: '/skills',
+    icon: Plug,
     group: 'Getting Started',
   },
   {
@@ -105,17 +112,10 @@ const quickLinks = [
     icon: Layers,
     group: 'Automation',
   },
-  { title: 'AI Agent Mode', href: '/ai-mode', icon: Bot, group: 'Automation' },
   {
     title: 'Architecture',
     href: '/architecture',
     icon: Box,
-    group: 'Reference',
-  },
-  {
-    title: 'Global Options',
-    href: '/options',
-    icon: Settings,
     group: 'Reference',
   },
 ];

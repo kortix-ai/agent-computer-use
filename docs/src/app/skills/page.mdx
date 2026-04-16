@@ -1,0 +1,100 @@
+import { PageHeader } from '@/components/docs';
+
+<PageHeader
+  title="Claude Code & Agents"
+  description="Install agent-cu as a skill on skills.sh and wire it into any of 40+ supported agent editors."
+/>
+
+agent-cu ships as a skill on **[skills.sh](https://skills.sh)** — Vercel's open agent skills registry — so any of 40+ supported agent editors can drive it directly.
+
+## Install the skill
+
+```bash
+npx skills add kortix-ai/agent-computer-use -g
+```
+
+- `-g` installs globally (available in every project). Drop it to install into the current project's `.claude/skills/` only.
+- Works with Claude Code, Cursor, Codex, Copilot, OpenCode, Cline, VS Code, and more. Pass `-a <agent>` to target one specifically, e.g. `-a claude-code` or `-a cursor`.
+
+Once installed, the SKILL.md lives at:
+
+```
+~/.claude/skills/agent-computer-use/SKILL.md
+```
+
+Your agent loads it at session start. Any prompt like "open Music and play X" or "fill out this form" will route through `agent-cu` automatically.
+
+## Skip the approval prompts
+
+By default, Claude Code asks for approval on every `agent-cu` command. To run without prompts, use the built-in setup wizard:
+
+```bash
+agent-cu setup
+```
+
+Interactive menu:
+
+```
+› How should agent-cu run in Claude Code?
+❯ Unsupervised
+  Supervised
+```
+
+Picking **Unsupervised** writes `Bash(agent-cu *)` into your settings so every `agent-cu` subcommand auto-approves. **Supervised** keeps the default "ask every time" behavior.
+
+### Non-interactive flags
+
+For CI, scripts, or AI agents running setup themselves:
+
+```bash
+agent-cu setup --yes                              # unsupervised + global
+agent-cu setup --mode unsupervised --scope project
+agent-cu setup --mode supervised                  # no-op, explicit
+```
+
+| Flag      | Values                                             |
+| --------- | -------------------------------------------------- |
+| `--mode`  | `unsupervised`, `supervised`                       |
+| `--scope` | `global`, `project`                                |
+| `--yes`   | shorthand for `--mode unsupervised --scope global` |
+
+**Scope:**
+
+- `global` → `~/.claude/settings.json` (every project)
+- `project` → `./.claude/settings.local.json` (this directory only)
+
+Running `agent-cu setup` again is idempotent — it detects the existing rule and exits without changes.
+
+## Manual config (alternative)
+
+If you prefer to edit settings yourself, add this to `~/.claude/settings.json`:
+
+```json
+{
+  "permissions": {
+    "allow": ["Bash(agent-cu *)"]
+  }
+}
+```
+
+Same effect as `agent-cu setup --yes`.
+
+## Update the skill
+
+skills.sh caches installed skills locally. When agent-cu ships a new version, pull it:
+
+```bash
+npx skills update agent-computer-use -y
+```
+
+Then fully quit and relaunch your agent — skills load at session start, running sessions keep the old version cached.
+
+## Remove the skill
+
+```bash
+npx skills remove agent-computer-use -g -y
+```
+
+## Building your own skill?
+
+See the [skills.sh docs](https://skills.sh) and the [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) repo for examples.

@@ -19,6 +19,7 @@ import {
   BookOpen,
   MousePointerClick,
   ChevronRight,
+  Plug,
 } from 'lucide-react';
 
 const navigation = [
@@ -28,6 +29,7 @@ const navigation = [
       { title: 'Introduction', href: '/', icon: BookOpen },
       { title: 'Quick Start', href: '/quickstart', icon: Rocket },
       { title: 'Installation', href: '/installation', icon: Terminal },
+      { title: 'Claude Code & Agents', href: '/skills', icon: Plug },
     ],
   },
   {
@@ -52,12 +54,7 @@ const navigation = [
     items: [
       { title: 'YAML Workflows', href: '/workflows', icon: FileText },
       { title: 'Batch Execution', href: '/batch', icon: Layers },
-      { title: 'AI Agent Mode', href: '/ai-mode', icon: Cpu },
     ],
-  },
-  {
-    title: 'Reference',
-    items: [{ title: 'Global Options', href: '/options', icon: Terminal }],
   },
 ];
 

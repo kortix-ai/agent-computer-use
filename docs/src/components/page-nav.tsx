@@ -8,6 +8,7 @@ const pages = [
   { href: '/', title: 'Introduction' },
   { href: '/quickstart', title: 'Quick Start' },
   { href: '/installation', title: 'Installation' },
+  { href: '/skills', title: 'Claude Code & Agents' },
   { href: '/snapshots', title: 'Snapshots & Refs' },
   { href: '/selectors', title: 'Selectors' },
   { href: '/background', title: 'Background Ops' },
@@ -17,9 +18,7 @@ const pages = [
   { href: '/commands', title: 'All Commands' },
   { href: '/workflows', title: 'Workflows' },
   { href: '/batch', title: 'Batch Execution' },
-  { href: '/ai-mode', title: 'AI Agent Mode' },
   { href: '/architecture', title: 'Architecture' },
-  { href: '/options', title: 'Global Options' },
 ];
 
 export function PageNav() {

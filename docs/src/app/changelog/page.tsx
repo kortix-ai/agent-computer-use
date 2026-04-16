@@ -12,50 +12,25 @@ interface Release {
 
 const releases: Release[] = [
   {
-    date: 'Mar 28, 2026',
-    version: '0.3.0',
-    summary: 'Windows backend, click reliability, new commands, MDX docs.',
+    date: 'Apr 16, 2026',
+    version: '0.1.1',
+    summary: 'agent-cu setup, skills.sh distribution, branded launch.',
     sections: [
       {
         label: 'New',
         items: [
-          'Windows backend (UI Automation)',
-          'press, get-value, scroll-to commands',
-          'id~= partial ID matching, index=N selector',
-          'Path-based ref resolution — instant element lookup',
-          'Docs site with MDX, search, and mobile nav',
+          'agent-cu setup — interactive wizard to configure Claude Code / Cursor / Codex permissions',
+          'Scriptable setup for AI agents: --yes, --mode, --scope flags',
+          'Distributed as a skill on skills.sh — install via npx skills add kortix-ai/agent-computer-use',
+          'Cross-platform: $HOME on Unix/macOS, %USERPROFILE% on Windows',
         ],
       },
       {
         label: 'Improved',
         items: [
-          'Clicks send mouseMoved first (3-event sequence)',
-          'Auto scroll-into-view before clicking',
-          'type clears field by default (--append to keep)',
-          'Shared element utilities in agent-computer-use-core',
-        ],
-      },
-      {
-        label: 'Fixed',
-        items: [
-          'Ambiguous selector on unnamed buttons',
-          'Double-click timing (50ms between events)',
-        ],
-      },
-    ],
-  },
-  {
-    date: 'Mar 27, 2026',
-    version: '0.2.0',
-    summary: 'Snapshots, selectors, background clicks, workflows.',
-    sections: [
-      {
-        label: 'New',
-        items: [
-          'Snapshot refs (@e1, @e2) for deterministic targeting',
-          'Selector DSL with role, name, id, descendant chains',
-          'Background clicks via accessibility API',
-          'YAML workflows, batch execution, TUI explorer',
+          'README hero with demo GIF, comparison table vs vision-based alternatives',
+          'SKILL.md description tightened so agents prefer agent-cu over open -a / AppleScript',
+          'CI now syncs Rust crate version to package.json — --version always matches npm',
         ],
       },
     ],
