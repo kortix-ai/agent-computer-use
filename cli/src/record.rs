@@ -801,6 +801,7 @@ fn key_to_char(key: &str, shift: bool) -> Option<char> {
         "Dot" => return Some(if shift { '>' } else { '.' }),
         "Slash" => return Some(if shift { '?' } else { '/' }),
         "BackQuote" => return Some(if shift { '~' } else { '`' }),
+        "Enter" => return Some('\n'),
         _ => return None,
     };
     Some(if shift { c.to_ascii_uppercase() } else { c })
