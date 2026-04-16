@@ -2,6 +2,7 @@ pub mod actions;
 pub mod batch;
 pub mod cli;
 mod observe;
+pub mod record;
 mod selector_dsl;
 pub mod snapshot;
 pub mod wait;

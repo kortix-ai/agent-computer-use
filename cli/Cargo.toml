@@ -57,6 +57,9 @@ agent-computer-use-cdp = { workspace = true }
 serde_yaml = "0.9"
 ratatui = "0.29"
 crossterm = "0.28"
+rdev = "0.5"
+ctrlc = "3"
+arboard = { version = "3", default-features = false }
 
 [target.'cfg(target_os = "macos")'.dependencies]
 agent-computer-use-macos = { workspace = true }

@@ -519,6 +519,10 @@ impl Platform for MacOSPlatform {
         })
     }
 
+    async fn element_at_point(&self, x: f64, y: f64) -> Result<Option<AccessibilityNode>> {
+        Ok(ax::element_at_point(x, y))
+    }
+
     async fn applications(&self) -> Result<Vec<AppInfo>> {
         let apps = self.running_apps();
         Ok(apps

@@ -347,6 +347,14 @@ impl<P: Platform> Platform for ElectronAwarePlatform<P> {
         self.inner.focused().await
     }
 
+    async fn element_at_point(
+        &self,
+        x: f64,
+        y: f64,
+    ) -> agent_computer_use_core::Result<Option<AccessibilityNode>> {
+        self.inner.element_at_point(x, y).await
+    }
+
     async fn applications(&self) -> agent_computer_use_core::Result<Vec<AppInfo>> {
         self.inner.applications().await
     }

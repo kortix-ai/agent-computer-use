@@ -436,6 +436,25 @@ pub async fn run(
             );
         }
 
+        Command::Record {
+            dir,
+            no_frames,
+            frame_every_ms,
+            capture_moves,
+        } => {
+            crate::record::record(
+                platform,
+                crate::record::RecordOptions {
+                    dir: std::path::PathBuf::from(dir),
+                    frames_enabled: !no_frames,
+                    frame_every_ms,
+                    capture_moves,
+                },
+            )
+            .await?;
+            let _ = output;
+        }
+
         Command::CheckPermissions => {
             let granted = platform.check_permissions().await?;
             if granted {
