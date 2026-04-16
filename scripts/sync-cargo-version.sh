@@ -2,44 +2,41 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-PKG_JSON="$ROOT_DIR/package.json"
-CARGO_TOML="$ROOT_DIR/cli/Cargo.toml"
+cd "$ROOT_DIR"
 
-if [[ ! -f "$PKG_JSON" ]]; then
-  echo "sync-cargo-version: $PKG_JSON not found" >&2
+if [[ ! -f package.json ]]; then
+  echo "sync-cargo-version: package.json not found in $ROOT_DIR" >&2
   exit 1
 fi
-if [[ ! -f "$CARGO_TOML" ]]; then
-  echo "sync-cargo-version: $CARGO_TOML not found" >&2
+if [[ ! -f cli/Cargo.toml ]]; then
+  echo "sync-cargo-version: cli/Cargo.toml not found in $ROOT_DIR" >&2
   exit 1
 fi
 
-VERSION="$(node -p "require('$PKG_JSON').version")"
+VERSION="$(node -p "require('./package.json').version")"
 if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
   echo "sync-cargo-version: refusing to sync non-semver version '$VERSION'" >&2
   exit 1
 fi
 
-python3 - "$CARGO_TOML" "$VERSION" <<'PY'
-import re, sys
-path, new_version = sys.argv[1], sys.argv[2]
-with open(path, 'r') as f:
-    content = f.read()
-new_content, n = re.subn(
-    r'(?m)^version = "\d+\.\d+\.\d+"',
-    f'version = "{new_version}"',
-    content,
-    count=1,
-)
-if n != 1:
-    sys.stderr.write(
-        f"sync-cargo-version: expected 1 top-level `version = \"...\"` in {path}, found {n}\n"
-    )
-    sys.exit(2)
-if new_content != content:
-    with open(path, 'w') as f:
-        f.write(new_content)
-    print(f"Synced {path} → version = \"{new_version}\"")
-else:
-    print(f"Already at version {new_version}, no change")
-PY
+node -e '
+  const fs = require("fs");
+  const path = "cli/Cargo.toml";
+  const newVersion = process.argv[1];
+  const content = fs.readFileSync(path, "utf8");
+  let replaced = 0;
+  const next = content.replace(/^version = "\d+\.\d+\.\d+"/m, () => {
+    replaced++;
+    return `version = "${newVersion}"`;
+  });
+  if (replaced !== 1) {
+    console.error(`sync-cargo-version: expected 1 top-level version in ${path}, found ${replaced}`);
+    process.exit(2);
+  }
+  if (next !== content) {
+    fs.writeFileSync(path, next);
+    console.log(`Synced ${path} → version = "${newVersion}"`);
+  } else {
+    console.log(`Already at version ${newVersion}, no change`);
+  }
+' "$VERSION"
