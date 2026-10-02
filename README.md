@@ -1,5 +1,8 @@
 # agent-computer-use
 
+> [!WARNING]
+> **This project is no longer maintained.** We recommend **[Cua](https://github.com/trycua/cua)** and its **[Cua Driver](https://cua.ai/docs/cua-driver/quickstart)** instead.
+
 [![Stars](https://img.shields.io/github/stars/kortix-ai/agent-computer-use?style=flat&logo=github&color=a8d420)](https://github.com/kortix-ai/agent-computer-use/stargazers)
 [![npm](https://img.shields.io/npm/v/agent-cu?color=a8d420)](https://www.npmjs.com/package/agent-cu)
 [![Downloads](https://img.shields.io/npm/dm/agent-cu?color=a8d420)](https://www.npmjs.com/package/agent-cu)
