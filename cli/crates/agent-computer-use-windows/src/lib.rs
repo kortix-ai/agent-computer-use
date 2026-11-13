@@ -3,6 +3,8 @@ pub mod input;
 #[cfg(target_os = "windows")]
 mod platform;
 #[cfg(target_os = "windows")]
+mod process_matching;
+#[cfg(target_os = "windows")]
 mod uia;
 
 #[cfg(target_os = "windows")]
