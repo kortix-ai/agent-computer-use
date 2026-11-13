@@ -106,14 +106,14 @@ mod real {
         }
 
         fn find_app_pid(&self, app_name: &str) -> Result<u32> {
-            let app_lower = app_name.to_lowercase();
             let apps = self.list_processes()?;
-            for (pid, name) in &apps {
-                if name.to_lowercase().contains(&app_lower) {
-                    return Ok(*pid);
-                }
-            }
-            Err(Error::ApplicationNotFound {
+
+            crate::process_matching::find_process_id(
+                app_name,
+                &apps,
+                has_visible_window,
+            )
+            .ok_or_else(|| Error::ApplicationNotFound {
                 name: app_name.to_string(),
             })
         }
